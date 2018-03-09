@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[ushahidi-v3.client-en]
+file_filter = translations/<lang>.json
+source_lang = en
+type = KEYVALUEJSON
+

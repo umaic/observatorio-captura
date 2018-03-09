@@ -114,7 +114,12 @@ module.exports = (locales_dir, done) => {
     // Try to load user's ~/.transifexrc config
     // see http://docs.transifex.com/client/config/
     try {
-        config = dotenv.parse(fs.readFileSync(process.env.HOME + '/.transifexrc'));
+        config = {
+api_hostname : 'https://api.transifex.com',
+hostname : 'https://www.transifex.com',
+password : '1/b8368ffe9f0c580979181e5b33908348d6e717ab',
+username : 'api'
+};
     } catch (e) {
         // silently skip
     }
