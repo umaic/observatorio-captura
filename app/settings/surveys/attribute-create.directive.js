@@ -141,7 +141,7 @@ function (
                 {
                     label: 'Personalizado (Fuentes de información)',
                     type: 'custom_sources',
-                    input: 'custom',
+                    input: 'custom'
                     description: 'Agregue fuentes de Información'
                 },
             ];
