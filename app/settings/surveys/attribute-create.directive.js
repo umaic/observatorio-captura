@@ -143,7 +143,7 @@ function (
                     type: 'custom_sources',
                     input: 'custom',
                     description: 'Agregue fuentes de Información'
-                },
+                }
             ];
         }
     };
