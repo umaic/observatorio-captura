@@ -137,7 +137,13 @@ function (
                     cardinality: 0,
                     input: 'tags',
                     description: $translate.instant('settings.settings_list.categories_desc')
-                }
+                },
+                {
+                    label: 'Personalizado (Fuentes de información)',
+                    type: 'custom_sources',
+                    input: 'custom',
+                    description: 'Agregue fuentes de Información'
+                },
             ];
         }
     };
