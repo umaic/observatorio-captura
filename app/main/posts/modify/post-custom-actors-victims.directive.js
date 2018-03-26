@@ -33,5 +33,12 @@ function PostCustomActorsVictimsController(
         $scope.selected_categories = categories.filter(function(category){
             return selected.includes(category.id);
         });
-    });   
+    });
+
+    var initCategory = function (){
+        if ($scope.selected_categories.length > 0) {
+            $scope.categoria = $scope.selected_categories.id;
+        }
+    }
+    initCategory();   
 }
