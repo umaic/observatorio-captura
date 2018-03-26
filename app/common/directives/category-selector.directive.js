@@ -143,6 +143,7 @@ function CategorySelectorController($scope, _) {
                     $scope.selected.splice(parentIndexSelected, 1);
                 }
             }
+            console.log($scope);
         });
 
     }

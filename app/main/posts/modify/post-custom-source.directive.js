@@ -35,8 +35,6 @@ function PostCustomSourceController(
         url: ""
     };
 
-    console.log($scope);
-
     // if (!$scope.source.date) {
     //     return;
     // }

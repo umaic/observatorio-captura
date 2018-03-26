@@ -24,5 +24,5 @@ function PostCustomActorsVictimsController(
     $sce,
     Notify
 ) {
-    console.log($scope);    
+    // console.log($scope);    
 }
