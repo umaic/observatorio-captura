@@ -6,7 +6,7 @@ function PostCustomActorsVictims() {
     return {
         restrict: 'E',
         scope: {
-            
+            form: '='
         },
         template: require('./custom-actors-victims.html'),
         controller: PostCustomActorsVictimsController
@@ -24,5 +24,5 @@ function PostCustomActorsVictimsController(
     $sce,
     Notify
 ) {
-    
+    console.log($scope);    
 }

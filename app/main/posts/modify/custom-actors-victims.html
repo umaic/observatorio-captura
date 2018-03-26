@@ -1,5 +1,12 @@
 <form name="frm-actors-victims">
   <div class="form-field">
-       
+    <div class="col-md-4 center-block">
+        <label for="categorias">Categoría</label>
+        <select ng-model = "categoria"
+                ng-options=""
+                name="categorias">
+                <option ng-if="!categoria" value="">Seleccione una</option>
+        </select>
+    </div>   
   </div>
 </form>
