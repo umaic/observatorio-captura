@@ -144,6 +144,6 @@ function CategorySelectorController($scope, $rootScope, _) {
                 }
             }
         });
-        $scope.$broadcast('selected_category')
+        $rootScope.$emit('selected_category')
     }
 }
