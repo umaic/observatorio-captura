@@ -27,6 +27,7 @@ function PostCustomActorsVictimsController(
     Notify
 ) {
     $scope.switchTab = switchTab;
+    $scope.categorySelected = categorySelected;
 
     $scope.actors = [
         {
@@ -47,6 +48,124 @@ function PostCustomActorsVictimsController(
         },
     ];
 
+    $scope.estados = [
+        {
+            label: "Desconocido",
+            value: 'desconocido'
+        },
+        {
+            label: "Herido",
+            value: 'herido'
+        },
+        {
+            label: "Muerto",
+            value: 'muerto'
+        },
+        {
+            label: "No aplica",
+            value: 'na'
+        },
+    ];
+
+    $scope.generos = [
+        {
+            label: "Desconocido",
+            value: 'desconocido'
+        },
+        {
+            label: "Femenino",
+            value: 'femenino'
+        },
+        {
+            label: "Masculino",
+            value: 'masculino'
+        },
+    ];
+
+    $scope.poblaciones = [
+        {
+            label: "AfroColombiano",
+            value: 'afro'
+        },
+        {
+            label: "Extranjero",
+            value: 'extranjero'
+        },
+        {
+            label: "Gitano",
+            value: 'gitano'
+        },
+        {
+            label: "Indígena",
+            value: 'indigena'
+        },
+        {
+            label: "Menores",
+            value: 'menores'
+        },
+    ];
+
+    $scope.condiciones = [
+        {
+            label: "Actor armado no estatal",
+            value: 'actor_no_estatal'
+        },
+        {
+            label: "Civil",
+            value: 'civil'
+        },
+        {
+            label: "Desconocido",
+            value: 'desconocido'
+        },
+        {
+            label: "Desmovilizado",
+            value: 'desmovilizado'
+        },
+        {
+            label: "Militar",
+            value: 'militar'
+        },
+    ];
+
+    $scope.ocupaciones = [
+        {
+            label: "Alcalde",
+            value: 'alcalde'
+        },
+        {
+            label: "Combatiente",
+            value: 'combatiente'
+        },
+        {
+            label: "Comerciante",
+            value: 'comerciante'
+        },
+        {
+            label: "Contratista",
+            value: 'contratista'
+        },
+        {
+            label: "Estudiante",
+            value: 'estudiante'
+        },
+    ];
+
+    $scope.edades = [
+        {
+            label: "Desconocido",
+            value: 'desconocido'
+        },
+        {
+            label: "Mayor de 18 años",
+            value: 'mayor'
+        },
+        {
+            label: "Menor de 18 años",
+            value: 'menor'
+        },
+    ];
+
     var initCategory = function (){
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.categoria = $scope.selected_categories[0].id;
@@ -58,6 +177,27 @@ function PostCustomActorsVictimsController(
 
         // Set initial menu tab
             $scope.switchTab('post', 'actor');
+        }
+
+    function categorySelected() {
+            $scope.actors = [
+                {
+                    label: "Bandas emergentes",
+                    value: false
+                },
+                {
+                    label: "Delincuencia",
+                    value: false
+                },
+                {
+                    label: "Fuerzas armadas estatales",
+                    value: false
+                },
+                {
+                    label: "Guerrillas",
+                    value: false
+                },
+            ];
         }
 
     function switchTab(section, tab) {
