@@ -148,13 +148,13 @@
                   ng-required="attribute.required"
               ></post-video-input>
               <!-- type: custom_sources -->
-              <post-custom-sources
+              <post-custom-source
                   ng-switch-when="custom_sources"
                   name="values_{{attribute.id}}"
                   sourceSelected="'sources'"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
-              ></post-custom-sources>
+              ></post-custom-source>
           </div>
       </div>
       <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
