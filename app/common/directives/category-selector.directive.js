@@ -148,7 +148,7 @@ function CategorySelectorController($scope, _) {
     }
 
     $scope.$watch('selected', function(newValue, oldValue, scope) {
-        console.log(newValue);
+        console.log($scope);
         if (newValue !== oldValue) {
             $scope.$broadcast('selected_category')
         }
