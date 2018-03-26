@@ -33,7 +33,5 @@ function PostCustomActorsVictimsController(
         $scope.selected_categories = categories.filter(function(category){
             return selected.includes(category.id);
         });
-
-        console.log($scope.selected_categories);
     });   
 }
