@@ -26,6 +26,7 @@ function CategorySelectorController($scope, _) {
     $scope.changeCategories = changeCategories;
 
     $scope.$watch('selected', function(newValue, oldValue, scope) {
+        console.log(newValue);
         if (newValue !== oldValue) {
             $scope.$broadcast('selected_category')
         }
