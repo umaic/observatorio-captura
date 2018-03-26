@@ -48,7 +48,7 @@ function PostValueEditController(
 
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
-
+    console.log($scope);
     function activate() {
     }
 
