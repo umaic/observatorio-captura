@@ -1,12 +1,12 @@
 module.exports = PostCustomSource;
 
-PostCustomSource.$inject = [];
+PostCustomSource.$inject = ['moment', '_', function (moment, _];
 
 function PostCustomSource() {
     return {
         restrict: 'E',
         scope: {
-            sourceselected: '='
+            source: '='
         },
         template: require('./custom-source.html'),
         controller: PostCustomSourceController
@@ -16,37 +16,34 @@ function PostCustomSource() {
 PostCustomSourceController.$inject = [
     '$scope',
     '$sce',
-    'Util',
     'Notify'
 ];
 
 function PostCustomSourceController(
     $scope,
     $sce,
-    Util,
     Notify
 ) {
-    $scope.constructIframe = constructIframe;
     $scope.dateOptions = { format: 'yyyy-mm-dd', onClose: save };
 
-    if (!ngModel) {
-        return;
-    }
+    // if (!$scope.source.date) {
+    //     return;
+    // }
 
-    // Update models on render
-    ngModel.$render = render;
+    // // Update models on render
+    // $scope.source.date.$render = render;
 
-    // Render ngModel viewValue into scope
-    function render() {
-        $scope.source_date = moment(ngModel.$viewValue).toDate();
-    }
+    // // Render ngModel viewValue into scope
+    // function render() {
+    //     $scope.source.date = moment(ngModel.$viewValue).toDate();
+    // }
 
-    // Save model value
-    // Only runs when modal closes, this avoids overwriting the time
-    // and rounding it to 15mins, even when the user never changed it
-    function save() {
-        ngModel.$setViewValue($scope.model);
-    }
+    // // Save model value
+    // // Only runs when modal closes, this avoids overwriting the time
+    // // and rounding it to 15mins, even when the user never changed it
+    // function save() {
+    //     ngModel.$setViewValue($scope.source.date);
+    // }
 
     $scope.sources = [
     {
