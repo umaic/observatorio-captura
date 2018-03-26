@@ -26,8 +26,7 @@ function PostCustomSourceController(
     Notify,
     moment
 ) {
-    $scope.dateOptions = { format: 'yyyy-mm-dd', onClose: save };
-    console.log($scope);
+    $scope.dateOptions = { format: 'yyyy-mm-dd'};
 
     // if (!$scope.source.date) {
     //     return;
@@ -44,9 +43,9 @@ function PostCustomSourceController(
     // // Save model value
     // // Only runs when modal closes, this avoids overwriting the time
     // // and rounding it to 15mins, even when the user never changed it
-    function save() {
-        ngModel.$setViewValue($scope.source.date);
-    }
+    // function save() {
+    //     ngModel.$setViewValue($scope.source.date);
+    // }
 
     $scope.sources = [
     {
