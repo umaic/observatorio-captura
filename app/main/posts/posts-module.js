@@ -29,6 +29,7 @@ angular.module('ushahidi.posts', [])
 .directive('postDatetime', require('./modify/post-datetime-value.directive.js'))
 .directive('postLocation', require('./modify/location.directive.js'))
 .directive('postRelation', require('./modify/post-relation.directive.js'))
+.directive('PostCustomSource', require('./modify/post-custom-source.directive.js'))
 
 // Post editing workflows
 .directive('postEditor', require('./modify/post-editor.directive.js'))
