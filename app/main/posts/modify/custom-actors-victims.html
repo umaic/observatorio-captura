@@ -6,6 +6,23 @@
                 ng-options="item.id as item.tag for item in selected_categories"
                 name="categorias">
         </select>
+        <div>
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#actor" aria-controls="actor" role="tab" data-toggle="tab">Actor/Presuntor Perpretador</a>
+            </li>
+            <li role="presentation">
+                <a href="#victima" aria-controls="victima" role="tab" data-toggle="tab">Afectados</a>
+            </li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="actor">...</div>
+            <div role="tabpanel" class="tab-pane" id="victima">...</div>
+          </div>
+
+        </div>
     </div>   
   </div>
 </form>
