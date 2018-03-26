@@ -26,6 +26,13 @@ function PostCustomActorsVictimsController(
     $sce,
     Notify
 ) {
+
+    var initCategory = function (){
+        if ($scope.selected_categories && $scope.selected_categories.length > 0) {
+            $scope.categoria = $scope.selected_categories[0].id;
+        }
+    } 
+    
     $rootScope.$on('selected_category', function(e){
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
@@ -33,13 +40,7 @@ function PostCustomActorsVictimsController(
         $scope.selected_categories = categories.filter(function(category){
             return selected.includes(category.id);
         });
-    });
 
-    var initCategory = function (){
-        if ($scope.selected_categories && $scope.selected_categories.length > 0) {
-            $scope.categoria = $scope.selected_categories[0].id;
-        }
-        console.log($scope.categoria);
-    }
-    initCategory();   
+        initCategory();
+    }); 
 }
