@@ -27,7 +27,15 @@ function PostCustomSourceController(
     moment
 ) {
     $scope.dateOptions = { format: 'yyyy-mm-dd'};
-    $scope.source = null;
+    var now = new Date();
+    $scope.source = {
+        selected: null,
+        date: moment(now).toDate(),
+        desc: "",
+        url: ""
+    };
+
+    console.log($scope);
 
     // if (!$scope.source.date) {
     //     return;
