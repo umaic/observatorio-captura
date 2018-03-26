@@ -25,13 +25,6 @@ function CategorySelectorController($scope, _) {
     $scope.disabledCategories = [];
     $scope.changeCategories = changeCategories;
 
-    $scope.$watch('$scope.selected', function(newValue, oldValue, scope) {
-        console.log(newValue);
-        if (newValue !== oldValue) {
-            $scope.$broadcast('selected_category')
-        }
-    });
-
     activate();
     $scope.selectAllEnabled = function () {
         if ($scope.enableParents) {
@@ -153,4 +146,11 @@ function CategorySelectorController($scope, _) {
         });
 
     }
+
+    $scope.$watch('selected', function(newValue, oldValue, scope) {
+        console.log(newValue);
+        if (newValue !== oldValue) {
+            $scope.$broadcast('selected_category')
+        }
+    });
 }
