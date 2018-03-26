@@ -15,16 +15,18 @@ function PostCustomActorsVictims() {
 
 PostCustomActorsVictimsController.$inject = [
     '$scope',
+    '$rootScope',
     '$sce',
     'Notify'
 ];
 
 function PostCustomActorsVictimsController(
     $scope,
+    $rootScope,
     $sce,
     Notify
 ) {
-    $scope.$on('selected_category', function(e){
+    $rootScope.$on('selected_category', function(e){
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
 
