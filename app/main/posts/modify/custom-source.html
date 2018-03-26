@@ -1,0 +1,18 @@
+<form>
+  <div class="form-field">
+    <label>{{label}}</label>
+    <label for="source">Fuente</label>
+	    <select ng-model = "sourceSelected"
+	    		ng-options="item as label for item in sources"
+	    		name="source">
+	    </select>
+    <label for="source-date">Fecha del evento reportada por la fuente</label>
+    <input
+    	name="source-date"
+        type="text"
+        pick-a-date="source_date"
+        pick-a-date-options="dateOptions"
+        />
+    </div>
+  </div>
+</form>

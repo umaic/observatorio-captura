@@ -79,6 +79,9 @@ function PostValueEditController(
     function isCheckbox(attr) {
         return attr.input === 'checkbox';
     }
+    function isCustomSource(attr) {
+        return attr.input === 'custom';
+    }
 
     // Can more values be added for this attribute?
     function canAddValue(attr) {
