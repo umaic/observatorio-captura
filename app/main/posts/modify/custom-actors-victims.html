@@ -4,8 +4,8 @@
         <label for="categorias">Categoría</label>
         <select ng-model = "categoria"
                 ng-options="item.id as item.tag for item in selected_categories"
+                ng-init="selected_categories[0]"
                 name="categorias">
-                <option ng-if="!categoria" value="">Seleccione una</option>
         </select>
     </div>   
   </div>
