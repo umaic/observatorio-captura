@@ -31,19 +31,19 @@ function PostCustomActorsVictimsController(
     $scope.actors = [
         {
             label: "Bandas emergentes",
-            value: false;
+            value: false
         },
         {
             label: "Delincuencia",
-            value: false;
+            value: false
         },
         {
             label: "Fuerzas armadas estatales",
-            value: false;
+            value: false
         },
         {
             label: "Guerrillas",
-            value: false;
+            value: false
         },
     ];
 
