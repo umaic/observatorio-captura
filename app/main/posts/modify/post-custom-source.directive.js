@@ -1,6 +1,6 @@
 module.exports = PostCustomSource;
 
-PostCustomSource.$inject = ['moment', '_', function (moment, _];
+PostCustomSource.$inject = ['moment', function (moment];
 
 function PostCustomSource() {
     return {
