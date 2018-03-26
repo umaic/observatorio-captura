@@ -28,6 +28,25 @@ function PostCustomActorsVictimsController(
 ) {
     $scope.switchTab = switchTab;
 
+    $scope.actors = [
+        {
+            label: "Bandas emergentes",
+            value: false;
+        },
+        {
+            label: "Delincuencia",
+            value: false;
+        },
+        {
+            label: "Fuerzas armadas estatales",
+            value: false;
+        },
+        {
+            label: "Guerrillas",
+            value: false;
+        },
+    ];
+
     var initCategory = function (){
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.categoria = $scope.selected_categories[0].id;
