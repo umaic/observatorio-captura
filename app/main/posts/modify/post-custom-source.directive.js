@@ -1,6 +1,6 @@
 module.exports = PostCustomSource;
 
-PostCustomSource.$inject = ['moment', function (moment)];
+PostCustomSource.$inject = [];
 
 function PostCustomSource() {
     return {
@@ -16,13 +16,15 @@ function PostCustomSource() {
 PostCustomSourceController.$inject = [
     '$scope',
     '$sce',
-    'Notify'
+    'Notify',
+    'moment'
 ];
 
 function PostCustomSourceController(
     $scope,
     $sce,
-    Notify
+    Notify,
+    moment
 ) {
     $scope.dateOptions = { format: 'yyyy-mm-dd', onClose: save };
 
