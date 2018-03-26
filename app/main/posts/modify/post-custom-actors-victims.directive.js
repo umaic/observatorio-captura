@@ -27,7 +27,6 @@ function PostCustomActorsVictimsController(
     Notify
 ) {
     $scope.switchTab = switchTab;
-    activate();
 
     var initCategory = function (){
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
@@ -68,5 +67,6 @@ function PostCustomActorsVictimsController(
         });
 
         initCategory();
+        activate();
     }); 
 }
