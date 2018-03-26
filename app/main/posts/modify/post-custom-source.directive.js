@@ -6,7 +6,7 @@ function PostCustomSource() {
     return {
         restrict: 'E',
         scope: {
-            source: '='
+            
         },
         template: require('./custom-source.html'),
         controller: PostCustomSourceController
@@ -27,6 +27,7 @@ function PostCustomSourceController(
     moment
 ) {
     $scope.dateOptions = { format: 'yyyy-mm-dd'};
+    $scope.source = null;
 
     // if (!$scope.source.date) {
     //     return;
