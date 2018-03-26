@@ -15,9 +15,9 @@ function CategorySelectorDirective() {
         template: require('./category-selector.html')
     };
 }
-CategorySelectorController.$inject = ['$scope', '_'];
+CategorySelectorController.$inject = ['$scope', '$rootScope', '_'];
 
-function CategorySelectorController($scope, _) {
+function CategorySelectorController($scope, $rootScope, _) {
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;
@@ -147,7 +147,7 @@ function CategorySelectorController($scope, _) {
 
     }
 
-    $scope.$watch('selected', function(newValue, oldValue, scope) {
+    $rootScope.$watch('selected', function(newValue, oldValue, scope) {
         console.log($scope);
         if (newValue !== oldValue) {
             $scope.$broadcast('selected_category')
