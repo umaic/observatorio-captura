@@ -144,13 +144,6 @@ function CategorySelectorController($scope, $rootScope, _) {
                 }
             }
         });
-        console.log($scope.selected);
+        $scope.$broadcast('selected_category')
     }
-
-    $scope.$watch('selected', function(newValue, oldValue, scope) {
-        console.log($scope);
-        if (newValue !== oldValue) {
-            $scope.$broadcast('selected_category')
-        }
-    });
 }
