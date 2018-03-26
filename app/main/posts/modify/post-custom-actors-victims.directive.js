@@ -6,7 +6,8 @@ function PostCustomActorsVictims() {
     return {
         restrict: 'E',
         scope: {
-            form: '='
+            form: '=',
+            categories: '='
         },
         template: require('./custom-actors-victims.html'),
         controller: PostCustomActorsVictimsController
