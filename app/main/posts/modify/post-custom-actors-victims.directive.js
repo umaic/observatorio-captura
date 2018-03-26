@@ -67,6 +67,6 @@ function PostCustomActorsVictimsController(
         });
 
         initCategory();
-        activate();
+        setTimeout(activate, 2000);
     }); 
 }
