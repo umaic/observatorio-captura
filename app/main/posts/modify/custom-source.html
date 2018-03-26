@@ -2,7 +2,7 @@
   <div class="form-field">
     <div class="col-md-6">
         <label for="source">Fuente</label>
-        <select ng-model = "source"
+        <select ng-model = "source.selected"
                 ng-options="item.value as item.label for item in sources"
                 name="source">
                 <option ng-if="!source" value="">Seleccione una</option>
