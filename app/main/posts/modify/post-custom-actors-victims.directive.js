@@ -37,7 +37,7 @@ function PostCustomActorsVictimsController(
 
     var initCategory = function (){
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
-            $scope.categoria = $scope.selected_categories.id;
+            $scope.categoria = $scope.selected_categories[0].id;
         }
     }
     initCategory();   
