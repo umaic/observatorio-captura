@@ -30,6 +30,7 @@ angular.module('ushahidi.posts', [])
 .directive('postLocation', require('./modify/location.directive.js'))
 .directive('postRelation', require('./modify/post-relation.directive.js'))
 .directive('postCustomSource', require('./modify/post-custom-source.directive.js'))
+.directive('postCustomActorsVictims', require('./modify/post-custom-actors-victims.directive.js'))
 
 // Post editing workflows
 .directive('postEditor', require('./modify/post-editor.directive.js'))
