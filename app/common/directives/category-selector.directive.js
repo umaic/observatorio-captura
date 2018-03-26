@@ -25,6 +25,12 @@ function CategorySelectorController($scope, _) {
     $scope.disabledCategories = [];
     $scope.changeCategories = changeCategories;
 
+    $scope.$watch('selected', function(newValue, oldValue, scope) {
+        if (newValue !== oldValue) {
+            $scope.$broadcast('selected_category')
+        }
+    });
+
     activate();
     $scope.selectAllEnabled = function () {
         if ($scope.enableParents) {
@@ -143,7 +149,6 @@ function CategorySelectorController($scope, _) {
                     $scope.selected.splice(parentIndexSelected, 1);
                 }
             }
-            console.log($scope);
         });
 
     }

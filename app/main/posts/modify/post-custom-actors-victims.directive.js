@@ -24,5 +24,14 @@ function PostCustomActorsVictimsController(
     $sce,
     Notify
 ) {
-    // console.log($scope);    
+    $scope.$on('selected_category', function(e){
+        var selected = e.targetScope.selected;
+        var categories = e.targetScope.categories;
+
+        $scope.selected_categories = categories.filter(function(category){
+            return selected.includes(category.id);
+        });
+
+        console.log($scope.selected_categories);
+    });   
 }
