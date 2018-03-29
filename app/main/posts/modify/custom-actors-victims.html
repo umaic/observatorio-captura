@@ -1,0 +1,89 @@
+<form name="frm-actors-victims">
+  <div class="form-field">
+    <div class="col-md-4 center-block" ng-if="selected_categories.length > 0">
+        <label for="categorias">Categoría</label>
+        <select ng-model = "categoria"
+                ng-options="item.id as item.tag for item in selected_categories"
+                ng-change="categorySelected()"
+                name="categorias">
+        </select>
+        <div>
+            <nav class="tabs-menu init" data-tabs="actor-victim">
+                <ul style="overflow-x: auto !important;">
+                    <li id="actor-post-li">
+                      <a ng-click="switchTab('post', 'actor')">
+                        Actor/Presunto Perpetrador
+                      </a>
+                    </li>
+                    <li id="victim-post-li">
+                      <a ng-click="switchTab('post', 'victim')">
+                        Afectados
+                      </a>
+                    </li>
+                </ul>
+            </nav>
+            <div id="actor-post" class="survey-details tabs-target" >
+                <div style="margin: 16px 0;">
+                    <div class="form-field checkbox" ng-repeat="(index, actor) in actors">
+                        <label>
+                            <input
+                                type="checkbox"
+                                ng-model = actor.value;
+                            >
+                            {{ ::actor.label }}                        
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div id="victim-post" class="survey-details tabs-target" >
+              <div class="form-field">
+                  <label for="num">Número de personas</label>
+                      <input type="number" name="num">                  
+              </div>
+              <div class="form-field">
+                  <label for="generos">Género</label>
+                        <select ng-model = "genero"
+                                ng-options="item.value as item.label for item in generos"
+                                name="generos">
+                        </select>                  
+              </div>
+              <div class="form-field">
+                  <label for="estados">Estado</label>
+                      <select ng-model = "estado"
+                                ng-options="item.value as item.label for item in estados"
+                                name="estados">
+                        </select>                  
+              </div>
+              <div class="form-field">
+                  <label for="poblacion">Grupo Poblacional</label>
+                      <select ng-model = "poblacion"
+                            ng-options="item.value as item.label for item in poblaciones"
+                            name="poblacion">
+                    </select>                  
+              </div>
+              <div class="form-field">
+                  <label for="edad">Edad</label>
+                      <select ng-model = "edad"
+                            ng-options="item.value as item.label for item in edades"
+                            name="edad">
+                    </select>
+              </div>
+              <div class="form-field">
+                  <label for="cond">Condición</label>
+                      <select ng-model = "condicion"
+                            ng-options="item.value as item.label for item in condiciones"
+                            name="cond">
+                    </select>
+              </div>
+              <div class="form-field">
+                  <label for="ocupacion">Ocupación</label>
+                      <select ng-model = "ocupacion"
+                            ng-options="item.value as item.label for item in ocupaciones"
+                            name="ocupacion">
+                    </select>
+              </div>
+            </div>
+        </div>
+    </div>   
+  </div>
+</form>

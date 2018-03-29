@@ -48,7 +48,7 @@ function PostValueEditController(
 
     $scope.isFieldSetStructure = isFieldSetStructure;
     activate();
-
+    
     function activate() {
     }
 
@@ -80,7 +80,10 @@ function PostValueEditController(
         return attr.input === 'checkbox';
     }
     function isCustomSource(attr) {
-        return attr.input === 'custom';
+        return attr.input === 'custom_source';
+    }
+    function isCustomActVict(attr) {
+        return attr.input === 'custom_actors_victims';
     }
 
     // Can more values be added for this attribute?

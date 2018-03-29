@@ -148,13 +148,21 @@
                   ng-required="attribute.required"
               ></post-video-input>
               <!-- type: custom_sources -->
-              <post-custom-sources
+              <post-custom-source
                   ng-switch-when="custom_sources"
                   name="values_{{attribute.id}}"
                   sourceSelected="'sources'"
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
-              ></post-custom-sources>
+              ></post-custom-source>
+              <!-- type: custom_actors_victims -->
+              <post-custom-actors_victims
+                  ng-switch-when="custom_actors_victims"
+                  name="values_{{attribute.id}}"
+                  form="form"
+                  ng-model="post.values[attribute.key][key]"
+                  ng-required="attribute.required"
+              ></post-custom-actors_victims>
           </div>
       </div>
       <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
