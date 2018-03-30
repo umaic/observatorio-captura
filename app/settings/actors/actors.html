@@ -6,7 +6,7 @@
                 <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
                 <li><a ui-sref="settings.list" translate>app.settings</a></li>
             </ol>
-            <h1 class="mode-context-title" translate>app.categories</h1>
+            <h1 class="mode-context-title" translate>app.actors</h1>
         </header>
 
         <span class="mode-context-trigger" dropdown-toggle>
@@ -21,11 +21,11 @@
         <!-- toolbar -->
         <div class="toolbar">
             <div class="fab">
-                <a ui-sref="settings.categories.create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedCategories.length}">
+                <a ui-sref="settings.actors.create" type="button" class="button button-alpha button-fab" ng-class="{'disabled': selectedActors.length}">
                     <svg class="iconic">
                       <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
                     </svg>
-                    <span class="hidden" translate>category.add_category</span>
+                    <span class="hidden" translate>actor.add_actor</span>
                 </a>
             </div>
         </div>
@@ -33,22 +33,22 @@
 
         <div class="main-col">
 
-            <div class="listing card" ng-class="{'toolbar-active': selectedCategories.length}">
-                <div class="alert" ng-hide="categories.length">
-                    <p ng-hide="categories.length"><em translate>empty.category</em></p>
+            <div class="listing card" ng-class="{'toolbar-active': selectedActors.length}">
+                <div class="alert" ng-hide="actors.length">
+                    <p ng-hide="actors.length"><em translate>empty.actor</em></p>
                 </div>
 
-                <div id="category-{{category.id}}" class="listing-item" ng-repeat="category in categories" ng-class="{ 'warning': isToggled(category) }">
+                <div id="actor-{{actor.id}}" class="listing-item" ng-repeat="actor in actors" ng-class="{ 'warning': isToggled(actor) }">
 
-                    <div class="listing-item-select" ng-click="toggleCategory(category)">
-                        <input type="checkbox" value="{{category.id}}" ng-checked="isToggled(category)"></input>
+                    <div class="listing-item-select" ng-click="toggleActor(actor)">
+                        <input type="checkbox" value="{{actor.id}}" ng-checked="isToggled(actor)"></input>
                     </div>
 
                     <div class="listing-item-primary">
-                        <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: category.id})">{{category.tag}}</a></h2>
+                        <h2 class="listing-item-title"><a ui-sref="settings.actors.edit({id: actor.id})">{{actor.tag}}</a></h2>
                     </div>
                     <div class="listing-item-secondary">
-                        <button class="button-beta button-flat" ng-click="deleteCategory(category)">
+                        <button class="button-beta button-flat" ng-click="deleteActor(actor)">
                             <svg class="iconic">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                             </svg>
@@ -56,17 +56,17 @@
                         </button>
                     </div>
 
-                    <div id="category-{{child.id}}" class="listing-item" ng-repeat="child in category.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleCategory(child)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="category.children">
+                    <div id="actor-{{child.id}}" class="listing-item" ng-repeat="child in actor.children" ng-class="{ 'warning': isToggled(child) }" ng-click="toggleActor(child)" ng-style="{'marginLeft': '50px', 'border': 'none'}" ng-if="actor.children">
 
                         <div class="listing-item-select">
                             <input type="checkbox" value="{{child.id}}" ng-checked="isToggled(child)">
                         </div>
 
                         <div class="listing-item-primary">
-                            <h2 class="listing-item-title"><a ui-sref="settings.categories.edit({id: child.id})">{{child.tag}}</a></h2>
+                            <h2 class="listing-item-title"><a ui-sref="settings.actors.edit({id: child.id})">{{child.tag}}</a></h2>
                         </div>
                         <div class="listing-item-secondary">
-                            <button class="button-beta button-flat" ng-click="deleteCategory(child)">
+                            <button class="button-beta button-flat" ng-click="deleteActor(child)">
                                 <svg class="iconic">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                                 </svg>
@@ -76,8 +76,8 @@
                     </div>
                 </div>
 
-                <listing-toolbar entities="allCategories" selected-set="selectedCategories">
-                    <button type="button" class="button-destructive" ng-disabled="!selectedCategories.length" ng-click="deleteCategories()">
+                <listing-toolbar entities="allactors" selected-set="selectedActors">
+                    <button type="button" class="button-destructive" ng-disabled="!selectedActors.length" ng-click="deleteActors()">
                         <svg class="iconic">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
                         </svg>

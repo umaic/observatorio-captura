@@ -36,5 +36,4 @@ function (
             $scope.tier = site.tier;
         });
     });
-    console.log($scope.settings);
 }];

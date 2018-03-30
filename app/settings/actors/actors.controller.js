@@ -4,7 +4,7 @@ module.exports = [
     '$rootScope',
     '$location',
     '$q',
-    'TagEndpoint',
+    'actorEndpoint',
     'Notify',
     '_',
 function (
@@ -13,7 +13,7 @@ function (
     $rootScope,
     $location,
     $q,
-    TagEndpoint,
+    actorEndpoint,
     Notify,
     _
 ) {
@@ -23,7 +23,7 @@ function (
         return $location.path('/');
     }
 
-    $translate('tool.manage_tags').then(function (title) {
+    $translate('tool.manage_actors').then(function (title) {
         $scope.title = title;
         $scope.$emit('setPageTitle', title);
     });
@@ -32,53 +32,53 @@ function (
 
 
     $scope.refreshView = function () {
-        TagEndpoint.queryFresh().$promise.then(function (tags) {
-            $scope.allCategories = tags;
-            $scope.categories = _.map(_.where(tags, { parent_id: null }), function (tag) {
-                if (tag && tag.children) {
-                    tag.children = _.map(tag.children, function (child) {
-                        return _.findWhere(tags, {id: parseInt(child.id)});
+        ActorEndpoint.queryFresh().$promise.then(function (actors) {
+            $scope.allActors = actors;
+            $scope.actors = _.map(_.where(actors, { parent_id: null }), function (actor) {
+                if (actor && actor.children) {
+                    actors.children = _.map(actor.children, function (child) {
+                        return _.findWhere(actors, {id: parseInt(child.id)});
                     });
                 }
-                return tag;
+                return actor;
             });
         });
-        $scope.selectedCategories = [];
+        $scope.selectedActors = [];
     };
     $scope.refreshView();
 
-    $scope.deleteCategory = function (tag) {
-        Notify.confirmDelete('notify.category.destroy_confirm', 'notify.category.destroy_confirm_desc').then(function () {
-            TagEndpoint.delete(tag).$promise.then(function () {
-                Notify.notify('notify.category.destroy_success', { name: tag.tag });
+    $scope.deleteActor = function (actor) {
+        Notify.confirmDelete('notify.actor.destroy_confirm', 'notify.actor.destroy_confirm_desc').then(function () {
+            actorEndpoint.delete(actor).$promise.then(function () {
+                Notify.notify('notify.actor.destroy_success', { name: actor.actor });
                 $scope.refreshView();
             }, handleResponseErrors);
         });
     };
 
-    $scope.deleteCategories = function () {
-        Notify.confirmDelete('notify.category.bulk_destroy_confirm', 'notify.category.bulk_destroy_confirm_desc', { count: $scope.selectedCategories.length }).then(function () {
+    $scope.deleteActors = function () {
+        Notify.confirmDelete('notify.actor.bulk_destroy_confirm', 'notify.actor.bulk_destroy_confirm_desc', { count: $scope.selectedActors.length }).then(function () {
             var calls = [];
-            angular.forEach($scope.selectedCategories, function (tagId) {
-                calls.push(TagEndpoint.delete({id: tagId }).$promise);
+            angular.forEach($scope.selectedActors, function (actorId) {
+                calls.push(actorEndpoint.delete({id: actorId }).$promise);
             });
             $q.all(calls).then(function () {
-                Notify.notify('notify.category.bulk_destroy_success', { count: $scope.selectedCategories.length });
+                Notify.notify('notify.actor.bulk_destroy_success', { count: $scope.selectedActors.length });
                 $scope.refreshView();
             }, handleResponseErrors);
         });
     };
 
-    $scope.isToggled = function (tag) {
-        return $scope.selectedCategories.indexOf(tag.id) > -1;
+    $scope.isToggled = function (actor) {
+        return $scope.selectedActors.indexOf(actor.id) > -1;
     };
 
-    $scope.toggleCategory = function (tag) {
-        var idx = $scope.selectedCategories.indexOf(tag.id);
+    $scope.toggleActor = function (actor) {
+        var idx = $scope.selectedActors.indexOf(actor.id);
         if (idx > -1) {
-            $scope.selectedCategories.splice(idx, 1);
+            $scope.selectedActors.splice(idx, 1);
         } else {
-            $scope.selectedCategories.push(tag.id);
+            $scope.selectedActors.push(actor.id);
         }
     };
 

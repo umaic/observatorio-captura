@@ -105,6 +105,30 @@ function (
     )
     .state(
         {
+            name: 'settings.actors',
+            url: '/settings/actors',
+            controller: require('./actors/actors.controller.js'),
+            template: require('./actors/actors.html')
+        }
+    )
+    .state(
+        {
+            name: 'settings.actors.create',
+            url: '/create',
+            controller: require('./actors/actors-edit.controller.js'),
+            template: require('./actors/actors-edit.html')
+        }
+    )
+    .state(
+        {
+            name: 'settings.actors.edit',
+            url: '/:id',
+            controller: require('./actors/actors-edit.controller.js'),
+            template: require('./actors/actors-edit.html')
+        }
+    )
+    .state(
+        {
             name: 'settings.users',
             url: '/settings/users',
             controller: require('./users/users.controller.js'),
