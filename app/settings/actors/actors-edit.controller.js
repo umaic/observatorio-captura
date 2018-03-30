@@ -4,7 +4,7 @@ module.exports = [
     '$translate',
     '$location',
     'RoleEndpoint',
-    'TagEndpoint',
+    'ActorEndpoint',
     'FormEndpoint',
     'Notify',
     '_',
@@ -18,7 +18,7 @@ function (
     $translate,
     $location,
     RoleEndpoint,
-    TagEndpoint,
+    ActorEndpoint,
     FormEndpoint,
     Notify,
     _,
@@ -33,27 +33,27 @@ function (
         return $location.path('/');
     }
 
-    // Set initial category properties and page title
-    if ($location.path() === '/settings/categories/create') {
-        // Set initial category properties
-        $scope.category = {
-            type: 'category',
-            icon: 'tag',
+    // Set initial actor properties and page title
+    if ($location.path() === '/settings/actors/create') {
+        // Set initial actor properties
+        $scope.actor = {
+            type: 'actor',
+            icon: 'actor',
             color: '',
             parent_id: null
         };
-        // Allow parent category selector
+        // Allow parent actor selector
         $scope.isParent = false;
-        // Translate and set add category page title
-        $translate('category.add_tag').then(function (title) {
+        // Translate and set add actor page title
+        $translate('actor.add_actor').then(function (title) {
             $scope.title = title;
             $scope.$emit('setPageTitle', title);
         });
     } else {
-        // Get and set initial category properties
-        getCategory();
-        // Translate and set edit category page title
-        $translate('category.edit_tag').then(function (title) {
+        // Get and set initial actor properties
+        getActor();
+        // Translate and set edit actor page title
+        $translate('actor.edit_actor').then(function (title) {
             $scope.title = title;
             $rootScope.$emit('setPageTitle', title);
         });
@@ -63,9 +63,9 @@ function (
     $scope.$emit('event:mode:change', 'settings');
 
     $scope.addParent = addParent;
-    $scope.deleteCategory = deleteCategory;
+    $scope.deleteActor = deleteActor;
     $scope.getParentName = getParentName;
-    $scope.saveCategory = saveCategory;
+    $scope.saveActor = saveActor;
 
     $scope.cancel = cancel;
 
@@ -77,7 +77,7 @@ function (
 
     function activate() {
         getRoles();
-        getParentCategories();
+        getParentActors();
     }
 
     function getRoles() {
@@ -86,112 +86,112 @@ function (
         });
     }
 
-    function getParentCategories() {
-        TagEndpoint.queryFresh({ level: 'parent' }).$promise.then(function (tags) {
-            // Remove current tag to avoid circular reference
-            $scope.parents = _.filter(tags, function (tag) {
-                return tag.id !== parseInt($transition$.params().id);
+    function getParentActors() {
+        ActorEndpoint.queryFresh({ level: 'parent' }).$promise.then(function (actors) {
+            // Remove current actor to avoid circular reference
+            $scope.parents = _.filter(actors, function (actor) {
+                return actor.id !== parseInt($transition$.params().id);
             });
         });
     }
 
-    function getCategory() {
-        TagEndpoint.getFresh({ id: $transition$.params().id }).$promise.then(function (tag) {
-            $scope.category = tag;
-            // Normalize parent category
-            if ($scope.category.parent) {
-                $scope.category.parent_id = $scope.category.parent.id;
-                $scope.category.parent_id_original = $scope.category.parent.id;
-                delete $scope.category.parent;
+    function getActor() {
+        ActorEndpoint.getFresh({ id: $transition$.params().id }).$promise.then(function (actor) {
+            $scope.actor = actor;
+            // Normalize parent actor
+            if ($scope.actor.parent) {
+                $scope.actor.parent_id = $scope.actor.parent.id;
+                $scope.actor.parent_id_original = $scope.actor.parent.id;
+                delete $scope.actor.parent;
             }
-            if ($scope.category.children && $scope.category.children.length) {
+            if ($scope.actor.children && $scope.actor.children.length) {
                 $scope.isParent = true;
             }
         });
     }
 
     function addParent(id) {
-        return TagEndpoint.getFresh({id: id});
+        return ActorEndpoint.getFresh({id: id});
     }
 
     function getParentName() {
         var parentName = 'Nothing';
-        if ($scope.category && $scope.parents) {
+        if ($scope.actor && $scope.parents) {
             $scope.parents.forEach(function (parent) {
-                if (parent.id === $scope.category.parent_id) {
-                    parentName = parent.tag;
+                if (parent.id === $scope.actor.parent_id) {
+                    parentName = parent.actor;
                 }
             });
         }
         return parentName;
     }
 
-    function saveCategory(category) {
+    function saveActor(actor) {
         // Set processing to disable user actions
         $scope.processing = true;
-        // Save category
+        // Save actor
         $q.when(
-            TagEndpoint
-            .saveCache(category)
+            ActorEndpoint
+            .saveCache(actor)
             .$promise
         )
         .then(function (result) {
-            // If parent category, apply parent category permisions to child categories
+            // If parent actor, apply parent actor permisions to child actors
             if (result.children && result.children.length) {
                 return updateChildrenPermissions(result);
             }
-            // If child category with new parent, apply new permissions to child category
-            if (result.parent && result.parent.id !== $scope.category.parent_id_original) {
+            // If child actor with new parent, apply new permissions to child actor
+            if (result.parent && result.parent.id !== $scope.actor.parent_id_original) {
                 return updateWithParentPermissions(result);
             }
         })
         .then(function () {
             // Display success message
             Notify.notify(
-                'notify.category.save_success',
-                { name: $scope.category.tag }
+                'notify.actor.save_success',
+                { name: $scope.actor.actor }
             );
-            // Redirect to categories list
-            $state.go('settings.categories', {}, { reload: true });
+            // Redirect to actors list
+            $state.go('settings.actors', {}, { reload: true });
         })
         // Catch and handle errors
         .catch(handleResponseErrors);
     }
 
-    function updateChildrenPermissions(category) {
+    function updateChildrenPermissions(actor) {
         var promises = [];
-        _.each(category.children, function (child) {
+        _.each(actor.children, function (child) {
             promises.push(
-              TagEndpoint
-              .saveCache({ id: child.id, role: category.role })
+              ActorEndpoint
+              .saveCache({ id: child.id, role: actor.role })
               .$promise
             );
         });
         return $q.all(promises);
     }
 
-    function updateWithParentPermissions(category) {
-        return TagEndpoint
-        .getFresh({ id: category.parent.id })
+    function updateWithParentPermissions(actor) {
+        return ActorEndpoint
+        .getFresh({ id: actor.parent.id })
         .$promise
         .then(function (parent) {
-            return TagEndpoint
-            .saveCache({ id: category.id, role: parent.role })
+            return ActorEndpoint
+            .saveCache({ id: actor.id, role: parent.role })
             .$promise;
         });
     }
 
-    function deleteCategory(category) {
+    function deleteActor(actor) {
         Notify.confirmDelete(
-            'notify.category.destroy_confirm',
-            'notify.category.destroy_confirm_desc'
+            'notify.actor.destroy_confirm',
+            'notify.actor.destroy_confirm_desc'
         ).then(function () {
-            return TagEndpoint
-            .delete({ id: category.id })
+            return ActorEndpoint
+            .delete({ id: actor.id })
             .$promise
             .then(function () {
-                Notify.notify('notify.category.destroy_success');
-                $location.url('/settings/categories');
+                Notify.notify('notify.actor.destroy_success');
+                $location.url('/settings/actors');
             });
         })
         .catch(handleResponseErrors);
@@ -203,7 +203,7 @@ function (
     }
 
     function cancel() {
-        $location.path('/settings/categories');
+        $location.path('/settings/actors');
     }
 
 }];
