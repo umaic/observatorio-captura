@@ -4,7 +4,7 @@ module.exports = [
     '$rootScope',
     '$location',
     '$q',
-    'actorEndpoint',
+    'ActorEndpoint',
     'Notify',
     '_',
 function (
@@ -13,7 +13,7 @@ function (
     $rootScope,
     $location,
     $q,
-    actorEndpoint,
+    ActorEndpoint,
     Notify,
     _
 ) {
@@ -49,7 +49,7 @@ function (
 
     $scope.deleteActor = function (actor) {
         Notify.confirmDelete('notify.actor.destroy_confirm', 'notify.actor.destroy_confirm_desc').then(function () {
-            actorEndpoint.delete(actor).$promise.then(function () {
+            ActorEndpoint.delete(actor).$promise.then(function () {
                 Notify.notify('notify.actor.destroy_success', { name: actor.actor });
                 $scope.refreshView();
             }, handleResponseErrors);
@@ -60,7 +60,7 @@ function (
         Notify.confirmDelete('notify.actor.bulk_destroy_confirm', 'notify.actor.bulk_destroy_confirm_desc', { count: $scope.selectedActors.length }).then(function () {
             var calls = [];
             angular.forEach($scope.selectedActors, function (actorId) {
-                calls.push(actorEndpoint.delete({id: actorId }).$promise);
+                calls.push(ActorEndpoint.delete({id: actorId }).$promise);
             });
             $q.all(calls).then(function () {
                 Notify.notify('notify.actor.bulk_destroy_success', { count: $scope.selectedActors.length });
