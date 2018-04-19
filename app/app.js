@@ -39,6 +39,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
     apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
+    //apiUrl = window.ushahidi.apiUrl = 'http://apimonitor.kuery.com.co' + '/api/v3',
     platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
     claimedAnonymousScopes = [
         'apikeys',
@@ -67,6 +68,7 @@ angular.module('app',
     [
         'checklist-model',
         'monospaced.elastic',
+        'auth0.auth0',
         'ui.router',
         'ngResource',
         'LocalStorageModule',
@@ -87,7 +89,7 @@ angular.module('app',
     ])
 
     .constant('CONST', {
-        BACKEND_URL              : backendUrl,
+        BACKEND_URL              : backendUrl,//'http://apimonitor.kuery.com.co',
         API_URL                  : apiUrl,
         INTERCOM_APP_ID          : intercomAppId,
         APP_STORE_ID             : appStoreId,
@@ -102,17 +104,19 @@ angular.module('app',
         EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000,
         EXPORT_POLLING_COUNT     : window.ushahidi.export_polling_count || 50
     })
+    .config(config)
     .config(['$compileProvider', function ($compileProvider) {
         $compileProvider.debugInfoEnabled(false);
     }])
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
-    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider) {
+    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider, angularAuth0Provider, $stateProvider) {
         $urlRouterProvider.when('', '/views/map');
         $urlRouterProvider.when('/', '/views/map');
         // if the path doesn't match any of the urls you configured
         // otherwise will take care of routing the user to the specified url
+
         $urlRouterProvider.otherwise('/404');
         $urlMatcherFactoryProvider.strictMode(false);
     })
@@ -169,4 +173,95 @@ angular.module('app',
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
+    }).controller('CallbackController', function($scope, Authentication) {
+        Authentication.handleAuthentication();
+    }).factory(
+            "transformRequestAsFormPost",
+            function() {
+                // I prepare the request data for the form post.
+                function transformRequest( data, getHeaders ) {
+                    var headers = getHeaders();
+                    headers[ "Content-type" ] = "application/x-www-form-urlencoded; charset=utf-8";
+                    return( serializeData( data ) );
+                }
+                // Return the factory value.
+                return( transformRequest );
+                // ---
+                // PRVIATE METHODS.
+                // ---
+                // I serialize the given Object into a key-value pair string. This
+                // method expects an object and will default to the toString() method.
+                // --
+                // NOTE: This is an atered version of the jQuery.param() method which
+                // will serialize a data collection for Form posting.
+                // --
+                // https://github.com/jquery/jquery/blob/master/src/serialize.js#L45
+                function serializeData( data ) {
+                    // If this is not an object, defer to native stringification.
+                    if ( ! angular.isObject( data ) ) {
+                        return( ( data == null ) ? "" : data.toString() );
+                    }
+                    var buffer = [];
+                    // Serialize each key in the object.
+                    for ( var name in data ) {
+                        if ( ! data.hasOwnProperty( name ) ) {
+                            continue;
+                        }
+                        var value = data[ name ];
+                        buffer.push(
+                            encodeURIComponent( name ) +
+                            "=" +
+                            encodeURIComponent( ( value == null ) ? "" : value )
+                        );
+                    }
+                    // Serialize the buffer and clean it up for transportation.
+                    var source = buffer
+                        .join( "&" )
+                        .replace( /%20/g, "+" )
+                    ;
+                    return( source );
+                }
+            }
+        );
+
+
+  config.$inject = [
+    '$stateProvider',
+    '$locationProvider',
+    '$urlRouterProvider',
+    'angularAuth0Provider'
+  ];
+
+  function config(
+    $stateProvider,
+    $locationProvider,
+    $urlRouterProvider,
+    angularAuth0Provider
+  ) {
+
+    $stateProvider
+      .state('callback', {
+        url: '/callback',
+        controller: 'CallbackController',
+        templateUrl: 'callback/callback.html',
+        controllerAs: 'vm'
+      });
+
+    // Initialization for the angular-auth0 library
+    angularAuth0Provider.init({
+      clientID: 'if8EtNk8otzLjYBAPy-cnT4sxx6GUVyJ',
+      domain: 'yflorezr887.auth0.com',
+      responseType: 'token id_token',
+      audience: 'https://yflorezr887.auth0.com/userinfo',
+      redirectUri: 'http://localhost:3000/callback',
+      scope: 'openid'
     });
+
+    $urlRouterProvider.otherwise('/');
+
+    $locationProvider.hashPrefix('');
+
+    /// Comment out the line below to run the app
+    // without HTML5 mode (will use hashes in routes)
+    $locationProvider.html5Mode(true);
+  }
