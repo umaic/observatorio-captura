@@ -253,7 +253,7 @@ angular.module('app',
       domain: 'yflorezr887.auth0.com',
       responseType: 'token id_token',
       audience: 'https://yflorezr887.auth0.com/userinfo',
-      redirectUri: 'http://localhost:3000/callback',
+      redirectUri: 'http://monitor.kuery.com.co:3000/callback',
       scope: 'openid'
     });
 
