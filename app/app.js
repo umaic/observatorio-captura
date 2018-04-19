@@ -249,7 +249,7 @@ angular.module('app',
 
     // Initialization for the angular-auth0 library
     angularAuth0Provider.init({
-      clientID: 'if8EtNk8otzLjYBAPy-cnT4sxx6GUVyJ',
+      clientID: 'c93Bot24smjNy72aNl0eITQekP6oV7C7',
       domain: 'yflorezr887.auth0.com',
       responseType: 'token id_token',
       audience: 'https://yflorezr887.auth0.com/userinfo',
