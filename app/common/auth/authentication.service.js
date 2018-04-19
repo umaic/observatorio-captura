@@ -15,6 +15,7 @@ module.exports = [
     'ModalService',
     'angularAuth0',
     '$state',
+    '$location',
     '$timeout',
     'transformRequestAsFormPost',
 function (
@@ -31,6 +32,7 @@ function (
     ModalService,
     angularAuth0,
     $state,
+    $location,
     $timeout,
     transformRequestAsFormPost
 ) {
@@ -82,10 +84,7 @@ function (
           setSession(authResult);
           //$state.go('/');
         } else if (err) {
-          $timeout(function() {
-            $state.go('/');
-          });
-          console.log(err);
+          $location.path( "/views/map" );
         }
       });
     }
@@ -206,7 +205,8 @@ function (
                     .finally(function () {
                         setToLoginState(userDataResponse.data);
                         $rootScope.$broadcast('event:authentication:login:succeeded');
-                        deferred.resolve();
+                        $location.path( "/views/map" );
+                        //deferred.resolve();
                     });
                 }, handleRequestError);
         };
