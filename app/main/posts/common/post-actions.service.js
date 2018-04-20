@@ -52,6 +52,27 @@ function (
                 .filter()
                 .value();
         }
+
+        filterPostEditorActors: function (attributeOptions, actors) {
+            // adding category-objects attribute-options
+            return _.chain(attributeOptions)
+                .map((actor) => {
+                    const ret = angular.copy(_.findWhere(actors, {id: actor}));
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map((child) => {
+                                if (attributeOptions.find((o) => o === child.id)) {
+                                    return _.findWhere(actors, {id: child.id});
+                                }
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
+        }
     };
 
     return Util.bindAllFunctionsToSelf(PostActionsService);

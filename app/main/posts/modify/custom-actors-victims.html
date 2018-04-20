@@ -4,7 +4,6 @@
         <label for="categorias">Categoría</label>
         <select ng-model = "categoria"
                 ng-options="item.id as item.tag for item in selected_categories"
-                ng-change="categorySelected()"
                 name="categorias">
         </select>
         <div>
@@ -24,14 +23,40 @@
             </nav>
             <div id="actor-post" class="survey-details tabs-target" >
                 <div style="margin: 16px 0;">
-                    <div class="form-field checkbox" ng-repeat="(index, actor) in actors">
+                    <div class="form-field checkbox" ng-repeat="(index, actor) in actors" ng-class="{ overflow : ($index > 1) }" ng-if="actor.parent_id === null">
                         <label>
-                            <input
-                                type="checkbox"
-                                ng-model = actor.value;
-                            >
-                            {{ ::actor.label }}                        
-                        </label>
+                          <input
+                              ng-show="actor.children.length === 0 || enableParents === true"
+                              type="checkbox"
+                              checklist-value="actor.id"
+                              ng-disabled="disabledActors[actor.id]"
+                              value="actor.id"
+                              checklist-model="selected"
+                              checklist-change="changeActors()"
+                          >
+                          <input
+                                  ng-show="actor.children.length > 0 && enableParents === false"
+                                  type="checkbox"
+                                  checklist-value="actor.id"
+                                  ng-disabled="true"
+                                  value="actor.id"
+                                  checklist-model="selectedParents"
+                          >
+                          {{ ::actor.tag }}
+                      </label>
+                      <div class="form-field checkbox" ng-if="actor.children" ng-repeat="child in actor.children">
+                          <label>
+                              <input
+                                  type="checkbox"
+                                  checklist-model="selected"
+                                  checklist-value="child.id"
+                                  value="child.id"
+                                  ng-selected="selected.indexOf(actor.id) >-1"
+                                  checklist-change="changeActors()"
+                              >
+                              {{ ::child.tag }}
+                      </label>
+                      </div>
                     </div>
                 </div>
             </div>

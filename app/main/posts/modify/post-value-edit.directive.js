@@ -30,7 +30,8 @@ function PostValueEditController(
     var fieldSetAttributes = [
         'checkbox',
         'radio',
-        'tags'
+        'tags',
+        'actors'
     ];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
@@ -82,10 +83,6 @@ function PostValueEditController(
     function isCustomSource(attr) {
         return attr.input === 'custom_source';
     }
-    function isCustomAct(attr) {
-        return attr.input === 'actors';
-    }
-
     // Can more values be added for this attribute?
     function canAddValue(attr) {
         return (
