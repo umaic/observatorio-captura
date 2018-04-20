@@ -51,8 +51,7 @@ function (
                 })
                 .filter()
                 .value();
-        }
-
+        },
         filterPostEditorActors: function (attributeOptions, actors) {
             // adding category-objects attribute-options
             return _.chain(attributeOptions)
