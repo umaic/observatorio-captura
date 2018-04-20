@@ -115,7 +115,7 @@ function (
     }
 
     function getParentName() {
-        var parentName = 'Nothing';
+        var parentName = 'Nada';
         if ($scope.actor && $scope.parents) {
             $scope.parents.forEach(function (parent) {
                 if (parent.id === $scope.actor.parent_id) {
