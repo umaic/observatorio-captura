@@ -36,13 +36,12 @@ function (
             $scope.allActors = actors;
             $scope.actors = _.map(_.where(actors, { parent_id: null }), function (actor) {
                 if (actor && actor.children) {
-                    actors.children = _.map(actor.children, function (child) {
+                    actor.children = _.map(actor.children, function (child) {
                         return _.findWhere(actors, {id: parseInt(child.id)});
                     });
                 }
                 return actor;
             });
-            console.log($scope.allActors);
         });
         $scope.selectedActors = [];
     };

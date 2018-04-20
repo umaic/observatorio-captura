@@ -42,7 +42,6 @@ function (
                 }
                 return tag;
             });
-            console.log($scope.allCategories);
         });
         $scope.selectedCategories = [];
     };
