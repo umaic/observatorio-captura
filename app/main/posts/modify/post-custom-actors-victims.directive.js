@@ -24,6 +24,7 @@ PostCustomActorsVictimsController.$inject = [
     '$rootScope',
     '$sce',
     'ActorEndpoint',
+    '_',
     'Notify'
 ];
 
@@ -32,6 +33,7 @@ function PostCustomActorsVictimsController(
     $rootScope,
     $sce,
     ActorEndpoint,
+    _,
     Notify
 ) {
     $scope.switchTab = switchTab;
