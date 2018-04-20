@@ -82,8 +82,8 @@ function PostValueEditController(
     function isCustomSource(attr) {
         return attr.input === 'custom_source';
     }
-    function isCustomActVict(attr) {
-        return attr.input === 'custom_actors_victims';
+    function isCustomAct(attr) {
+        return attr.input === 'actors';
     }
 
     // Can more values be added for this attribute?

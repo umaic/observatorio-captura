@@ -145,10 +145,10 @@ function (
                     description: 'Agregue fuentes de Información'
                 },
                 {
-                    label: 'Personalizado (Actores y Afectados)',
-                    type: 'custom_actors_victims',
-                    input: 'custom_actors_victims',
-                    description: 'Agregue actores y victimas para cada categoría'
+                    label: 'Personalizado (Actores)',
+                    type: 'actors',
+                    input: 'actors',
+                    description: 'Agregue actores para cada categoría'
                 }
             ];
         }
