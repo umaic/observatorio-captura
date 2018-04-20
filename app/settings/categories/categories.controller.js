@@ -42,6 +42,7 @@ function (
                 }
                 return tag;
             });
+            console.log($scope.categories);
         });
         $scope.selectedCategories = [];
     };
