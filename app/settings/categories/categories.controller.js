@@ -42,7 +42,7 @@ function (
                 }
                 return tag;
             });
-            console.log($scope.categories);
+            console.log($scope.allCategories);
         });
         $scope.selectedCategories = [];
     };

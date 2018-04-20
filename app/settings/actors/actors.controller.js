@@ -42,7 +42,7 @@ function (
                 }
                 return actor;
             });
-            console.log($scope.actors);
+            console.log($scope.allActors);
         });
         $scope.selectedActors = [];
     };
