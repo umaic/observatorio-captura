@@ -25,6 +25,7 @@ SurveyEditorController.$inject = [
     'FormAttributeEndpoint',
     'RoleEndpoint',
     'TagEndpoint',
+    'ActorEndpoint',
     '_',
     'Notify',
     'SurveyNotify',
@@ -43,6 +44,7 @@ function SurveyEditorController(
     FormAttributeEndpoint,
     RoleEndpoint,
     TagEndpoint,
+    ActorEndpoint,
     _,
     Notify,
     SurveyNotify,
@@ -160,6 +162,7 @@ function SurveyEditorController(
 
         loadAvailableForms();
         loadAvailableCategories();
+        loadAvailableActors();
 
         if (!$scope.surveyId) {
             $q.all([Features.loadFeatures(), FormEndpoint.queryFresh().$promise]).then(function (data) {
@@ -241,6 +244,29 @@ function SurveyEditorController(
 
         });
     }
+    function loadAvailableActors() {
+        // Get available categories.
+        ActorEndpoint.queryFresh().$promise.then(function (actors) {
+            $scope.availableActors = actors;
+            // adding actor-objects attribute-options
+            $scope.availableActors = _.chain($scope.availableActors)
+                .map(function (actor) {
+                    const ret = _.findWhere($scope.availableActors, {id: actor.id});
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map(function (child) {
+                                return _.findWhere($scope.availableActors, {id: child.id});
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
+
+        });
+    }
 
     function loadFormData() {
         // If we're editing an existing survey,
@@ -258,6 +284,11 @@ function SurveyEditorController(
                 .value();
             _.each(attributes, function (attr) {
                     if (attr.type === 'tags') {
+                        attr.options = _.map(attr.options, function (option) {
+                            return parseInt(option);
+                        });
+                    }
+                    if (attr.type === 'actors') {
                         attr.options = _.map(attr.options, function (option) {
                             return parseInt(option);
                         });
@@ -289,6 +320,7 @@ function SurveyEditorController(
                 delete $scope.survey.url;
                 delete $scope.survey.can_create;
                 delete $scope.survey.tags;
+                delete $scope.survey.actors;
 
                 // Reset Task and Attribute IDs
                 _.each($scope.survey.tasks, function (task) {
@@ -628,6 +660,12 @@ function SurveyEditorController(
             _.each(task.attributes, function (attribute) {
                 // Remove faulty category ids from each attribute
                 if (attribute.type === 'tags') {
+                    attribute.options = _.filter(attribute.options, function (option) {
+                        return !isNaN(option);
+                    });
+                }
+                // Remove faulty actor ids from each attribute
+                if (attribute.type === 'actors') {
                     attribute.options = _.filter(attribute.options, function (option) {
                         return !isNaN(option);
                     });
