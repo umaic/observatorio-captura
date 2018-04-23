@@ -25,6 +25,7 @@ PostDetailDataController.$inject = [
     'CollectionEndpoint',
     'UserEndpoint',
     'TagEndpoint',
+    'ActorEndpoint',
     'FormAttributeEndpoint',
     'FormStageEndpoint',
     'FormEndpoint',
@@ -47,6 +48,7 @@ function PostDetailDataController(
     CollectionEndpoint,
     UserEndpoint,
     TagEndpoint,
+    ActorEndpoint,
     FormAttributeEndpoint,
     FormStageEndpoint,
     FormEndpoint,
@@ -67,6 +69,7 @@ function PostDetailDataController(
     // isEmbed ? $rootScope.setLayout('layout-d layout-embed') : $rootScope.setLayout('layout-d');
 
     $scope.post = $scope.post;
+
     $scope.post_task = {};
     $scope.hasPermission = $rootScope.hasPermission;
     $scope.canCreatePostInSurvey = PostSurveyService.canCreatePostInSurvey;
@@ -93,13 +96,15 @@ function PostDetailDataController(
                 FormEndpoint.get({id: $scope.post.form.id}),
                 FormStageEndpoint.query({formId: $scope.post.form.id, postStatus: $scope.post.status}).$promise,
                 FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
-                TagEndpoint.query().$promise
+                TagEndpoint.query().$promise,
+                ActorEndpoint.query().$promise
             ]).then(function (results) {
                 $scope.form = results[0];
                 $scope.form_name = results[0].name;
                 $scope.form_description = results[0].description;
                 $scope.form_color = results[0].color;
                 $scope.tags = results[3];
+                $scope.actors = results[4];
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: results[0].name}).then(function (title) {

@@ -666,7 +666,7 @@
       }
     },
     "valid": {
-      "no_changes": "You haven’t made any changes",
+      "no_changes": "No has hecho ningún cambio",
       "invalid_state": "Este mensaje tiene condición de no válido en este momento. Necesita completar todas las tareas obligatorias antes de que pueda volver a publicar este mensaje. Puede completar las tareas necesarias o marcar su mensaje con otra condición, como ¨en revisión¨.",
       "validation_fail": "Hay campos requeridos que faltan rellenar, los campos están marcados con un * debajo de ellos.",
       "title": {
@@ -675,7 +675,7 @@
         "maxlength": "El título es demasiado largo"
       },
       "content": {
-        "required": "Descripción cannot be empty"
+        "required": "La descripción no puede estar vacia"
       },
       "tags": {
         "required": "Las Categorías son obligatorias"
@@ -694,18 +694,18 @@
       }
     },
     "media": {
-      "enter_a": "Enter a",
+      "enter_a": "Ingresar un",
       "youtube": "Youtube",
-      "current_url": "Current image",
+      "current_url": "Imagen actual",
       "add_caption": "Añadir pie de foto.",
-      "upload": "Upload",
-      "add_photo": "Add photo",
-      "delete_photo": "Delete photo",
-      "replace_image": "Replace image"
+      "upload": "Cargar",
+      "add_photo": "Agregar foto",
+      "delete_photo": "Eliminar foto",
+      "replace_image": "Reemplazar imagen"
     },
     "video": {
-      "enter_a": "Enter a",
-      "or": "or",
+      "enter_a": "Ingresar un",
+      "or": "o",
       "vimeo": "Vimeo",
       "video_url": "video URL"
     },
@@ -869,7 +869,7 @@
     "manage_plugins": "Administrar Plugins",
     "appearance_settings": "Ajustes de la apariencia",
     "map_settings": "Ajustes del Mapa",
-    "site_settings": "Ajustes del Site",
+    "site_settings": "Ajustes del Sitio",
     "settings": "Ajustes",
     "tools": "Herramientas"
   },
@@ -929,10 +929,10 @@
     "map_default_longitude": "Longitud por defecto",
     "map_default_zoom_level": "Nivel de zoom inicial",
     "map_default_location": "Ubicación por defecto",
-    "site": "Ajustes del site",
+    "site": "Ajustes del sitio",
     "site_email": "Dirección de email de contacto",
     "site_email_note": "Use con cuidado ya que esto va a ser visible por todos en su sitio web.",
-    "site_description": "Descripción del site",
+    "site_description": "Descripción del sitio",
     "site_description_placeholder": "Una descripción opcional de una frase",
     "site_timezone": "Zona horaria",
     "site_language": "Idioma",
@@ -1250,10 +1250,10 @@
   },
   "location": {
     "search": "Buscar",
-    "use_current_location": "Use your current location",
-    "click_map": "<em>You can search or click the area of map where you want to place the marker.</em>",
-    "placeholder": "Search for addresses, place names, or coordinates...",
-    "search_results": "Search results",
+    "use_current_location": "Usar tu ubicación actual",
+    "click_map": "<em>Puedes buscar o hacer click en el area del mapa donde quieres ubicar el marcados.</em>",
+    "placeholder": "Buscar por dirección, lugar o coordenada...",
+    "search_results": "Buscar resultados",
     "error": "Lo sentimos, no pudimos hallar una ubicación que corresponda a su búsqueda"
   },
   "notification": {

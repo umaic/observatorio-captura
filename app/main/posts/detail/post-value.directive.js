@@ -7,7 +7,8 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             value: '=',
             attribute: '=',
             type: '=',
-            tags: '='
+            tags: '=',
+            actors: '='
         },
         template: require('./post-value.html'),
         link: function ($scope) {
@@ -32,6 +33,22 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                 });
                 return formatedTags;
             };
+            $scope.formatActors = function (tagIds) {
+                // getting tag-names and formatting them for displaying
+                var formatedActors = ' ';
+                _.each(tagIds, function (tag, index) {
+                    var tagObj = _.where($scope.actors, {id: parseInt(tag)});
+                    if (tagObj[0]) {
+                        tag = tagObj[0].tag;
+                        if (index < tagIds.length - 1) {
+                            formatedActors += tag + ', ';
+                        } else {
+                            formatedActors += tag;
+                        }
+                    }
+                });
+                return formatedActors;
+            };
             if ($scope.attribute.type === 'relation') {
                 $scope.value = $scope.value.map(function (entry) {
                     return PostEndpoint.get({ id : entry });
@@ -39,6 +56,9 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             }
             if ($scope.attribute.input === 'tags') {
                 $scope.value = $scope.formatTags($scope.value);
+            }
+            if ($scope.attribute.input === 'actors') {
+                $scope.value = $scope.formatActors($scope.value);
             }
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {

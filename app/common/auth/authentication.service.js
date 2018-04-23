@@ -79,7 +79,6 @@ function (
 
     function handleAuthentication() {
       angularAuth0.parseHash(function(err, authResult) {
-        console.log("Ayth1");
         if (authResult && authResult.accessToken && authResult.idToken) {
           setSession(authResult);
           //$state.go('/');
@@ -108,7 +107,6 @@ function (
     function getProfile() {
         var accessToken = localStorage.getItem('access_token');
         if (!accessToken)
-            console.log('Access Token must exist to fetch profile');
         angularAuth0.client.userInfo(accessToken, function(err, profile) {
             if (profile)
               setUserProfile(profile);
@@ -116,7 +114,6 @@ function (
     }
 
     function setUserProfile(profile) {
-        console.log(profile);
         var request = $http({
             method: "post",
             url: apiUrl + '/validate',
@@ -126,7 +123,6 @@ function (
             transformRequest: transformRequestAsFormPost,
             data: {email: profile.email}
         }).then(function(response) {
-            console.log(response);
             if(response.data == 0){
                 var request = $http({
                     method: "post",
