@@ -80,8 +80,7 @@ function (
     function handleAuthentication() {
       angularAuth0.parseHash(function(err, authResult) {
         if (authResult && authResult.accessToken && authResult.idToken) {
-          setSession(authResult);
-          //$state.go('/');
+            setSession(authResult);
         } else if (err) {
           $location.path( "/views/map" );
         }
@@ -89,7 +88,7 @@ function (
     }
 
     function setSession(authResult) {
-      // Set the time that the Access Token will expire at
+        // Set the time that the Access Token will expire at
       let expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
       localStorage.setItem('access_token', authResult.accessToken);
       localStorage.setItem('id_token', authResult.idToken);
@@ -106,11 +105,12 @@ function (
 
     function getProfile() {
         var accessToken = localStorage.getItem('access_token');
-        if (!accessToken)
-        angularAuth0.client.userInfo(accessToken, function(err, profile) {
-            if (profile)
-              setUserProfile(profile);
-        });
+        if (accessToken){
+            angularAuth0.client.userInfo(accessToken, function(err, profile) {
+                if (profile)
+                    setUserProfile(profile);
+            });
+        }
     }
 
     function setUserProfile(profile) {

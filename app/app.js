@@ -90,20 +90,20 @@ angular.module('app',
     ])
 
     .constant('CONST', {
-        BACKEND_URL              : backendUrl,//'http://apimonitor.kuery.com.co',
-        API_URL                  : apiUrl,
-        INTERCOM_APP_ID          : intercomAppId,
-        APP_STORE_ID             : appStoreId,
-        DEFAULT_LOCALE           : 'en_US',
-        OAUTH_CLIENT_ID          : 'ushahidiui',
-        OAUTH_CLIENT_SECRET      : '35e7f0bca957836d05ca0492211b0ac707671261',
-        CLAIMED_ANONYMOUS_SCOPES : claimedAnonymousScopes,
-        CLAIMED_USER_SCOPES      : claimedAnonymousScopes.concat('dataproviders'),
-        MAPBOX_API_KEY           : window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
-        TOS_RELEASE_DATE         : new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
-        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL : platform_websocket_redis_adapter_url,
-        EXPORT_POLLING_INTERVAL  : window.ushahidi.export_polling_interval || 30000,
-        EXPORT_POLLING_COUNT     : window.ushahidi.export_polling_count || 50
+        BACKEND_URL: backendUrl,//'http://apimonitor.kuery.com.co',
+        API_URL: apiUrl,
+        INTERCOM_APP_ID: intercomAppId,
+        APP_STORE_ID: appStoreId,
+        DEFAULT_LOCALE: 'en_US',
+        OAUTH_CLIENT_ID: 'ushahidiui',
+        OAUTH_CLIENT_SECRET: '35e7f0bca957836d05ca0492211b0ac707671261',
+        CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,
+        CLAIMED_USER_SCOPES: claimedAnonymousScopes.concat('dataproviders'),
+        MAPBOX_API_KEY: window.ushahidi.mapboxApiKey || 'pk.eyJ1IjoidXNoYWhpZGkiLCJhIjoiY2lxaXUzeHBvMDdndmZ0bmVmOWoyMzN6NiJ9.CX56ZmZJv0aUsxvH5huJBw', // Default OSS mapbox api key
+        TOS_RELEASE_DATE: new Date(window.ushahidi.tosReleaseDate).toJSON() ? new Date(window.ushahidi.tosReleaseDate) : false, // Date in UTC
+        PLATFORM_WEBSOCKET_REDIS_ADAPTER_URL: platform_websocket_redis_adapter_url,
+        EXPORT_POLLING_INTERVAL: window.ushahidi.export_polling_interval || 30000,
+        EXPORT_POLLING_COUNT: window.ushahidi.export_polling_count || 50
     })
     .config(config)
     .config(['$compileProvider', function ($compileProvider) {
@@ -154,7 +154,7 @@ angular.module('app',
     .factory('BootstrapConfig', ['_', function (_) {
         return window.ushahidi.bootstrapConfig ?
             _.indexBy(window.ushahidi.bootstrapConfig, 'id') :
-            { map: {}, site: {}, features: {} };
+            {map: {}, site: {}, features: {}};
     }])
     // inject the router instance into a `run` block by name
     // .run(['$uiRouter', '$trace', '$location', function ($uiRouter, $trace, $location) {
@@ -174,88 +174,98 @@ angular.module('app',
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    }).controller('CallbackController', function($scope, Authentication) {
-        Authentication.handleAuthentication();
-    }).factory(
-            "transformRequestAsFormPost",
-            function() {
-                // I prepare the request data for the form post.
-                function transformRequest( data, getHeaders ) {
-                    var headers = getHeaders();
-                    headers[ "Content-type" ] = "application/x-www-form-urlencoded; charset=utf-8";
-                    return( serializeData( data ) );
-                }
-                // Return the factory value.
-                return( transformRequest );
-                // ---
-                // PRVIATE METHODS.
-                // ---
-                // I serialize the given Object into a key-value pair string. This
-                // method expects an object and will default to the toString() method.
-                // --
-                // NOTE: This is an atered version of the jQuery.param() method which
-                // will serialize a data collection for Form posting.
-                // --
-                // https://github.com/jquery/jquery/blob/master/src/serialize.js#L45
-                function serializeData( data ) {
-                    // If this is not an object, defer to native stringification.
-                    if ( ! angular.isObject( data ) ) {
-                        return( ( data == null ) ? "" : data.toString() );
-                    }
-                    var buffer = [];
-                    // Serialize each key in the object.
-                    for ( var name in data ) {
-                        if ( ! data.hasOwnProperty( name ) ) {
-                            continue;
-                        }
-                        var value = data[ name ];
-                        buffer.push(
-                            encodeURIComponent( name ) +
-                            "=" +
-                            encodeURIComponent( ( value == null ) ? "" : value )
-                        );
-                    }
-                    // Serialize the buffer and clean it up for transportation.
-                    var source = buffer
-                        .join( "&" )
-                        .replace( /%20/g, "+" )
-                    ;
-                    return( source );
-                }
+    }).controller('CallbackController', function ($scope, Authentication) {
+    Authentication.handleAuthentication();
+}).factory(
+    "transformRequestAsFormPost",
+    function () {
+        // I prepare the request data for the form post.
+        function transformRequest(data, getHeaders) {
+            var headers = getHeaders();
+            headers["Content-type"] = "application/x-www-form-urlencoded; charset=utf-8";
+            return (serializeData(data));
+        }
+
+        // Return the factory value.
+        return (transformRequest);
+        // ---
+        // PRVIATE METHODS.
+        // ---
+        // I serialize the given Object into a key-value pair string. This
+        // method expects an object and will default to the toString() method.
+        // --
+        // NOTE: This is an atered version of the jQuery.param() method which
+        // will serialize a data collection for Form posting.
+        // --
+        // https://github.com/jquery/jquery/blob/master/src/serialize.js#L45
+        function serializeData(data) {
+            // If this is not an object, defer to native stringification.
+            if (!angular.isObject(data)) {
+                return ((data == null) ? "" : data.toString());
             }
-        );
+            var buffer = [];
+            // Serialize each key in the object.
+            for (var name in data) {
+                if (!data.hasOwnProperty(name)) {
+                    continue;
+                }
+                var value = data[name];
+                buffer.push(
+                    encodeURIComponent(name) +
+                    "=" +
+                    encodeURIComponent((value == null) ? "" : value)
+                );
+            }
+            // Serialize the buffer and clean it up for transportation.
+            var source = buffer
+                .join("&")
+                .replace(/%20/g, "+")
+            ;
+            return (source);
+        }
+    }
+);
 
 
-  config.$inject = [
+config.$inject = [
     '$stateProvider',
     '$locationProvider',
     '$urlRouterProvider',
     'angularAuth0Provider'
-  ];
+];
 
-  function config(
+function config(
     $stateProvider,
     $locationProvider,
     $urlRouterProvider,
     angularAuth0Provider
-  ) {
+) {
 
     $stateProvider
-      .state('callback', {
-        url: '/callback',
-        controller: 'CallbackController',
-        templateUrl: 'callback/callback.html',
-        controllerAs: 'vm'
-      });
+        .state('callback', {
+            url: '/callback',
+            controller: 'CallbackController',
+            templateUrl: 'callback/callback.html',
+            controllerAs: 'vm'
+        });
 
     // Initialization for the angular-auth0 library
-    angularAuth0Provider.init({
+    /*angularAuth0Provider.init({
       clientID: 'c93Bot24smjNy72aNl0eITQekP6oV7C7',
       domain: 'yflorezr887.auth0.com',
       responseType: 'token id_token',
       audience: 'https://yflorezr887.auth0.com/userinfo',
       redirectUri: 'http://monitor.kuery.com.co:3000/callback',
       scope: 'openid'
+    });*/
+
+    angularAuth0Provider.init({
+        clientID: '5RVlNXQkW9vBM35eimh4cpaChvxJjAPg',
+        domain: 'kuery.auth0.com',
+        responseType: 'token id_token',
+        audience: 'https://kuery.auth0.com/userinfo',
+        redirectUri: 'http://monitor.kuery.com.co:3000/callback',
+        scope: 'openid'
     });
 
     $urlRouterProvider.otherwise('/');
@@ -265,4 +275,4 @@ angular.module('app',
     /// Comment out the line below to run the app
     // without HTML5 mode (will use hashes in routes)
     $locationProvider.html5Mode(true);
-  }
+}
