@@ -57,6 +57,7 @@ angular.module('ushahidi.posts', [])
 .directive('filterBySurvey', require('./views/filter-by-survey.directive.js'))
 .directive('filterBySurveyDropdown', require('./views/filter-by-survey-dropdown.directive.js'))
 .directive('postToolbar', require('./views/post-toolbar.directive.js'))
+.directive('mapReport', require('./views/map-report.directive.js'))
 .directive('filterByDatasource', require('./views/filter-by-datasource.directive.js'))
 .directive('postViewData', require('./views/post-view-data.directive.js'))
 // Filters

@@ -1,0 +1,252 @@
+#totalxd{
+	right: 0px;
+    width: 360px;
+    max-height: 750px;
+    padding: 0;
+    top: 130px;
+    position: absolute;
+    z-index: 1000;
+}
+#totalxd #data{
+	padding:0;
+}
+#chart_t_s {
+    margin: 20px 10px;
+}
+#chart_total {
+    width: 39%;
+}
+.left {
+    float: left;
+}
+#chart_total .ct {
+    padding: 5px;
+    height: 50px;
+}
+#tendencia{
+	padding: 0px;
+}
+#resumen .ec, #tendencia .ec {
+    background-color: #D40000;
+    color: #ffffff;
+}
+#chart_subtotal {
+    margin-left: 1px;
+	width: 60%;
+}
+
+.ui-tabs .ui-tabs-panel {
+    display: block;
+    border-width: 0;
+    padding: 1em 1.4em;
+    background: 0;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br {
+    -moz-border-radius-bottomright: 2px;
+    -webkit-border-bottom-right-radius: 2px;
+    -khtml-border-bottom-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+}
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl {
+    -moz-border-radius-bottomleft: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -khtml-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+.dn {
+    background-color: #2ca02c;
+    color: #ffffff;
+}
+#chart_subtotal .left {
+    width: 55px;
+    height: 50px;
+    padding: 5px;
+}
+
+.total_n {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.total_t {
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.subtotal_n {
+    font-size: 13px;
+    font-weight: bold;
+}
+.subtotal_t {
+    font-size: 11px;
+    text-transform: capitalize;
+}
+#totalxd h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 17px;
+    padding: 4px;
+}
+.highcharts-title tspan{
+	font-size: 15px;
+}
+.highcharts-container {
+	top: 20px;
+	margin-bottom: 40px !important;
+}
+.div_table_totalxd {
+    max-height: 550px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 0;
+}
+#resumen{
+	padding: 5px 2px;
+}
+#resumen_ec, #resumen_dn {
+    word-wrap: break-word;
+}
+.half {
+    width: 50%;
+}
+.left {
+    float: left;
+}
+.hide {
+    display: none;
+}
+#resumen .resumen_total {
+    padding: 5px 12px;
+    font-size: 24px;
+    margin: 0;
+}
+#resumen .resumen_total, #resumen .resumen_row {
+}
+#resumen .ec, #tendencia .ec {
+    background-color: #D40000;
+    color: #ffffff;
+}
+#resumen .resumen_total .num {
+    font-size: 24px;
+    font-weight: bold;
+}
+#resumen .resumen_total .cat, #resumen .resumen_row .cat {
+    font-size: 12px;
+}
+.bold {
+    font-weight: bold;
+}
+#resumen .resumen_row:not(:last-child) {
+    border-bottom: 1px solid #cccccc;
+}
+
+#resumen .ect {
+    border-right: 1px solid #cccccc;
+}
+#resumen .resumen_total, #resumen .resumen_row {
+}
+#resumen .resumen_row {
+    padding: 5px 10px;
+    /* margin: 0px 10px 0 0; */
+    background-color: #f1f1f1;
+    position: relative;
+    cursor: pointer;
+    border-top: 1px solid #ffffff;
+    /* min-height: 60px; */
+}
+#resumen .ect {
+    color: #D40000;
+}
+#resumen .resumen_row .num {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#resumen .resumen_row:hover {
+    background-color: #e0e0e0;
+}
+
+#resumen .dn {
+    background-color: #2CA02C;
+    color: #ffffff;
+}
+#resumen .dnt {
+    color: #2CA02C;
+}
+#departamentos table {
+    width: 95%;
+    margin: 10px auto;
+    font-size: 11px;
+}
+#departamentos table th.d {
+    width: 150px;
+}
+#departamentos table th {
+    text-align: left;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+#departamentos table th.ec {
+    width: 50px;
+}
+#departamentos table th.dn {
+    width: 50px;
+}
+#departamentos table th {
+    text-align: left;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+.dn {
+    background-color: #2ca02c;
+    color: #ffffff;
+}
+
+.hide {
+    display: none;
+}
+#departamentos tr.f:nth-child(odd) {
+    background-color: #e1e1e1;
+}
+.ec {
+    background-color: #FFE7E7;
+}
+#departamentos table th.d {
+    width: 150px;
+}
+
+#departamentos table th {
+    text-align: left;
+    padding: 3px 5px;
+    cursor: pointer;
+}
+#departamentos{
+	padding: 0px;
+}
+#departamentos td.left {
+    text-align: left !important;
+}
+
+#departamentos td {
+    padding: 3px 5px;
+}
+.ec {
+    background-color: #FFE7E7;
+}
+.div_table_totalxd thead{
+	background-color: #FFF !important;
+}
+#minmax_total {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 1006;
+}
+.minimize {
+    background: url(https://monitor.umaic.org/media/img/minimize.png) no-repeat 0 0;
+    height: 26px;
+    width: 26px;
+}
+.ui-tabs .ui-tabs-nav li{
+    font-size:12px;
+}
