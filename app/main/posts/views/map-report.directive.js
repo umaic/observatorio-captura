@@ -44,6 +44,7 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
 		cat = response.data.events.total_by_day.violencia_armada;
 		var data2 = Object.keys(cat).map(function(k) { return cat[k] });
 		$scope.events_by_category = response.data.events.total_by_categories;
+		$scope.victims_count = response.data.events.victims_count;
 		
 		Highcharts.chart('container', {
 	    	chart:{
