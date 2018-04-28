@@ -58,14 +58,17 @@ function PostCustomSourceController(
 
     function setSourceOptions(sources) {
         $scope.sources_obj = _.filter(sources, function (source){
+            return source.children.length == 0;
+        });
+
+        _.each($scope.sources_obj, function (source){
             if (source.parent) {
                 var parent_obj = _.find(sources, function(s){
                     return (source.parent.id == s.id);
                 });
-                console.log(parent_obj);
+
                 source.parent.tag = parent_obj.tag;
             }
-            return source.children.length == 0;
         });
         console.log($scope.sources_obj);
     }
