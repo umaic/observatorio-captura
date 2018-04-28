@@ -172,7 +172,6 @@ function PostCustomActorsVictimsController(
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.categoria = $scope.selected_categories[0].id;
         }
-        console.log($scope.selected_categories);
     }
 
     function fixInittab() {
@@ -221,7 +220,6 @@ function PostCustomActorsVictimsController(
     } 
 
     $rootScope.$on('selected_category', function(e){
-        console.log(e);
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
 
@@ -230,6 +228,6 @@ function PostCustomActorsVictimsController(
         });
 
         initCategory();
-        fixInittab();
+        setTimeout(fixInittab, 2000);
     }); 
 }
