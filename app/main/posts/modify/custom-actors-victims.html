@@ -2,7 +2,7 @@
   <div class="form-field">
     <div class="col-md-12 center-block" ng-if="selected_categories.length > 0">
         <label for="categorias">Categoría</label>
-        <select ng-model = "categoria"
+        <select ng-model = "category_selected"
                 ng-options="item.id as item.tag for item in selected_categories"
                 name="categorias">
         </select>
@@ -61,53 +61,57 @@
                 </div>
             </div>
             <div id="victim-post" class="survey-details tabs-target" >
-              <div class="panel panel-warning">
+              <div class="panel panel-warning" ng-repeat="victim in victims track by $index">
                   <div class="panel-body">
-                    <div class="plus-action">
-                      <button type="button" class="button-alpha button-fab">+</button>
+                    <div class="plus-action col-md-1">
+                      <button type="button" class="button-alpha button-fab" ng-if="$index > 0" ng-click="delVictim($index)">-</button>
+                    </div>
+                    <div class="plus-action col-md-1">
+                      <button type="button" class="button-alpha button-fab" ng-click="addVictim()">+</button>
                     </div>
                     <div class="form-field">
                         <label for="num">Número de personas</label>
-                            <input type="number" name="num">                  
+                            <input type="number" name="num" ng-model="victim.amount">                  
                     </div>
                     <div class="form-field">
                         <label for="generos">Género</label>
-                              <select ng-model = "genero"
+                              <select ng-model="victim.gender"
                                       ng-options="item.value as item.label for item in generos"
-                                      name="generos">
+                                      name="generos"
+                                      >
                               </select>                  
                     </div>
                     <div class="form-field">
                         <label for="estados">Estado</label>
-                            <select ng-model = "estado"
+                            <select ng-model="victim.status"
                                       ng-options="item.value as item.label for item in estados"
                                       name="estados">
                               </select>                  
                     </div>
                     <div class="form-field">
                         <label for="poblacion">Grupo Poblacional</label>
-                            <select ng-model = "poblacion"
+                            <select ng-model="victim.ethnic_group"
                                   ng-options="item.value as item.label for item in poblaciones"
                                   name="poblacion">
                           </select>                  
                     </div>
                     <div class="form-field">
                         <label for="edad">Edad</label>
-                            <select ng-model = "edad"
+                            <select ng-model="victim.age"
                                   ng-options="item.value as item.label for item in edades"
                                   name="edad">
                           </select>
                     </div>
                     <div class="form-field">
                         <label for="cond">Condición</label>
-                            <select ng-model = "condicion"
+                            <select ng-model="victim.condition"
                                   ng-options="item.value as item.label for item in condiciones"
                                   name="cond">
                           </select>
                     </div>
                     <div class="form-field">
                         <label for="ocupacion">Ocupación</label>
-                            <select ng-model = "ocupacion"
+                            <select ng-model="victim.occupation"
                                   ng-options="item.value as item.label for item in ocupaciones"
                                   name="ocupacion">
                           </select>

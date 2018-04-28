@@ -1616,3 +1616,14 @@ hr {
     display: none !important;
   }
 }
+
+.plus-action{
+    position: absolute;
+    right: 0;
+    padding: 0 !important;
+}
+
+.plus-action button{
+    width: 30px;
+    height: 30px;
+}

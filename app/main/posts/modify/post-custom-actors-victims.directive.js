@@ -37,6 +37,8 @@ function PostCustomActorsVictimsController(
     Notify
 ) {
     $scope.switchTab = switchTab;
+    $scope.addVictim = addVictim;
+    $scope.delVictim = delVictim;
     //$scope.categorySelected = categorySelected;
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
@@ -46,6 +48,25 @@ function PostCustomActorsVictimsController(
     $scope.changeActors = changeActors;
 
     activate();
+
+    function addVictim(){
+        var v = {
+            amount: null,
+            gender: null,
+            status: null,
+            ethnic_group: null,
+            age: null,
+            condition: null,
+            occupation: null,
+            tag_id: $scope.category_selected
+        };
+        $scope.victims.push(v);
+    }
+
+    function delVictim (idx){
+        //console.log(idx);
+        $scope.victims.splice(idx,1);
+    }
 
     function activate() {
         // remove default null value when creating a new post
@@ -170,7 +191,17 @@ function PostCustomActorsVictimsController(
 
     var initCategory = function (){
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
-            $scope.categoria = $scope.selected_categories[0].id;
+            $scope.category_selected = $scope.selected_categories[0].id;
+            $scope.victims = [{
+                amount: null,
+                gender: null,
+                status: null,
+                ethnic_group: null,
+                age: null,
+                condition: null,
+                occupation: null,
+                tag_id: $scope.category_selected 
+            }];
         }
     }
 
