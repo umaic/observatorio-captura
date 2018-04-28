@@ -56,21 +56,21 @@ function PostCustomSourceController(
         setSourceOptions($scope.sources);
     }
 
-    function setSourceOptions(sources) {
-        $scope.sources_obj = _.filter(sources, function (source){
-            return source.children.length == 0;
-        });
+    // function setSourceOptions(sources) {
+    //     $scope.sources_obj = _.filter(sources, function (source){
+    //         return source.children.length == 0;
+    //     });
 
-        _.each($scope.sources_obj, function (source){
-            if (source.parent) {
-                var parent_obj = _.find(sources, function(s){
-                    return (source.parent.id == s.id);
-                });
+    //     _.each($scope.sources_obj, function (source){
+    //         if (source.parent) {
+    //             var parent_obj = _.find(sources, function(s){
+    //                 return (source.parent.id == s.id);
+    //             });
 
-                source.parent.tag = parent_obj.tag;
-            }
-        });
-    }
+    //             source.parent.tag = parent_obj.tag;
+    //         }
+    //     });
+    // }
 
     // if (!$scope.source.date) {
     //     return;
