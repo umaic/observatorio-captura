@@ -50,7 +50,7 @@ function PostValueEditController(
 
     $scope.isFieldSetStructure = isFieldSetStructure;
 
-    console.log(post, attribute);
+    console.log($scope);
     activate();
     
     function activate() {
