@@ -6,7 +6,13 @@ function PostCustomSource() {
     return {
         restrict: 'E',
         scope: {
-            
+            formId: '=',
+            attribute: '=',
+            postValue: '=',
+            available: '=',
+            selected: '=',
+            enableParents: '=',
+            form: '='
         },
         template: require('./custom-source.html'),
         controller: PostCustomSourceController
@@ -35,6 +41,19 @@ function PostCustomSourceController(
         url: ""
     };
 
+    activate();
+
+    function activate() {
+        // remove default null value when creating a new post
+        if ($scope.selected[0] === null) {
+            $scope.selected = [];
+        }
+        $scope.sources = [];
+
+        $scope.sources = $scope.available;
+        console.log($scope.sources);
+    }
+
     // if (!$scope.source.date) {
     //     return;
     // }
@@ -53,20 +72,5 @@ function PostCustomSourceController(
     // function save() {
     //     ngModel.$setViewValue($scope.source.date);
     // }
-
-    $scope.sources = [
-    {
-    	label: 'ACNUR',
-    	value: 'ACNUR'
-    },
-    {
-    	label: 'Banco Mundial',
-    	value: 'Banco Mundial'
-    },
-    {
-    	label: 'CEPAL',
-    	value: 'CEPAL'
-    },
-    ];
     // $scope.getVideoThumbnail = getVideoThumbnail;
 }

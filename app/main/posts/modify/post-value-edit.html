@@ -147,14 +147,7 @@
                   ng-model="post.values[attribute.key][key]"
                   ng-required="attribute.required"
               ></post-video-input>
-              <!-- type: sources -->
-              <post-custom-source
-                  ng-switch-when="sources"
-                  name="values_{{attribute.id}}"
-                  sourceSelected="'sources'"
-                  ng-model="post.values[attribute.key][key]"
-                  ng-required="attribute.required"
-              ></post-custom-source>
+              
           </div>
       </div>
       <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
@@ -237,6 +230,19 @@
           post-value="post.values[attribute.key]"
       ></post-custom-actors_victims>
     </div>
+    <!-- type: sources -->
+    <div ng-switch-when="sources">
+        <post-custom-source
+          available="attribute.options"
+          selected="post.values[attribute.key]",
+          enable-parents="false"
+          form="form"
+          form-id="post.form.id"
+          attribute="attribute"
+          post-value="post.values[attribute.key]"
+        ></post-custom-source>
+    </div>
+              
               
     <div class="alert error" ng-show="form['values_' + attribute.id].$dirty && taskIsMarkedCompleted()" ng-repeat="(error, value) in form['values_' + attribute.id].$error">
         <svg class="iconic">

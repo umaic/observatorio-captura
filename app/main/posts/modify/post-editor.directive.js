@@ -33,6 +33,7 @@ PostEditorController.$inject = [
     'UserEndpoint',
     'TagEndpoint',
     'ActorEndpoint',
+    'SourceEndpoint',
     'Notify',
     '_',
     'PostActionsService',
@@ -59,6 +60,7 @@ function PostEditorController(
     UserEndpoint,
     TagEndpoint,
     ActorEndpoint,
+    SourceEndpoint,
     Notify,
     _,
     PostActionsService,
@@ -85,6 +87,7 @@ function PostEditorController(
     $scope.postDescriptionLabel = 'Description';
     $scope.tagKeys = [];
     $scope.actorKeys = [];
+    $scope.sourceKeys = [];
     $scope.save = $translate.instant('app.save');
     $scope.saving = $translate.instant('app.saving');
     $scope.submit = $translate.instant('app.submit');
@@ -123,7 +126,8 @@ function PostEditorController(
             FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
             FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
             TagEndpoint.queryFresh().$promise,
-            ActorEndpoint.queryFresh().$promise
+            ActorEndpoint.queryFresh().$promise,
+            SourceEndpoint.queryFresh().$promise
         ];
 
         // If existing Post attempt to acquire lock
@@ -133,7 +137,7 @@ function PostEditorController(
 
         return $q.all(requests).then(function (results) {
 
-            if ($scope.post.id && !results[4]) {
+            if ($scope.post.id && !results[5]) {
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
@@ -147,6 +151,7 @@ function PostEditorController(
                 .value();
             var categories = results[2];
             var actors = results[3];
+            var sources = results[4];
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {
@@ -180,6 +185,10 @@ function PostEditorController(
                 if (attr.input === 'actors') {
                     // adding actor-objects attribute-options
                     attr.options = PostActionsService.filterPostEditorActors(attr.options, actors);
+                }
+                if (attr.input === 'sources') {
+                    // adding source-objects attribute-options
+                    attr.options = PostActionsService.filterPostEditorSources(attr.options, actors);
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
@@ -217,6 +226,13 @@ function PostEditorController(
                     }
                 } else if (attr.input === 'actors') {
                     // actor.id needs to be a number
+                    if ($scope.post.values[attr.key]) {
+                        $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
+                            return parseInt(id);
+                        });
+                    }
+                } else if (attr.input === 'sources') {
+                    // source.id needs to be a number
                     if ($scope.post.values[attr.key]) {
                         $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
                             return parseInt(id);
@@ -307,6 +323,15 @@ function PostEditorController(
             if ($scope.actorKeys.length > 0) {
                 post.actors = _.chain(post.values)
                 .pick($scope.actorKeys) // Grab just the 'actor' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                .filter()             // Remove nulls                      [0,1,1,2]
+                .uniq()               // Remove duplicates                 [0,1,2]
+                .value();             // and output
+            }
+            if ($scope.sourceKeys.length > 0) {
+                post.sources = _.chain(post.values)
+                .pick($scope.sourceKeys) // Grab just the 'actor' fields        { key1: [0,1], key2: [1,2], key3: undefined }
                 .values()             // then take their values            [ [0,1], [1,2], undefined ]
                 .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
                 .filter()             // Remove nulls                      [0,1,1,2]

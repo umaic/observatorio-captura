@@ -71,6 +71,26 @@ function (
                 })
                 .filter()
                 .value();
+        },
+        filterPostEditorSources: function (attributeOptions, sources) {
+            // adding category-objects attribute-options
+            return _.chain(attributeOptions)
+                .map((source) => {
+                    const ret = angular.copy(_.findWhere(sources, {id: source}));
+                    if (ret && ret.children.length > 0) {
+                        ret.children = _.chain(ret.children)
+                            .map((child) => {
+                                if (attributeOptions.find((o) => o === child.id)) {
+                                    return _.findWhere(sources, {id: child.id});
+                                }
+                            })
+                            .filter()
+                            .value();
+                    }
+                    return ret;
+                })
+                .filter()
+                .value();
         }
     };
 
