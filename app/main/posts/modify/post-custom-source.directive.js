@@ -53,7 +53,7 @@ function PostCustomSourceController(
         $scope.sources = [];
 
         $scope.sources = $scope.available;
-        setSourceOptions($scope.sources);
+        //setSourceOptions($scope.sources);
     }
 
     // function setSourceOptions(sources) {
