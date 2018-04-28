@@ -220,6 +220,7 @@ function PostCustomActorsVictimsController(
     } 
 
     $rootScope.$on('selected_category', function(e){
+        console.log(e);
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
 
