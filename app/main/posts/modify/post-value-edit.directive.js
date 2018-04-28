@@ -49,6 +49,8 @@ function PostValueEditController(
     $scope.taskIsMarkedCompleted = taskIsMarkedCompleted;
 
     $scope.isFieldSetStructure = isFieldSetStructure;
+
+    console.log(post, attribute);
     activate();
     
     function activate() {
