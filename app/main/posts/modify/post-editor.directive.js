@@ -96,7 +96,6 @@ function PostEditorController(
 
     function activate() {
         $scope.post.form = $scope.form;
-        console.log($scope.post);
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
@@ -189,7 +188,7 @@ function PostEditorController(
                 }
                 if (attr.input === 'sources') {
                     // adding source-objects attribute-options
-                    attr.options = PostActionsService.filterPostEditorSources(attr.options, actors);
+                    attr.options = PostActionsService.filterPostEditorSources(attr.options, sources);
                 }
                 // @todo don't assign default when editing? or do something more sane
                 if (!$scope.post.values[attr.key]) {
@@ -332,7 +331,7 @@ function PostEditorController(
             }
             if ($scope.sourceKeys.length > 0) {
                 post.sources = _.chain(post.values)
-                .pick($scope.sourceKeys) // Grab just the 'actor' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                .pick($scope.sourceKeys) // Grab just the 'source' fields        { key1: [0,1], key2: [1,2], key3: undefined }
                 .values()             // then take their values            [ [0,1], [1,2], undefined ]
                 .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
                 .filter()             // Remove nulls                      [0,1,1,2]
