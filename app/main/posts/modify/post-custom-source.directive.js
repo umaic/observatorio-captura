@@ -23,14 +23,16 @@ PostCustomSourceController.$inject = [
     '$scope',
     '$sce',
     'Notify',
-    'moment'
+    'moment',
+    '_',
 ];
 
 function PostCustomSourceController(
     $scope,
     $sce,
     Notify,
-    moment
+    moment,
+    _
 ) {
     $scope.dateOptions = { format: 'yyyy-mm-dd'};
     var now = new Date();
@@ -51,7 +53,21 @@ function PostCustomSourceController(
         $scope.sources = [];
 
         $scope.sources = $scope.available;
-        console.log($scope.sources);
+        setSourceOptions($scope.sources);
+    }
+
+    function setSourceOptions(sources) {
+        $scope.sources_obj = _.filter(sources, function (source){
+            if (source.parent) {
+                source.parent.tag = _.each(sources, function (s){
+                    if (source.parent.id == s.id) {
+                        return s.tag;
+                    }
+                })
+            }
+            return source.children.length == 0;
+        });
+        console.log($scope.sources_obj);
     }
 
     // if (!$scope.source.date) {
