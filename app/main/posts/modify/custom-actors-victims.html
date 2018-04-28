@@ -1,6 +1,6 @@
 <form name="frm-actors-victims">
   <div class="form-field">
-    <div class="col-md-4 center-block" ng-if="selected_categories.length > 0">
+    <div class="col-md-12 center-block" ng-if="selected_categories.length > 0">
         <label for="categorias">Categoría</label>
         <select ng-model = "categoria"
                 ng-options="item.id as item.tag for item in selected_categories"
