@@ -49,7 +49,6 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
         'api',
         'tags',
         'actors',
-        'sources',
         'savedsearches',
         'sets',
         'users',
