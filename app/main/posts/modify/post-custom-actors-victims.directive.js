@@ -56,6 +56,7 @@ function PostCustomActorsVictimsController(
 
         $scope.actors = $scope.available;
         // making sure no children are selected without their parents
+        console.log($scope.actors);
         $scope.changeActors();
     }
 

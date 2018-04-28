@@ -96,6 +96,7 @@ function PostEditorController(
 
     function activate() {
         $scope.post.form = $scope.form;
+        console.log($scope.post);
         $scope.loadData().then(function () {
             // Use $timeout to delay this check till after form fields are rendered.
             $timeout(() => {
