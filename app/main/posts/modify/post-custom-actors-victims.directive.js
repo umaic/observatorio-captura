@@ -230,6 +230,6 @@ function PostCustomActorsVictimsController(
         });
 
         initCategory();
-        setTimeout(fixInittab, 2000);
+        fixInittab();
     }); 
 }
