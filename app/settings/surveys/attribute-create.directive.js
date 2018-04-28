@@ -140,8 +140,8 @@ function (
                 },
                 {
                     label: 'Personalizado (Fuentes de información)',
-                    type: 'custom_sources',
-                    input: 'custom_sources',
+                    type: 'sources',
+                    input: 'sources',
                     description: 'Agregue fuentes de Información'
                 },
                 {
