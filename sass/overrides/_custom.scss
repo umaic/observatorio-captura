@@ -1623,7 +1623,13 @@ hr {
     padding: 0 !important;
 }
 
-.plus-action button{
-    width: 30px;
-    height: 30px;
+.less-action{
+    position: absolute;
+    right: 35px;
+    padding: 0 !important;
+}
+
+.plus-action button, .less-action button{
+    width: 30px !important;
+    height: 30px !important;
 }
