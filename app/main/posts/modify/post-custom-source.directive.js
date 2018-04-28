@@ -59,11 +59,10 @@ function PostCustomSourceController(
     function setSourceOptions(sources) {
         $scope.sources_obj = _.filter(sources, function (source){
             if (source.parent) {
-                source.parent.tag = _.each(sources, function (s){
-                    if (source.parent.id == s.id) {
-                        return s.tag;
-                    }
-                })
+                let parent_obj = _.find(sources, function(s){
+                    return (source.parent.id == s.id);
+                });
+                source.parent.tag = parent_obj.tag;
             }
             return source.children.length == 0;
         });
