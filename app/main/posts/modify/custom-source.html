@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <label for="source">Fuente</label>
         <select ng-model = "source.selected"
-                ng-options="item as item.tag group by item.parent.tag for item in sources"
+                ng-options="item as item.tag group by item.parent.tag for item in sources_obj"
                 name="source">
                 <option ng-if="!source.selected" value="">Seleccione una</option>
         </select>

@@ -70,7 +70,6 @@ function PostCustomSourceController(
                 source.parent.tag = parent_obj.tag;
             }
         });
-        console.log($scope.sources_obj);
     }
 
     // if (!$scope.source.date) {
