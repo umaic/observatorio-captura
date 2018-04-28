@@ -31,7 +31,8 @@ function PostValueEditController(
         'checkbox',
         'radio',
         'tags',
-        'actors'
+        'actors',
+        'sources'
     ];
     $scope.isDate = isDate;
     $scope.isDateTime = isDateTime;
