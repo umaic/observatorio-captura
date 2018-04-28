@@ -129,6 +129,30 @@ function (
     )
     .state(
         {
+            name: 'settings.sources',
+            url: '/settings/sources',
+            controller: require('./sources/sources.controller.js'),
+            template: require('./sources/sources.html')
+        }
+    )
+    .state(
+        {
+            name: 'settings.sources.create',
+            url: '/create',
+            controller: require('./sources/sources-edit.controller.js'),
+            template: require('./sources/sources-edit.html')
+        }
+    )
+    .state(
+        {
+            name: 'settings.sources.edit',
+            url: '/:id',
+            controller: require('./sources/sources-edit.controller.js'),
+            template: require('./sources/sources-edit.html')
+        }
+    )
+    .state(
+        {
             name: 'settings.users',
             url: '/settings/users',
             controller: require('./users/users.controller.js'),

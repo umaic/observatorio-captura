@@ -1,8 +1,8 @@
-module.exports = CategorySelectorDirective;
+module.exports = ActorSelectorDirective;
 
-CategorySelectorDirective.$inject = [];
+ActorSelectorDirective.$inject = [];
 
-function CategorySelectorDirective() {
+function ActorSelectorDirective() {
     return {
         restrict: 'E',
         scope: {
@@ -11,13 +11,13 @@ function CategorySelectorDirective() {
             form: '=',
             available: '='
         },
-        controller: CategorySelectorController,
+        controller: ActorSelectorController,
         template: require('./actor-selector.html')
     };
 }
-CategorySelectorController.$inject = ['$scope', '$rootScope', '_'];
+ActorSelectorController.$inject = ['$scope', '$rootScope', '_'];
 
-function CategorySelectorController($scope, $rootScope, _) {
+function ActorSelectorController($scope, $rootScope, _) {
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;

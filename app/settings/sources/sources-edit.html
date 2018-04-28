@@ -1,0 +1,130 @@
+<div>
+    <div class="mode-context init" dropdown>
+        <header class="mode-context-header">
+            <ol class="breadcrumbs">
+                <li><a href="/" ng-controller="navigation as nav">{{nav.site.name}}</a></li>
+                <li><a href="/settings" translate>app.settings</a></li>
+                <li><a href="/settings/sources" translate>app.sources</a></li>
+            </ol>
+            <h1 class="mode-context-title" ng-show="source.id" translate>app.edit_source</h1>
+            <h1 class="mode-context-title" ng-show="!source.id" translate>app.add_source</h1>
+        </header>
+
+        <span class="mode-context-trigger" dropdown-toggle>
+            <svg class="iconic">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+            </svg>
+            <span class="label hidden" translate>app.show_more_less</span>
+        </span>
+        <div class="mode-context-body">
+        </div>
+    </div>
+    <main role="main">
+        <!-- toolbar -->
+        <div class="toolbar">
+            <div class="button-group">
+                <button type="button" class="button-flat" ng-click="cancel()" translate>app.cancel</button>
+                <button class="button-alpha" type="button" ng-click="saveSource(source)" type="submit" ng-disabled="form.$invalid" ng-if="!processing" translate>
+                app.save</button>
+                <button type="submit" class="button-alpha"  disabled ng-if="processing">{{saving}}
+                  <div class="loading">
+                    <div class="line"></div>
+                    <div class="line"></div>
+                    <div class="line"></div>
+                  </div>
+                </button>
+            </div>
+        </div>
+        <!-- end toolbar -->
+
+        <!-- start edit -->
+
+        <div class="full-col">
+          <form name="form">
+            <div class="form-sheet">
+              <!-- Title -->
+              <div class="form-field title">
+                <label class="hidden" translate="source.editor.name"></label>
+                <input type="text" placeholder="{{'source.editor.name' | translate}}" ng-minlength="2" ng-maxlength="255" ng-model="source.tag" required>
+              </div>
+              <!-- Description -->
+              <div class="form-field">
+                <label translate>source.editor.description</label>
+                <textarea name="description" data-min-rows='1' rows='1' ng-maxlength="150" ng-model="source.description"></textarea>
+              </div>
+              <!-- Parent/child-relations -->
+              <fieldset
+                class="custom-fieldset init"
+                dropdown
+                ng-show="!isParent"
+              >
+                <legend
+                  class="dropdown-trigger init active"
+                  data-toggle="dropdown-menu"
+                  dropdown-toggle
+                >
+                  <span class="legend-label" translate="app.this_source_is_child_to" translate-values="{ parent: getParentName() }">This source is a child to</span>
+                  <svg class="iconic chevron">
+                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                  </svg>
+                </legend>
+                <div class="dropdown-menu init" dropdown-menu>
+                  <div class="form-field radio">
+                      <label for="parent_label-nothing">
+                          <input
+                            type="radio"
+                            name="parent_label"
+                            id="parent_label-nothing"
+                            ng-value="null"
+                            ng-checked="source.parent_id === null"
+                            ng-model="source.parent_id"
+                            />
+                          <span translate>app.nothing</span>
+                      </label>
+                  </div>
+
+                  <div class="form-field radio" ng-repeat="parent in parents">
+                      <label for="parent_label-{{parent.id}}">
+                          <input
+                            type="radio"
+                            name="parent_label"
+                            id="parent_label-{{parent.id}}"
+                            ng-checked="parent.id === source.parent_id"
+                            ng-value="parent.id"
+                            ng-model="source.parent_id"
+                          />
+                          {{parent.tag}}
+                      </label>
+                  </div>
+                </div>
+              </fieldset>
+              <!-- Who can see and add -->
+              <role-selector model="source" title="'app.who_can_see_this_source'" ng-show="!source.parent_id"></role-selector>
+              <div class="form-field" ng-show="source.parent_id">
+                <svg class="iconic">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#people"></use>
+                </svg>
+                <span translate>source.child_permissions</span>
+              </div>
+            </div>
+          </form>
+          <!--<div class="form-sheet" ng-show="source.id">
+             <div class="form-sheet-summary">
+                 <h3 class="form-sheet-title" translate>source.delete_this_source</h3>
+             </div>
+
+             <div class="form-field">
+                 <p translate>source.delete_source_desc</p>
+
+                 <button class="button-destructive" ng-click="deleteCategory(source)">
+                     <svg class="iconic">
+                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#trash"></use>
+                     </svg>
+                     <span class="button-label" translate>source.delete_source</span>
+                 </button>
+             </div>
+
+          </div>-->
+        </div>
+    </main>
+</div>
