@@ -1622,16 +1622,17 @@ hr {
     position: absolute;
     right: 0;
     padding: 0 !important;
+    z-index: 100;
 }
 
 .less-action{
     position: absolute;
     right: 35px;
     padding: 0 !important;
+    z-index: 100;
 }
 
 .plus-action button, .less-action button{
     width: 30px !important;
     height: 30px !important;
-    z-index: 100;
 }
