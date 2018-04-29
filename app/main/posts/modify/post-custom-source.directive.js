@@ -36,12 +36,6 @@ function PostCustomSourceController(
 ) {
     $scope.dateOptions = { format: 'yyyy-mm-dd'};
     var now = new Date();
-    $scope.source = {
-        selected: null,
-        date: moment(now).toDate(),
-        desc: "",
-        url: ""
-    };
 
     activate();
 
@@ -51,9 +45,32 @@ function PostCustomSourceController(
             $scope.selected = [];
         }
         $scope.sources = [];
+        $scope.sources_set = [{
+            source_id: null,
+            date: moment(now).toDate(),
+            desc: null,
+            link: null,
+            tag_id: $scope.category_selected
+        }];
 
         $scope.sources = $scope.available;
         setSourceOptions($scope.sources);
+    }
+
+    function addSource(){
+        var v = {
+            source_id: null,
+            date: moment(now).toDate(),
+            desc: null,
+            link: null,
+            tag_id: $scope.category_selected
+        };
+        $scope.sources_set.push(v);
+    }
+
+    function delSource (idx){
+        //console.log(idx);
+        $scope.sources_set.splice(idx,1);
     }
 
     function setSourceOptions(sources) {
@@ -71,6 +88,8 @@ function PostCustomSourceController(
             }
         });
     }
+
+    //para establecer las fuentes seleccionadas, hacer un watch de sources_set e ir armando la variable selected según las fuentes que se vayan agregando
 
     // if (!$scope.source.date) {
     //     return;
