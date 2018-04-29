@@ -34,6 +34,8 @@ function PostCustomSourceController(
     moment,
     _
 ) {
+    $scope.addSource = addSource;
+    $scope.delSource = delSource;
     $scope.dateOptions = { format: 'yyyy-mm-dd'};
     var now = new Date();
 
@@ -58,14 +60,14 @@ function PostCustomSourceController(
     }
 
     function addSource(){
-        var v = {
+        var s = {
             source_id: null,
             date: moment(now).toDate(),
             desc: null,
             link: null,
             tag_id: $scope.category_selected
         };
-        $scope.sources_set.push(v);
+        $scope.sources_set.push(s);
     }
 
     function delSource (idx){
