@@ -68,11 +68,29 @@ function PostCustomSourceController(
             tag_id: $scope.category_selected
         };
         $scope.sources_set.push(s);
+        _.each($scope.sources_set, function (source){
+            var found = _.find($scope.selected, function (val){
+                return (source.tag_id == val);
+            });
+            if (!found) {
+                $scope.selected.push(source.tag_id);
+            }
+        });
+        console.log($scope.selected);
     }
 
     function delSource (idx){
         //console.log(idx);
+        var tag = $scope.sources_set[idx].tag_id;
+        var found = _.findIndex($scope.selected, function (val){
+                return (source.tag_id == tag);
+            });
+
+        if (found) {
+                $scope.selected.splice(found, 1);
+            }
         $scope.sources_set.splice(idx,1);
+        console.log($scope.selected);
     }
 
     function setSourceOptions(sources) {
@@ -90,10 +108,6 @@ function PostCustomSourceController(
             }
         });
     }
-
-    $scope.$watch('sources_set.length', function(newVal,oldVal){
-        console.log(newVal)
-    });
 
     //para establecer las fuentes seleccionadas, hacer un watch de sources_set e ir armando la variable selected según las fuentes que se vayan agregando
 
