@@ -91,6 +91,10 @@ function PostCustomSourceController(
         });
     }
 
+    $scope.watch('sources_set', function(oldVal, newVal){
+        console.log(newVal)
+    });
+
     //para establecer las fuentes seleccionadas, hacer un watch de sources_set e ir armando la variable selected según las fuentes que se vayan agregando
 
     // if (!$scope.source.date) {
