@@ -69,52 +69,64 @@
                     <div class="plus-action col-md-1">
                       <button type="button" class="button-alpha button-fab" ng-click="addVictim()">+</button>
                     </div>
-                    <div class="form-field">
-                        <label for="num">Número de personas</label>
-                            <input type="number" name="num" ng-model="victim.amount">                  
-                    </div>
-                    <div class="form-field">
-                        <label for="generos">Género</label>
+                    <div class="row">
+                      <div class="col-md-10">
+                        <div class="col-md-3">
+                          <label for="num">Número de personas</label>
+                            <input type="number" name="num" ng-model="victim.amount">
+                        </div>
+                        <div class="col-md-4">
+                          <label for="generos">Género</label>
                               <select ng-model="victim.gender"
                                       ng-options="item.value as item.label for item in generos"
                                       name="generos"
                                       >
-                              </select>                  
-                    </div>
-                    <div class="form-field">
-                        <label for="estados">Estado</label>
+                              </select> 
+                        </div>
+                        <div class="col-md-4">
+                          <label for="estados">Estado</label>
                             <select ng-model="victim.status"
                                       ng-options="item.value as item.label for item in estados"
                                       name="estados">
-                              </select>                  
+                              </select>
+                        </div>
+                      </div>
                     </div>
-                    <div class="form-field">
-                        <label for="poblacion">Grupo Poblacional</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="col-md-4">
+                          <label for="poblacion">Grupo Poblacional</label>
                             <select ng-model="victim.ethnic_group"
                                   ng-options="item.value as item.label for item in poblaciones"
                                   name="poblacion">
-                          </select>                  
-                    </div>
-                    <div class="form-field">
-                        <label for="edad">Edad</label>
+                          </select>
+                        </div>
+                        <div class="col-md-4">
+                          <label for="edad">Edad</label>
                             <select ng-model="victim.age"
                                   ng-options="item.value as item.label for item in edades"
                                   name="edad">
                           </select>
-                    </div>
-                    <div class="form-field">
-                        <label for="cond">Condición</label>
+                        </div>
+                        <div class="col-md-4">
+                          <label for="cond">Condición</label>
                             <select ng-model="victim.condition"
                                   ng-options="item.value as item.label for item in condiciones"
                                   name="cond">
                           </select>
+                        </div>
+                      </div>
                     </div>
-                    <div class="form-field">
-                        <label for="ocupacion">Ocupación</label>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="col-md-4">
+                          <label for="ocupacion">Ocupación</label>
                             <select ng-model="victim.occupation"
                                   ng-options="item.value as item.label for item in ocupaciones"
                                   name="ocupacion">
                           </select>
+                        </div>
+                      </div>
                     </div>
                   </div>
               </div>
