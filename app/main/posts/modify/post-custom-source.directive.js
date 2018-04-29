@@ -91,7 +91,7 @@ function PostCustomSourceController(
         });
     }
 
-    $scope.$watch('sources_set', function(oldVal, newVal){
+    $scope.$watch('sources_set.length', function(oldVal, newVal){
         console.log(newVal)
     });
 
