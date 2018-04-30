@@ -49,7 +49,7 @@ function PostCustomSourceController(
             $scope.selected = [];
         }
         $scope.sources = [];
-        if (!post.id) {
+        if (!$scope.post.id) {
                 $scope.sources_set = [{
                 selected: null,
                 date: moment(now).toDate(),
