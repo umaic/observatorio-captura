@@ -10,8 +10,8 @@
                 </div>
             <div class="col-md-9">
         <label for="source">Fuente</label>
-            <select ng-model = "source.selected"
-                    ng-options="item as item.tag group by item.parent.tag for item in sources_obj"
+            <select ng-model = "source.source_id"
+                    ng-options="item.id as item.tag group by item.parent.tag for item in sources_obj"
                     name="source"
                     ng-change="changeSource(source, $index)">
                     <option ng-if="!source.selected" value="">Seleccione una</option>
