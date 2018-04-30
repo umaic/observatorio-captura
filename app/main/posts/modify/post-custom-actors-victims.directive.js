@@ -50,13 +50,15 @@ function PostCustomActorsVictimsController(
     $scope.actor_category = [];
     $scope.victims = [{
         amount: null,
-        gender: null,
-        status: null,
-        ethnic_group: null,
-        age: null,
-        condition: null,
-        occupation: null,
-        tag_id: $scope.category_selected
+        victim_gender: null,
+        victim_status: null,
+        victim_ethnic_group: null,
+        victim_sub_ethnic_group: null,
+        victim_age: null,
+        victim_age_group: null,
+        victim_condition: null,
+        victim_sub_condition: null,
+        victim_occupation: null
     }];
     $scope.changeActors = changeActors;
     $scope.changeActorsCategory = function (cs) {
@@ -78,13 +80,15 @@ function PostCustomActorsVictimsController(
     function addVictim() {
         var v = {
             amount: null,
-            gender: null,
-            status: null,
-            ethnic_group: null,
-            age: null,
-            condition: null,
-            occupation: null,
-            tag_id: $scope.category_selected
+            victim_gender: null,
+            victim_status: null,
+            victim_ethnic_group: null,
+            victim_sub_ethnic_group: null,
+            victim_age: null,
+            victim_age_group: null,
+            victim_condition: null,
+            victim_sub_condition: null,
+            victim_occupation: null
         };
         $scope.victims.push(v);
     }
