@@ -1,10 +1,14 @@
 module.exports = [
+    '$q',
     '$resource',
+    '$http',
     '$rootScope',
     'Util',
     'CacheFactory',
     function (
+        $q,
         $resource,
+        $http,
         $rootScope,
         Util,
         CacheFactory
@@ -15,16 +19,22 @@ module.exports = [
         }
         cache.removeExpired();
 
-        var VictimsDataEndpoint = $resource(Util.url('/victims-data'), {}, {
-            query: {
-                method: 'GET',
-                isArray: true,
-                cache: cache,
-                transformResponse: function (data /*, header*/) {
-                    return data;
-                }
+
+        var VictimsDataEndpoint = {
+            query: function () {
+                var deferred = $q.defer();
+                var request = $http({
+                    method: "GET",
+                    url: Util.url('/victims-data'),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function (response) {
+                    deferred.resolve(response.data);
+                });
+                return deferred.promise;
             }
-        });
+        };
 
         VictimsDataEndpoint.queryFresh = function (params) {
             cache.removeAll();

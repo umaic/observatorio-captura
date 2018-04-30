@@ -48,6 +48,16 @@ function PostCustomActorsVictimsController(
     $scope.selected_cat = [];
     $scope.disabledActors = [];
     $scope.actor_category = [];
+    $scope.victims = [{
+        amount: null,
+        gender: null,
+        status: null,
+        ethnic_group: null,
+        age: null,
+        condition: null,
+        occupation: null,
+        tag_id: $scope.category_selected
+    }];
     $scope.changeActors = changeActors;
     $scope.changeActorsCategory = function (cs) {
         $scope.category_selected = cs;
@@ -240,16 +250,6 @@ function PostCustomActorsVictimsController(
     function initCategory() {
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.category_selected = $scope.selected_categories[0].id;
-            $scope.victims = [{
-                amount: null,
-                gender: null,
-                status: null,
-                ethnic_group: null,
-                age: null,
-                condition: null,
-                occupation: null,
-                tag_id: $scope.category_selected
-            }];
         }
     }
 

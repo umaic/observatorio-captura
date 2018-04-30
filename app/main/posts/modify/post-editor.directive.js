@@ -130,7 +130,7 @@ function PostEditorController(
             TagEndpoint.queryFresh().$promise,
             ActorEndpoint.queryFresh().$promise,
             SourceEndpoint.queryFresh().$promise,
-            VictimsDataEndpoint.queryFresh().$promise
+            VictimsDataEndpoint.queryFresh()
         ];
 
         // If existing Post attempt to acquire lock
@@ -139,7 +139,7 @@ function PostEditorController(
         }
 
         return $q.all(requests).then(function (results) {
-            if ($scope.post.id && !results[5]) {
+            if ($scope.post.id && !results[6]) {
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
                 // have the option to break the lock
@@ -155,7 +155,6 @@ function PostEditorController(
             var actors = results[3];
             var sources = results[4];
             var victimsData = results[5];
-            console.log(results[5]);
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {

@@ -82,7 +82,7 @@
                                     <div class="col-md-4">
                                         <label for="generos">Género</label>
                                         <select ng-model="victim.gender"
-                                                ng-options="item.value as item.label for item in generos"
+                                                ng-options="item.value as item.gender for item in post.victimsData.victim_gender"
                                                 name="generos"
                                                 class="col-md-12">
                                         </select>
@@ -94,7 +94,7 @@
                                     <div class="col-md-4">
                                         <label for="estados">Estado</label>
                                         <select ng-model="victim.status"
-                                                ng-options="item.value as item.label for item in estados"
+                                                ng-options="item.value as item.status for item in post.victimsData.victim_status"
                                                 name="estados"
                                                 class="col-md-12">
                                         </select>
@@ -102,7 +102,7 @@
                                     <div class="col-md-6">
                                         <label for="poblacion">Grupo Poblacional</label>
                                         <select ng-model="victim.ethnic_group"
-                                                ng-options="item.value as item.label for item in poblaciones"
+                                                ng-options="item.value as item.ethnic_group for item in post.victimsData.victim_ethnic_group"
                                                 name="poblacion"
                                                 class="col-md-12">
                                         </select>
