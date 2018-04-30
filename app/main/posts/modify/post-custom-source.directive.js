@@ -73,7 +73,9 @@ function PostCustomSourceController(
                 return (source.tag_id == val);
             });
             if (!found) {
-                $scope.selected.push(source.tag_id);
+                if (source.tag_id) {
+                    $scope.selected.push(source.tag_id);
+                }
             }
         });
         console.log($scope.selected);
