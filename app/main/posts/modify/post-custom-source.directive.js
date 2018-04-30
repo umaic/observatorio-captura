@@ -57,7 +57,7 @@ function PostCustomSourceController(
                 url: null
             }];
         }else{
-            console.log(post.values);
+            console.log($scope.post.values);
         }
 
         $scope.sources = $scope.available;
