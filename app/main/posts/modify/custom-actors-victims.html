@@ -104,7 +104,8 @@
                                         <select ng-model="victim.victim_ethnic_group"
                                                 ng-options="item.id as item.ethnic_group for item in post.victimsData.victim_ethnic_group"
                                                 name="poblacion"
-                                                class="col-md-12">
+                                                class="col-md-12"
+                                                ng-change="setEthnic(victim.victim_ethnic_group)">
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -124,13 +125,14 @@
                                         <select ng-model="victim.victim_age_group"
                                                 ng-options="item.id as item.age_group for item in post.victimsData.victim_age_group"
                                                 name="edad"
-                                                class="col-md-12">
+                                                class="col-md-12"
+                                                ng-change="setAge(victim_age_group)">
                                         </select>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="edad">Edad</label>
                                         <select ng-model="victim.victim_age"
-                                                ng-options="item.id as item.age for item in post.victimsData.victim_age"
+                                                ng-options="item.id as item.age for item in ages_by_group"
                                                 name="edad"
                                                 class="col-md-12">
                                         </select>
@@ -156,7 +158,8 @@
                                         <select ng-model="victim.victim_condition"
                                                 ng-options="item.iud as item.condition for item in post.victimsData.victim_condition"
                                                 name="ocupacion"
-                                                class="col-md-12">
+                                                class="col-md-12"
+                                                ng-change="setCondition(victim.victim_condition)">
                                         </select>
                                     </div>
                                 </div>
