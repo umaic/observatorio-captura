@@ -49,9 +49,12 @@ function PostCustomSourceController(
             $scope.selected = [];
         }
         $scope.sources = [];
+
+        $scope.sources = $scope.available;
+
         if (!$scope.post.id) {
                 $scope.sources_set = [{
-                selected: null,
+                source_id: null,
                 event_date: moment(now).toDate(),
                 event_desc: null,
                 url: null
@@ -60,14 +63,12 @@ function PostCustomSourceController(
             console.log($scope.post.values);
             $scope.sources_set = $scope.post.values.sources_set;
         }
-
-        $scope.sources = $scope.available;
         setSourceOptions($scope.sources);
     }
 
     function addSource(){
         var s = {
-            selected: null,
+            source_id: null,
             event_date: moment(now).toDate(),
             event_desc: null,
             url: null
