@@ -54,7 +54,7 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                 _.each(array, function (data, index) {
                     var actorObj = _.where($scope.actors, {id: parseInt(data.actor_id)});
                     var tagObj = _.where($scope.tags, {id: parseInt(data.tag_id)});
-                    console.log(actorObj);
+                    console.log($scope.actors);
                     if (index < array.length - 1) {
                         format += actorObj[0].tag + ' (' +  tagObj[0].tag + '), ';
                     } else {
