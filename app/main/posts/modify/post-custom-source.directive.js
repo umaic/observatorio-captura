@@ -60,11 +60,17 @@ function PostCustomSourceController(
                 url: null
             }];
         }else{
-            console.log($scope.post.values);
             $scope.sources_set = $scope.post.values.sources_set;
+            parseIds($scope.sources_set);
         }
         setSourceOptions($scope.sources);
     }
+
+    function parseIds(sources){
+        _.each($scope.sources_set, function(val){
+            val.source_id = parseInt(val.source_id);
+        });
+    };
 
     function addSource(){
         var s = {
