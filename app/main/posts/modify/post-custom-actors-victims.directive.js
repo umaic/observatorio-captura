@@ -117,11 +117,11 @@ function PostCustomActorsVictimsController(
     }
 
     function setCondition(victim) {
-        victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
+        victim.sub_conditions = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
     }
 
     function setEthnic(victim) {
-        victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
+        victim.sub_ethnics = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
     }
 
     function activate() {

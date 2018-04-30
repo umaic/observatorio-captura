@@ -111,7 +111,7 @@
                                     <div class="col-md-6">
                                         <label for="poblacion">Sub Grupo Poblacional</label>
                                         <select ng-model="victim.victim_sub_ethnic_group"
-                                                ng-options="item.id as item.sub_ethnic_group for item in post.victimsData.victim_sub_ethnic_group"
+                                                ng-options="item.id as item.sub_ethnic_group for item in victim.sub_ethnics"
                                                 name="poblacion"
                                                 class="col-md-12">
                                         </select>
@@ -169,7 +169,7 @@
                                     <div class="col-md-12">
                                         <label for="cond">Sub Condición</label>
                                         <select ng-model="victim.victim_sub_condition"
-                                                ng-options="item.id as item.sub_condition for item in post.victimsData.victim_sub_condition"
+                                                ng-options="item.id as item.sub_condition for item in victim.sub_conditions"
                                                 name="cond"
                                                 class="col-md-12">
                                         </select>
