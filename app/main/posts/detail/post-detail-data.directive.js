@@ -27,6 +27,7 @@ PostDetailDataController.$inject = [
     'TagEndpoint',
     'ActorEndpoint',
     'SourceEndpoint',
+    'VictimsDataEndpoint',
     'FormAttributeEndpoint',
     'FormStageEndpoint',
     'FormEndpoint',
@@ -51,6 +52,7 @@ function PostDetailDataController(
     TagEndpoint,
     ActorEndpoint,
     SourceEndpoint,
+    VictimsDataEndpoint,
     FormAttributeEndpoint,
     FormStageEndpoint,
     FormEndpoint,
@@ -100,7 +102,8 @@ function PostDetailDataController(
                 FormAttributeEndpoint.query({formId: $scope.post.form.id}).$promise,
                 TagEndpoint.query().$promise,
                 ActorEndpoint.query().$promise,
-                SourceEndpoint.query().$promise
+                SourceEndpoint.query().$promise,
+                VictimsDataEndpoint.queryFresh()
             ]).then(function (results) {
                 $scope.form = results[0];
                 $scope.form_name = results[0].name;
@@ -109,6 +112,7 @@ function PostDetailDataController(
                 $scope.tags = results[3];
                 $scope.actors = results[4];
                 $scope.sources = results[5];
+                $scope.victimsd = results[6];
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: results[0].name}).then(function (title) {

@@ -54,7 +54,7 @@ function PostCustomActorsVictimsController(
     $scope.disabledActors = [];
     $scope.actor_category = [];
     $scope.victim_category = [];
-
+    $scope.post.values.victim_category = $scope.victim_category;
     $scope.victims = [{
         amount: null,
         victim_gender: null,
@@ -67,6 +67,7 @@ function PostCustomActorsVictimsController(
         victim_sub_condition: null,
         victim_occupation: null
     }];
+
 
     $scope.changeActors = changeActors;
 
@@ -81,13 +82,18 @@ function PostCustomActorsVictimsController(
                 $scope.changeActors();
             }
         });
-
+        console.log($scope.post.victim_category);
+        _.each($scope.victim_category, function (vc, index) {
+            if (vc.category === cs) {
+                $scope.victims = $scope.victim_category[index].victims;
+            }
+        });
     };
 
     activate();
 
     function addVictim() {
-        var v = {
+        $scope.victims.push({
             amount: null,
             victim_gender: null,
             victim_status: null,
@@ -98,8 +104,7 @@ function PostCustomActorsVictimsController(
             victim_condition: null,
             victim_sub_condition: null,
             victim_occupation: null
-        };
-        $scope.victims.push(v);
+        });
     }
 
     function delVictim(idx) {
@@ -107,27 +112,17 @@ function PostCustomActorsVictimsController(
         $scope.victims.splice(idx, 1);
     }
 
-    function setAge(victim){
+    function setAge(victim) {
         victim.ages_by_group = _.where($scope.post.victimsData.victim_age, {id_age_group: victim.victim_age_group});
     }
 
-    function setCondition(victim){
+    function setCondition(victim) {
         victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
     }
 
-    function setEthnic(victim){
+    function setEthnic(victim) {
         victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
     }
-
-    $scope.watchCollection('victims', function (n,o,s){
-        _.each(n, function (victim){
-            if (victim.amount) {
-
-            }
-        });
-    })
-
-    
 
     function activate() {
         if ($scope.post.id) {
@@ -284,6 +279,11 @@ function PostCustomActorsVictimsController(
     function initCategory() {
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.category_selected = $scope.selected_categories[0].id;
+            _.each($scope.victim_category, function (vc, index) {
+                if (vc.category === $scope.category_selected) {
+                    $scope.victims = $scope.victim_category[index].victims;
+                }
+            });
         }
     }
 
@@ -336,7 +336,18 @@ function PostCustomActorsVictimsController(
             if (!found_vc) {
                 $scope.victim_category.push({
                     category: sel,
-                    victims: []
+                    victims: [{
+                        amount: null,
+                        victim_gender: null,
+                        victim_status: null,
+                        victim_ethnic_group: null,
+                        victim_sub_ethnic_group: null,
+                        victim_age: null,
+                        victim_age_group: null,
+                        victim_condition: null,
+                        victim_sub_condition: null,
+                        victim_occupation: null
+                    }]
                 });
             }
         });

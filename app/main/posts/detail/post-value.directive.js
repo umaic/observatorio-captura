@@ -9,6 +9,7 @@ module.exports = ['PostEndpoint', '$sce', 'moment', '_', function (PostEndpoint,
             type: '=',
             tags: '=',
             actors: '=',
+            victimsd: '=',
             sources: '='
         },
         template: require('./post-value.html'),
@@ -64,6 +65,57 @@ module.exports = ['PostEndpoint', '$sce', 'moment', '_', function (PostEndpoint,
                 });
                 return format;
             };
+            $scope.formatVictimsCategory = function (array) {
+                console.log($scope.victimsd);
+                console.log(array);
+                var format = ' ';
+                _.each(array, function (data, index) {
+                    format += '- ';
+                    if (data.amount && data.amount >= 0) {
+                        format += 'Personas: ' + data.amount;
+                    }
+                    if (data.id_age) {
+                        var victim_age = _.where($scope.victimsd.victim_age, {id: data.id_age});
+                        format += '. Edad: ' + victim_age[0].age;
+                    }
+                    if (data.id_age_group) {
+                        var victim_age_group = _.where($scope.victimsd.victim_age_group, {id: data.id_age_group});
+                        format += '. Grupo de Edad: ' + victim_age_group[0].age_group;
+                    }
+                    if (data.id_condition) {
+                        var victim_condition = _.where($scope.victimsd.victim_condition, {id: data.id_condition});
+                        format += '. Condición: ' + victim_condition[0].condition;
+                    }
+                    if (data.id_sub_condition) {
+                        var victim_sub_condition = _.where($scope.victimsd.victim_sub_condition, {id: data.id_sub_condition});
+                        format += '. Condición: ' + victim_sub_condition[0].sub_condition;
+                    }
+                    if (data.id_ethnic_group) {
+                        var victim_ethnic_group = _.where($scope.victimsd.victim_ethnic_group, {id: data.id_ethnic_group});
+                        format += '. Condición: ' + victim_ethnic_group[0].ethnic_group;
+                    }
+                    if (data.id_sub_ethnic_group) {
+                        var victim_sub_ethnic_group = _.where($scope.victimsd.victim_sub_ethnic_group, {id: data.id_sub_ethnic_group});
+                        format += '. Sub Grupo Étnico: ' + victim_sub_ethnic_group[0].sub_ethnic_group;
+                    }
+                    if (data.id_gender) {
+                        var victim_gender = _.where($scope.victimsd.victim_gender, {id: data.id_gender});
+                        format += '. Género: ' + victim_gender[0].gender;
+                    }
+                    if (data.id_occupation) {
+                        var victim_occupation = _.where($scope.victimsd.victim_occupation, {id: data.id_occupation});
+                        format += '. Ocupación: ' + victim_occupation[0].occupation;
+                    }
+                    if (data.id_status) {
+                        var victim_status = _.where($scope.victimsd.victim_status, {id: data.id_status});
+                        format += '. Estado: ' + victim_status[0].status;
+                    }
+                    var tagObj = _.where($scope.tags, {id: parseInt(data.tag_id)});
+                    format += '. Categoría: ' + tagObj[0].tag + '.<br>';
+
+                });
+                return format;
+            };
             $scope.formatSources = function (array) {
                 var format = '<p>';
                 _.each(array, function (data, index) {
@@ -89,6 +141,9 @@ module.exports = ['PostEndpoint', '$sce', 'moment', '_', function (PostEndpoint,
             }
             if ($scope.attribute.input === 'actorscat') {
                 $scope.value = $scope.formatActorsCategory($scope.value);
+            }
+            if ($scope.attribute.input === 'victimcat') {
+                $scope.value = $scope.formatVictimsCategory($scope.value);
             }
             if ($scope.attribute.input === 'sour') {
                 $scope.value = $scope.formatSources($scope.value);
