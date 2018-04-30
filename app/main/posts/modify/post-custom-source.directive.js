@@ -12,7 +12,8 @@ function PostCustomSource() {
             available: '=',
             selected: '=',
             enableParents: '=',
-            form: '='
+            form: '=',
+            post: '=',
         },
         template: require('./custom-source.html'),
         controller: PostCustomSourceController
