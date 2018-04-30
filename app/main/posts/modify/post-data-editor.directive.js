@@ -34,6 +34,7 @@ PostDataEditorController.$inject = [
     'TagEndpoint',
     'ActorEndpoint',
     'SourceEndpoint',
+    'VictimsDataEndpoint',
     'Notify',
     '_',
     'PostActionsService',
@@ -64,6 +65,7 @@ function PostDataEditorController(
     TagEndpoint,
     ActorEndpoint,
     SourceEndpoint,
+    VictimsDataEndpoint,
     Notify,
     _,
     PostActionsService,
@@ -224,7 +226,8 @@ function PostDataEditorController(
             FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
             TagEndpoint.queryFresh().$promise,
             ActorEndpoint.queryFresh().$promise,
-            SourceEndpoint.queryFresh().$promise
+            SourceEndpoint.queryFresh().$promise,
+            VictimsDataEndpoint.queryFresh().$promise
         ];
 
         // If existing Post attempt to acquire lock
@@ -250,6 +253,8 @@ function PostDataEditorController(
             var categories = results[2];
             var actors = results[3];
             var sources = results[4];
+            var victimsData = results[5];
+            console.log(results[5]);
             $scope.post.categories = categories;
 
             // Set Post Lock
