@@ -40,6 +40,8 @@ function PostCustomActorsVictimsController(
     $scope.switchTab = switchTab;
     $scope.addVictim = addVictim;
     $scope.delVictim = delVictim;
+
+    $scope.setAge = setAge;
     //$scope.categorySelected = categorySelected;
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
