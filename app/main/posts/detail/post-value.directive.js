@@ -8,7 +8,8 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             attribute: '=',
             type: '=',
             tags: '=',
-            actors: '='
+            actors: '=',
+            sources: '='
         },
         template: require('./post-value.html'),
         link: function ($scope) {
@@ -65,10 +66,9 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             };
             $scope.formatSources = function (array) {
                 var format = '<p>';
-                setTimeout(function (){
                     _.each(array, function (data, index) {
                         var sourceObj = _.where($scope.sources, {id: parseInt(data.source_id)});
-                        console.log(sourceObj);
+
                         if (index < array.length - 1) {
                             format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p><p>';
                         } else {
@@ -76,7 +76,6 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                         }
                     });
                     return format;
-                }, 1500)
             };
             if ($scope.attribute.type === 'relation') {
                 $scope.value = $scope.value.map(function (entry) {
