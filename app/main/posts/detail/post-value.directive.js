@@ -65,16 +65,18 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             };
             $scope.formatSources = function (array) {
                 var format = '<p>';
-                _.each(array, function (data, index) {
-                    var sourceObj = _.where($scope.sources, {id: parseInt(data.source_id)});
+                setTimeout(function (){
+                    _.each(array, function (data, index) {
+                        var sourceObj = _.where($scope.sources, {id: parseInt(data.source_id)});
 
-                    if (index < array.length - 1) {
-                        format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p><p>';
-                    } else {
-                        format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p>';
-                    }
-                });
-                return format;
+                        if (index < array.length - 1) {
+                            format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p><p>';
+                        } else {
+                            format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p>';
+                        }
+                    });
+                    return format;
+                }, 1500)
             };
             if ($scope.attribute.type === 'relation') {
                 $scope.value = $scope.value.map(function (entry) {
