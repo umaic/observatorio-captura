@@ -36,6 +36,7 @@ function PostCustomSourceController(
 ) {
     $scope.addSource = addSource;
     $scope.delSource = delSource;
+    $scope.changeSource = changeSource;
     $scope.dateOptions = { format: 'yyyy-mm-dd'};
     var now = new Date();
 
