@@ -58,6 +58,7 @@ function PostCustomSourceController(
             }];
         }else{
             console.log($scope.post.values);
+            $scope.sources_set = $scope.post.values.sources_set;
         }
 
         $scope.sources = $scope.available;
