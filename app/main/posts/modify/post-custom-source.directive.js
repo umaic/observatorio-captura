@@ -117,6 +117,10 @@ function PostCustomSourceController(
         });
     }
 
+    $scope.logg = function (){
+        console.log($scope.sources_set);
+    }
+
     // if (!$scope.source.date) {
     //     return;
     // }
