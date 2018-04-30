@@ -42,6 +42,9 @@ function PostCustomActorsVictimsController(
     $scope.delVictim = delVictim;
 
     $scope.setAge = setAge;
+    $scope.setCondition = setCondition;
+    $scope.setEthnic = setEthnic;
+
     //$scope.categorySelected = categorySelected;
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
@@ -50,6 +53,8 @@ function PostCustomActorsVictimsController(
     $scope.selected_cat = [];
     $scope.disabledActors = [];
     $scope.actor_category = [];
+    $scope.victim_category = [];
+
     $scope.victims = [{
         amount: null,
         victim_gender: null,
@@ -62,7 +67,9 @@ function PostCustomActorsVictimsController(
         victim_sub_condition: null,
         victim_occupation: null
     }];
+
     $scope.changeActors = changeActors;
+
     $scope.changeActorsCategory = function (cs) {
         $scope.category_selected = cs;
         _.each($scope.actor_category, function (ac) {
@@ -104,19 +111,35 @@ function PostCustomActorsVictimsController(
         victim.ages_by_group = _.where($scope.post.victimsData.victim_age, {id_age_group: victim.victim_age_group});
     }
 
+    function setCondition(victim){
+        victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
+    }
+
+    function setEthnic(victim){
+        victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
+    }
+
+    $scope.watchCollection('victims', function (n,o,s){
+        _.each(n, function (victim){
+            if (victim.amount) {
+
+            }
+        });
+    })
+
     
 
     function activate() {
         if ($scope.post.id) {
             _.each($scope.post.actor_category, function (pac) {
-                var exists = false;
+                var found_ac = false;
                 _.each($scope.actor_category, function (ac) {
                     if (ac.category === parseInt(pac.tag_id)) {
                         ac.actors.push(parseInt(pac.actor_id));
-                        exists = true;
+                        found_ac = true;
                     }
                 });
-                if (!exists) {
+                if (!found_ac) {
                     $scope.selected_cat.push(parseInt(pac.tag_id));
                     $scope.actor_category.push({
                         category: parseInt(pac.tag_id),
@@ -141,8 +164,6 @@ function PostCustomActorsVictimsController(
             // making sure no children are selected without their parents
             $scope.changeActors();
         }
-        console.log($scope.post);
-
     }
 
     $scope.selectAllEnabled = function () {
@@ -293,23 +314,40 @@ function PostCustomActorsVictimsController(
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
         _.each(selected, function (sel) {
-            var exists = false;
+            var found_ac = false;
+            var found_vc = false;
             _.each($scope.actor_category, function (ac) {
                 if (ac.category === sel) {
-                    exists = true;
+                    found_ac = true;
                 }
             });
-            if (!exists) {
+            _.each($scope.victim_category, function (vc) {
+                if (vc.category === sel) {
+                    found_vc = true;
+                }
+            });
+            if (!found_ac) {
                 $scope.actor_category.push({
                     category: sel,
                     actors: [],
                     actorsParent: []
                 });
             }
+            if (!found_vc) {
+                $scope.victim_category.push({
+                    category: sel,
+                    victims: []
+                });
+            }
         });
         _.each($scope.actor_category, function (ac, index) {
             if (ac && !selected.includes(ac.category)) {
                 $scope.actor_category.splice(index, 1);
+            }
+        });
+        _.each($scope.victim_category, function (vc, index) {
+            if (vc && !selected.includes(vc.category)) {
+                $scope.victim_category.splice(index, 1);
             }
         });
         $scope.selected_categories = categories.filter(function (category) {

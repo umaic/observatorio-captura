@@ -71,7 +71,7 @@
                                 </button>
                             </div>
                             <div class="plus-action col-md-1">
-                                <button type="button" class="button-alpha button-fab" ng-click="addVictim()">+</button>
+                                <button type="button" class="button-alpha button-fab" ng-click="addVictim()" ng-disabled="!victim.amount || ($index+1) < victims.length">+</button>
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
@@ -105,7 +105,7 @@
                                                 ng-options="item.id as item.ethnic_group for item in post.victimsData.victim_ethnic_group"
                                                 name="poblacion"
                                                 class="col-md-12"
-                                                ng-change="setEthnic(victim.victim_ethnic_group)">
+                                                ng-change="setEthnic(victim)">
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -159,7 +159,7 @@
                                                 ng-options="item.iud as item.condition for item in post.victimsData.victim_condition"
                                                 name="ocupacion"
                                                 class="col-md-12"
-                                                ng-change="setCondition(victim.victim_condition)">
+                                                ng-change="setCondition(victim)">
                                         </select>
                                     </div>
                                 </div>
