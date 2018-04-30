@@ -117,8 +117,6 @@ function PostCustomSourceController(
         });
     }
 
-    //para establecer las fuentes seleccionadas, hacer un watch de sources_set e ir armando la variable selected según las fuentes que se vayan agregando
-
     // if (!$scope.source.date) {
     //     return;
     // }
