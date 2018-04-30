@@ -83,7 +83,7 @@ function PostCustomSourceController(
         //console.log(idx);
         var tag = $scope.sources_set[idx].tag_id;
         var found = _.findIndex($scope.selected, function (val){
-                return (source.tag_id == tag);
+                return (val == tag);
             });
 
         if (found) {
