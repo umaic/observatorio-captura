@@ -231,6 +231,11 @@ function PostEditorController(
                             return parseInt(id);
                         });
                     }
+                }else if (attr.input === 'actorscat') {
+                    // actor.id needs to be a number
+                    if ($scope.post.values[attr.key]) {
+                        $scope.post.values[attr.key] = $scope.post.values[attr.key];
+                    }
                 } else if (attr.input === 'sources') {
                     // source.id needs to be a number
                     if ($scope.post.values[attr.key]) {

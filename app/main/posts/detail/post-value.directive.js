@@ -49,9 +49,22 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                 });
                 return formatedActors;
             };
+            $scope.formatActorsCategory = function (array) {
+                var format = ' ';
+                _.each(array, function (data, index) {
+                    var actorObj = _.where($scope.actors, {id: parseInt(data.actor_id)});
+                    var tagObj = _.where($scope.tags, {id: parseInt(data.tag_id)});
+                    if (index < array.length - 1) {
+                        format += actorObj[0].tag + ' (' +  tagObj[0].tag + '), ';
+                    } else {
+                        format += actorObj[0].tag + ' (' +  tagObj[0].tag + ')';
+                    }
+                });
+                return format;
+            };
             if ($scope.attribute.type === 'relation') {
                 $scope.value = $scope.value.map(function (entry) {
-                    return PostEndpoint.get({ id : entry });
+                    return PostEndpoint.get({id: entry});
                 });
             }
             if ($scope.attribute.input === 'tags') {
@@ -59,6 +72,9 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
             }
             if ($scope.attribute.input === 'actors') {
                 $scope.value = $scope.formatActors($scope.value);
+            }
+            if ($scope.attribute.input === 'actorscat') {
+                $scope.value = $scope.formatActorsCategory($scope.value);
             }
             if ($scope.attribute.type === 'datetime') {
                 if ($scope.attribute.input === 'date') {
