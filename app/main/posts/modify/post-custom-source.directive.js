@@ -69,29 +69,34 @@ function PostCustomSourceController(
         $scope.sources_set.push(s);
     }
 
-    function changeSource (source){
-        console.log(source);
-            var found = _.find($scope.selected, function (val){
+    function changeSource (source, idx){
+            if ($scope.selected[idx]) {
+               $scope.selected[idx] = source.selected.id 
+            }else{
+               var found = _.find($scope.selected, function (val){
                 return (source.selected.id == val);
-            });
-            if (!found) {
-                if (source.selected.id) {
-                    $scope.selected.push(source.selected.id);
-                }
-            }
+                });
+                if (!found) {
+                    if (source.selected.id) {
+                        $scope.selected.push(source.selected.id);
+                    }
+                } 
+            }            
         console.log($scope.selected);
     }
 
     function delSource (idx){
         //console.log(idx);
-        var id = $scope.sources_set[idx].selected.id;
-        var found = _.findIndex($scope.selected, function (val){
+        if ($scope.sources_set[idx].selected) {
+           var id = $scope.sources_set[idx].selected.id;
+           var found = _.findIndex($scope.selected, function (val){
                 return (val == id);
             });
 
-        if (found) {
+            if (found) {
                 $scope.selected.splice(found, 1);
-            }
+            } 
+        }
         $scope.sources_set.splice(idx,1);
         console.log($scope.selected);
     }
