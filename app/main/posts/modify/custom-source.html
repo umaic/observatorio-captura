@@ -12,7 +12,8 @@
         <label for="source">Fuente</label>
             <select ng-model = "source.selected"
                     ng-options="item as item.tag group by item.parent.tag for item in sources_obj"
-                    name="source">
+                    name="source"
+                    ng-change="changeSource(source)">
                     <option ng-if="!source.selected" value="">Seleccione una</option>
             </select>
             </div>

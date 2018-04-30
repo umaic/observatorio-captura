@@ -48,11 +48,10 @@ function PostCustomSourceController(
         }
         $scope.sources = [];
         $scope.sources_set = [{
-            source_id: null,
+            selected: null,
             date: moment(now).toDate(),
             desc: null,
-            link: null,
-            tag_id: $scope.category_selected
+            link: null
         }];
 
         $scope.sources = $scope.available;
@@ -61,31 +60,32 @@ function PostCustomSourceController(
 
     function addSource(){
         var s = {
-            source_id: null,
+            selected: null,
             date: moment(now).toDate(),
             desc: null,
-            link: null,
-            tag_id: $scope.category_selected
+            link: null
         };
         $scope.sources_set.push(s);
-        _.each($scope.sources_set, function (source){
+    }
+
+    function changeSource (source){
+        console.log(source);
             var found = _.find($scope.selected, function (val){
-                return (source.tag_id == val);
+                return (source.selected.id == val);
             });
             if (!found) {
-                if (source.tag_id) {
-                    $scope.selected.push(source.tag_id);
+                if (source.selected.id) {
+                    $scope.selected.push(source.selected.id);
                 }
             }
-        });
         console.log($scope.selected);
     }
 
     function delSource (idx){
         //console.log(idx);
-        var tag = $scope.sources_set[idx].tag_id;
+        var id = $scope.sources_set[idx].selected.id;
         var found = _.findIndex($scope.selected, function (val){
-                return (val == tag);
+                return (val == id);
             });
 
         if (found) {
