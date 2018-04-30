@@ -109,6 +109,7 @@ function PostDetailDataController(
                 $scope.tags = results[3];
                 $scope.actors = results[4];
                 $scope.sources = results[5];
+                console.log(results);
                 // Set page title to '{form.name} Details' if a post title isn't provided.
                 if (!$scope.post.title) {
                     $translate('post.type_details', {type: results[0].name}).then(function (title) {
