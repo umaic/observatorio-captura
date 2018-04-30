@@ -50,7 +50,6 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                 return formatedActors;
             };
             $scope.formatActorsCategory = function (array) {
-                console.log($scope.tags);
                 var format = ' ';
                 _.each(array, function (data, index) {
                     var actorObj = _.where($scope.actors, {id: parseInt(data.actor_id)});
