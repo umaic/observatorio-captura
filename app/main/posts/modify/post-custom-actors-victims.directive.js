@@ -102,7 +102,6 @@ function PostCustomActorsVictimsController(
 
     function setAge(victim){
         victim.ages_by_group = _.where($scope.post.victimsData.victim_age, {id_age_group: victim.victim_age_group});
-
     }
 
     
