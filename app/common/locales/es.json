@@ -70,10 +70,13 @@
     "add_webhook": "Agregar Webhook",
     "categories": "Categorías",
     "actors": "Actores",
+    "sources": "Fuentes",
     "edit_category": "Editar Categoría",
     "add_category": "Añadir Categoría",
     "edit_actor": "Editar Actor",
     "add_actor": "Añadir Actor",
+    "edit_source": "Editar Fuente",
+    "add_source": "Añadir Fuente",
     "categories_count": "{{count}} categorías",
     "plans": "Planes",
     "delete": "Borrar",
@@ -107,9 +110,11 @@
     "who_can_see_this_category": "¿Quién puede ver esta categoría?",
     "this_category_is_child_to": "Esta categoría es parte de <strong>{{parent}}</strong>",
     "this_actor_is_child_to": "Este actor es parte de <strong>{{parent}}</strong>",
+    "this_source_is_child_to": "Esta fuente es parte de <strong>{{parent}}</strong>",
     "nothing": "Nada",
     "who_can_see_this": "¿Quién puede ver esto?",
     "who_can_see_this_actor": "¿Quién puede ver esto?",
+    "who_can_see_this_source": "¿Quién puede ver esto?",
     "add": "Agregar",
     "add_new_category": "+ Agregar nueva categoría",
     "sort_by": "Ordenar por ...",
@@ -829,10 +834,10 @@
     "add_tag": "Añadir Actor",
     "save_add_another": "Guardar & Añadir Otro",
     "delete_category": "Borrar actor",
-    "delete_this_category": "Borrar esta actor",
+    "delete_this_category": "Borrar este actor",
     "delete_category_desc": "<strong>Si borras este actor</strong>, no quedará asociado con ningún evento.",
     "show_categories": "Mostrar actores disponibles",
-    "child_permissions": "Los permisos para este actor serás gestionados por su padre.",
+    "child_permissions": "Los permisos para este actor serán gestionados por su padre.",
     "select_all": "Seleccionar Todo",
     "choose_roles": "Seleccionar Roles",
     "create_tag": "Crear Actor",
@@ -851,7 +856,38 @@
       "roles_help": "Sólo los roles seleccionado podrán ver este actor."
     },
     "types": {
-      "category": "Categoría",
+      "actor": "Actor",
+      "status": "Estado"
+    },
+    "delete": "Borrar"
+  },
+  "source": {
+    "add_tag": "Añadir Fuente",
+    "save_add_another": "Guardar & Añadir Otro",
+    "delete_source": "Borrar fuente",
+    "delete_this_source": "Borrar esta fuente",
+    "delete_source_desc": "<strong>Si borras esta fuente</strong>, no quedará asociada con ningún reporte.",
+    "show_sources": "Mostrar fuentes disponibles",
+    "child_permissions": "Los permisos para esta fuente serán gestionados por su padre.",
+    "select_all": "Seleccionar Todo",
+    "choose_roles": "Seleccionar Roles",
+    "create_source": "Crear Fuente",
+    "saved_source": "Fuente Guardado.",
+    "deleted_sources": "Fuentes borradas.",
+    "manage_sources": "Administrar Fuentes",
+    "edit_source": "Editar Fuente",
+    "editor": {
+      "name": "Nombre de la Fuente",
+      "slug": "Enlace a la Fuente",
+      "slug_help": "Si no se especifica será generado automaticamente del nombre de la fuente.",
+      "description": "Descripción",
+      "type": "Tipo",
+      "color": "Color del icono",
+      "icon": "Nombre del icono",
+      "roles_help": "Sólo los roles seleccionado podrán ver esta fuente."
+    },
+    "types": {
+      "source": "Fuente",
       "status": "Estado"
     },
     "delete": "Borrar"
@@ -860,6 +896,7 @@
     "manage_forms": "Administrar formularios",
     "manage_tags": "Administrar Categorías",
     "manage_actors": "Administrar Actores",
+    "manage_sources": "Administrar Fuentes",
     "manage_users": "Administrar Usuarios",
     "manage_roles": "Administrar Roles",
     "manage_webhooks": "Manage Webhooks",
@@ -902,6 +939,8 @@
       "categories_desc": "Crear y gestionar las categorías en las que los usuarios pueden añadir reportes para una mejor organización.",
       "actors": "Actores",
       "actors_desc": "Crear y gestionar los actores que los usuarios pueden añadir a los reportes",
+      "sources": "Fuentes",
+      "sources_desc": "Crear y gestionar las fuentes de información que los usuarios pueden añadir a los reportes",
       "webhooks": "Webhooks",
       "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
       "plans": "Planes",
@@ -1149,6 +1188,16 @@
       "leave_confirm_message": "Si continua se perderan todos los cambios",
       "leave_confirm": "Continuar sin guardas"
     },
+    "actor": {
+      "save_success": "Actor guardado {{name}}",
+      "destroy_confirm": "Seguro de que desea borrar este actor?",
+      "destroy_confirm_desc": "Eliminar este actor lo borrará de los reportes existentes. Esto no se puede deshacer.",
+      "destroy_success": "Actor borrado",
+      "destroy_error": "No se puede borrar el actor, por favor, inténtelo de nuevo",
+      "bulk_destroy_confirm": "Seguro de que desea borrar {{count}} actores?",
+      "bulk_destroy_confirm_desc": "Eliminar estos actores los borrará de los reportes existentes. Esto no se puede deshacer.",
+      "bulk_destroy_success": "{{count}} actores borrados"
+    },
     "category": {
       "save_success": "Guardada categoría {{name}}",
       "destroy_confirm": "Seguro de que desea borrar esta categoría?",
@@ -1158,6 +1207,16 @@
       "bulk_destroy_confirm": "Seguro de que desea borrar {{count}} categorías?",
       "bulk_destroy_confirm_desc": "Eliminar estas categorías las borrará de los reportes existentes. Esto no se puede deshacer.",
       "bulk_destroy_success": "{{count}} categorías borradas"
+    },
+    "source": {
+      "save_success": "Guardada fuente {{name}}",
+      "destroy_confirm": "Seguro de que desea borrar esta fuente?",
+      "destroy_confirm_desc": "Eliminar esta fuente la borrará de los reportes existentes. Esto no se puede deshacer.",
+      "destroy_success": "Fuente borrada",
+      "destroy_error": "No se puede borrar la fuente, por favor, inténtelo de nuevo",
+      "bulk_destroy_confirm": "Seguro de que desea borrar {{count}} fuentes?",
+      "bulk_destroy_confirm_desc": "Eliminar estas fuentes las borrará de los reportes existentes. Esto no se puede deshacer.",
+      "bulk_destroy_success": "{{count}} fuentes borradas"
     },
     "role": {
       "delete_question": "Seguro que desea borrar el rol {{role}}?",
@@ -1243,6 +1302,7 @@
     "user": "No se han encontrado usuarios.",
     "category": "No se han encontrado categorías.",
     "actor": "No se han encontrado actores.",
+    "source": "No se han encontrado fuentes.",
     "role": "No se han encontrado roles",
     "webhook": "No webhooks found.",
     "permission": "No se han encontrado permisos.",

@@ -39,7 +39,7 @@ PostEditorController.$inject = [
     'PostActionsService',
     'MediaEditService',
     '$state'
-  ];
+];
 
 function PostEditorController(
     $scope,
@@ -66,7 +66,7 @@ function PostEditorController(
     PostActionsService,
     MediaEditService,
     $state
-  ) {
+) {
 
     // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
@@ -102,9 +102,9 @@ function PostEditorController(
                 // If the post in marked as 'Published' but it is not in
                 // a valid state to be saved as 'Published' warn the user
                 if ($scope.post.status === 'published' && !canSavePost()) {
-                    Notify.error('post.valid.invalid_state');
-                }
-            });
+                Notify.error('post.valid.invalid_state');
+            }
+        });
         });
 
         $scope.medias = {};
@@ -123,8 +123,8 @@ function PostEditorController(
     function loadData() {
 
         var requests = [
-            FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
+            FormStageEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
+            FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
             TagEndpoint.queryFresh().$promise,
             ActorEndpoint.queryFresh().$promise,
             SourceEndpoint.queryFresh().$promise
@@ -199,7 +199,7 @@ function PostEditorController(
                         } else {
                             $scope.post.values[attr.key] = [null];
                         }
-                    }  else if (attr.input === 'number') {
+                    } else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
@@ -313,30 +313,21 @@ function PostEditorController(
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
                 post.tags = _.chain(post.values)
-                .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
-            }
-            if ($scope.actorKeys.length > 0) {
-                post.actors = _.chain(post.values)
-                .pick($scope.actorKeys) // Grab just the 'actor' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
+                    .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                    .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                    .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                    .filter()             // Remove nulls                      [0,1,1,2]
+                    .uniq()               // Remove duplicates                 [0,1,2]
+                    .value();             // and output
             }
             if ($scope.sourceKeys.length > 0) {
                 post.sources = _.chain(post.values)
-                .pick($scope.sourceKeys) // Grab just the 'source' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
+                    .pick($scope.sourceKeys) // Grab just the 'source' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                    .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                    .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                    .filter()             // Remove nulls                      [0,1,1,2]
+                    .uniq()               // Remove duplicates                 [0,1,2]
+                    .value();             // and output
             }
             var request;
             if (post.id) {
@@ -350,10 +341,10 @@ function PostEditorController(
                 if (response.id && response.allowed_privileges.indexOf('read') !== -1) {
                     $scope.saving_post = false;
                     $scope.post.id = response.id;
-                    Notify.notify(success_message, { name: $scope.post.title });
+                    Notify.notify(success_message, {name: $scope.post.title});
                     $state.go('posts.data.detail', {postId: response.id});
                 } else {
-                    Notify.notify(success_message, { name: $scope.post.title });
+                    Notify.notify(success_message, {name: $scope.post.title});
                     $state.go('posts.map.all');
                 }
             }, function (errorResponse) { // errors

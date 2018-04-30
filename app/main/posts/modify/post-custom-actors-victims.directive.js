@@ -12,7 +12,8 @@ function PostCustomActorsVictims() {
             available: '=',
             selected: '=',
             enableParents: '=',
-            form: '='
+            form: '=',
+            post: '='
         },
         template: require('./custom-actors-victims.html'),
         controller: PostCustomActorsVictimsController
@@ -45,11 +46,25 @@ function PostCustomActorsVictimsController(
     $scope.selectParent = selectParent;
     $scope.selectedParents = [];
     $scope.disabledActors = [];
+    $scope.actor_category = [];
     $scope.changeActors = changeActors;
 
     activate();
 
-    function addVictim(){
+    $scope.changeActorsCategory = function (cs) {
+        $scope.category_selected = cs;
+        _.each($scope.actor_category, function (ac) {
+            if (ac.category === cs) {
+                $scope.selected = angular.copy(ac.actors);
+                $scope.selectedParents = angular.copy(ac.actorsParent);
+                $scope.actors = [];
+                $scope.actors = angular.copy($scope.available);
+                $scope.changeActors();
+            }
+        });
+    };
+
+    function addVictim() {
         var v = {
             amount: null,
             gender: null,
@@ -63,9 +78,9 @@ function PostCustomActorsVictimsController(
         $scope.victims.push(v);
     }
 
-    function delVictim (idx){
+    function delVictim(idx) {
         //console.log(idx);
-        $scope.victims.splice(idx,1);
+        $scope.victims.splice(idx, 1);
     }
 
     function activate() {
@@ -76,7 +91,6 @@ function PostCustomActorsVictimsController(
         $scope.actors = [];
 
         $scope.actors = $scope.available;
-        console.log($scope.actors);
         // making sure no children are selected without their parents
         $scope.changeActors();
     }
@@ -187,9 +201,16 @@ function PostCustomActorsVictimsController(
                 }
             }
         });
+        _.each($scope.actor_category, function (ac) {
+            if (ac.category === $scope.category_selected) {
+                ac.actors = angular.copy($scope.selected);
+                ac.actorsParent = angular.copy($scope.selectedParents);
+            }
+        });
+        $scope.post.values.actor_category = $scope.actor_category;
     }
 
-    var initCategory = function (){
+    var initCategory = function () {
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.category_selected = $scope.selected_categories[0].id;
             $scope.victims = [{
@@ -200,38 +221,17 @@ function PostCustomActorsVictimsController(
                 age: null,
                 condition: null,
                 occupation: null,
-                tag_id: $scope.category_selected 
+                tag_id: $scope.category_selected
             }];
         }
     }
 
     function fixInittab() {
-            $scope.tab_history = {};
+        $scope.tab_history = {};
 
         // Set initial menu tab
-            $scope.switchTab('post', 'actor');
-        }
-
-    // function categorySelected() {
-    //         $scope.actors = [
-    //             {
-    //                 label: "Bandas emergentes",
-    //                 value: false
-    //             },
-    //             {
-    //                 label: "Delincuencia",
-    //                 value: false
-    //             },
-    //             {
-    //                 label: "Fuerzas armadas estatales",
-    //                 value: false
-    //             },
-    //             {
-    //                 label: "Guerrillas",
-    //                 value: false
-    //             },
-    //         ];
-    //     }
+        $scope.switchTab('post', 'actor');
+    }
 
     function switchTab(section, tab) {
 
@@ -248,17 +248,31 @@ function PostCustomActorsVictimsController(
         var tab_li = tab + '-li';
         angular.element(document.getElementById(tab)).addClass('active');
         angular.element(document.getElementById(tab_li)).addClass('active');
-    } 
+    }
 
-    $rootScope.$on('selected_category', function(e){
+    $rootScope.$on('selected_category', function (e) {
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
-
-        $scope.selected_categories = categories.filter(function(category){
+        _.each(selected, function (sel) {
+            var exists = false;
+            _.each($scope.actor_category, function (ac) {
+                if (ac.category === sel) {
+                    exists = true;
+                }
+            });
+            if (!exists) {
+                $scope.actor_category.push({
+                    category: sel,
+                    actors: [],
+                    actorsParent: []
+                });
+            }
+        });
+        $scope.selected_categories = categories.filter(function (category) {
             return selected.includes(category.id);
         });
 
         initCategory();
         setTimeout(fixInittab, 2000);
-    }); 
+    });
 }
