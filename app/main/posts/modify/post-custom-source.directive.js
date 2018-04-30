@@ -15,7 +15,7 @@ function PostCustomSource() {
             form: '=',
             post: '=',
         },
-        template: require('./custom-source.html'),
+        template: require('./post-custom-source.html'),
         controller: PostCustomSourceController
     };
 }

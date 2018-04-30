@@ -15,7 +15,7 @@ function PostCustomActorsVictims() {
             form: '=',
             post: '='
         },
-        template: require('./custom-actors-victims.html'),
+        template: require('./post-custom-actors-victims.html'),
         controller: PostCustomActorsVictimsController
     };
 }
