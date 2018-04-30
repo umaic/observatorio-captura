@@ -90,7 +90,7 @@ function PostCustomSourceController(
                 return (source.source_id == val);
                 });
                 if (!found) {
-                    if (source.source_id.id) {
+                    if (source.source_id) {
                         $scope.selected.push(source.source_id);
                     }
                 } 
