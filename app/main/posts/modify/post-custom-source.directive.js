@@ -94,8 +94,7 @@ function PostCustomSourceController(
                         $scope.selected.push(source.source_id);
                     }
                 } 
-            }
-            console.log($scope.selected);            
+            }           
         $scope.post.values.sources_set = $scope.sources_set;
     }
 
