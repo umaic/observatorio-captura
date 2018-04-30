@@ -27,7 +27,7 @@
                 <svg class="iconic" style="margin-right:4px;">
                     <use xlink:href="/img/iconic-sprite.svg#tag"></use>
                 </svg>
-                <p ng-if="attribute.type === 'markdown'" markdown-to-html="value"></p>
+                <p ng-if="attribute.type === 'markdown'" ng-bind-html="value"></p>
             </p>
         </div>
 

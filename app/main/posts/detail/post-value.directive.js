@@ -1,4 +1,4 @@
-module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment, _) {
+module.exports = ['PostEndpoint', '$sce', 'moment', '_', function (PostEndpoint, $sce, moment, _) {
     return {
         restrict: 'E',
         replace: true,
