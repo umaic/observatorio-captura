@@ -53,7 +53,7 @@ function PostCustomSourceController(
             selected: null,
             date: moment(now).toDate(),
             desc: null,
-            link: null
+            url: null
         }];
 
         $scope.sources = $scope.available;
@@ -65,7 +65,7 @@ function PostCustomSourceController(
             selected: null,
             date: moment(now).toDate(),
             desc: null,
-            link: null
+            url: null
         };
         $scope.sources_set.push(s);
     }
@@ -83,7 +83,7 @@ function PostCustomSourceController(
                     }
                 } 
             }            
-        console.log($scope.selected);
+        $scope.post.values.sources_set = $scope.sources_set;
     }
 
     function delSource (idx){
@@ -99,7 +99,7 @@ function PostCustomSourceController(
             } 
         }
         $scope.sources_set.splice(idx,1);
-        console.log($scope.selected);
+        $scope.post.values.sources_set = $scope.sources_set;
     }
 
     function setSourceOptions(sources) {
