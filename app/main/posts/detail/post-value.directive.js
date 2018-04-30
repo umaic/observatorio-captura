@@ -68,7 +68,7 @@ module.exports = ['PostEndpoint', 'moment', '_', function (PostEndpoint, moment,
                 var format = '<p>';
                     _.each(array, function (data, index) {
                         var sourceObj = _.where($scope.sources, {id: parseInt(data.source_id)});
-
+                        console.log(sourceObj);
                         if (index < array.length - 1) {
                             format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p><p>';
                         } else {
