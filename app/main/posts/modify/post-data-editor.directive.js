@@ -42,6 +42,7 @@ PostDataEditorController.$inject = [
     '$transitions',
     'LoadingProgress'
 ];
+
 function PostDataEditorController(
     $scope,
     $rootScope,
@@ -70,7 +71,7 @@ function PostDataEditorController(
     $state,
     $transitions,
     LoadingProgress
-  ) {
+) {
 
     // Setup initial stages container
     $scope.everyone = $filter('translate')('post.modify.everyone');
@@ -127,7 +128,7 @@ function PostDataEditorController(
     });
     $scope.$on('$destroy', () => {
         unbindOnStart();
-    });
+});
 
     /**
      *
@@ -159,7 +160,7 @@ function PostDataEditorController(
      * - - Save failure: cancel the transition, show errors or whatever the save post does.
      */
     function saveChangesAndContinue() {
-        return new Promise (function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
             // Do we have unsaved changes? If not , leave them continue
             if (!$scope.editForm || ($scope.editForm && !$scope.editForm.$dirty)) {
                 unlockPost().then(resolve, resolve); // Resolve even if unlock fails
@@ -201,6 +202,7 @@ function PostDataEditorController(
     function setVisibleStage(stageId) {
         $scope.visibleStage = stageId;
     }
+
     function selectForm() {
         $scope.form = $scope.post.form;
         $scope.loadData().then(function () {
@@ -209,17 +211,17 @@ function PostDataEditorController(
                 // If the post in marked as 'Published' but it is not in
                 // a valid state to be saved as 'Published' warn the user
                 if ($scope.post.status === 'published' && !canSavePost()) {
-                    Notify.error('post.valid.invalid_state');
-                }
-            });
+                Notify.error('post.valid.invalid_state');
+            }
+        });
         });
     }
 
     function loadData() {
 
         var requests = [
-            FormStageEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
-            FormAttributeEndpoint.queryFresh({ formId: $scope.post.form.id }).$promise,
+            FormStageEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
+            FormAttributeEndpoint.queryFresh({formId: $scope.post.form.id}).$promise,
             TagEndpoint.queryFresh().$promise,
             ActorEndpoint.queryFresh().$promise,
             SourceEndpoint.queryFresh().$promise
@@ -248,6 +250,7 @@ function PostDataEditorController(
             var categories = results[2];
             var actors = results[3];
             var sources = results[4];
+            $scope.post.categories = categories;
 
             // Set Post Lock
             $scope.post.lock = results[4];
@@ -267,7 +270,6 @@ function PostDataEditorController(
                     attributes.push(attr);
                 }
             });
-
             // Initialize values on post (helps avoid madness in the template)
             attributes.map(function (attr) {
                 // Create associated media entity
@@ -300,7 +302,7 @@ function PostDataEditorController(
                         } else {
                             $scope.post.values[attr.key] = [null];
                         }
-                    }  else if (attr.input === 'number') {
+                    } else if (attr.input === 'number') {
                         $scope.post.values[attr.key] = [parseInt(attr.default)];
                     } else if (attr.input === 'date' || attr.input === 'datetime') {
                         $scope.post.values[attr.key] = attr.default ? [new Date(attr.default)] : [new Date()];
@@ -332,6 +334,8 @@ function PostDataEditorController(
                             return parseInt(id);
                         });
                     }
+                } else if (attr.input === 'actorscat') {
+                    $scope.post[attr.key] = $scope.post.values[attr.key];
                 } else if (attr.input === 'sources') {
                     // source.id needs to be a number
                     if ($scope.post.values[attr.key]) {
@@ -411,30 +415,30 @@ function PostDataEditorController(
             // adding neccessary tags to post.tags, needed for filtering
             if ($scope.tagKeys.length > 0) {
                 post.tags = _.chain(post.values)
-                .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
+                    .pick($scope.tagKeys) // Grab just the 'tag' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                    .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                    .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                    .filter()             // Remove nulls                      [0,1,1,2]
+                    .uniq()               // Remove duplicates                 [0,1,2]
+                    .value();             // and output
             }
             if ($scope.actorKeys.length > 0) {
                 post.actors = _.chain(post.values)
-                .pick($scope.actorKeys) // Grab just the 'actor' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
+                    .pick($scope.actorKeys) // Grab just the 'actor' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                    .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                    .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                    .filter()             // Remove nulls                      [0,1,1,2]
+                    .uniq()               // Remove duplicates                 [0,1,2]
+                    .value();             // and output
             }
             if ($scope.sourceKeys.length > 0) {
                 post.sources = _.chain(post.values)
-                .pick($scope.sourceKeys) // Grab just the 'source' fields        { key1: [0,1], key2: [1,2], key3: undefined }
-                .values()             // then take their values            [ [0,1], [1,2], undefined ]
-                .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
-                .filter()             // Remove nulls                      [0,1,1,2]
-                .uniq()               // Remove duplicates                 [0,1,2]
-                .value();             // and output
+                    .pick($scope.sourceKeys) // Grab just the 'source' fields        { key1: [0,1], key2: [1,2], key3: undefined }
+                    .values()             // then take their values            [ [0,1], [1,2], undefined ]
+                    .flatten()            // flatten them into a single array  [0,1,1,2,undefined]
+                    .filter()             // Remove nulls                      [0,1,1,2]
+                    .uniq()               // Remove duplicates                 [0,1,2]
+                    .value();             // and output
             }
             var request;
             if (post.id) {
@@ -459,7 +463,7 @@ function PostDataEditorController(
                     $scope.post.id = response.id;
                 }
 
-                Notify.notify(success_message, { name: $scope.post.title });
+                Notify.notify(success_message, {name: $scope.post.title});
 
                 // adding post to broadcast to make sure it gets filtered out from post-list if it does not match the filters.
                 $rootScope.$broadcast('event:edit:post:data:mode:saveSuccess', {post: response});

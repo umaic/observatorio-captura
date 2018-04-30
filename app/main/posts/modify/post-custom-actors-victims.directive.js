@@ -45,12 +45,10 @@ function PostCustomActorsVictimsController(
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;
     $scope.selectedParents = [];
+    $scope.selected_cat = [];
     $scope.disabledActors = [];
     $scope.actor_category = [];
     $scope.changeActors = changeActors;
-
-    activate();
-
     $scope.changeActorsCategory = function (cs) {
         $scope.category_selected = cs;
         _.each($scope.actor_category, function (ac) {
@@ -62,7 +60,10 @@ function PostCustomActorsVictimsController(
                 $scope.changeActors();
             }
         });
+
     };
+
+    activate();
 
     function addVictim() {
         var v = {
@@ -84,15 +85,41 @@ function PostCustomActorsVictimsController(
     }
 
     function activate() {
-        // remove default null value when creating a new post
-        if ($scope.selected[0] === null) {
-            $scope.selected = [];
+        if ($scope.post.id) {
+            _.each($scope.post.actor_category, function (pac) {
+                var exists = false;
+                _.each($scope.actor_category, function (ac) {
+                    if (ac.category === parseInt(pac.tag_id)) {
+                        ac.actors.push(parseInt(pac.actor_id));
+                        exists = true;
+                    }
+                });
+                if (!exists) {
+                    $scope.selected_cat.push(parseInt(pac.tag_id));
+                    $scope.actor_category.push({
+                        category: parseInt(pac.tag_id),
+                        actors: [parseInt(pac.actor_id)],
+                        actorsParent: []
+                    });
+                }
+            });
+            $scope.selected_categories = $scope.post.categories.filter(function (category) {
+                return $scope.selected_cat.includes(category.id);
+            });
+            $scope.category_selected = $scope.selected_categories[0].id;
+            $scope.changeActorsCategory($scope.category_selected);
+            setTimeout(fixInittab, 2000);
+        } else {
+            // remove default null value when creating a new post
+            if ($scope.selected[0] === null) {
+                $scope.selected = [];
+            }
+            $scope.actors = [];
+            $scope.actors = $scope.available;
+            // making sure no children are selected without their parents
+            $scope.changeActors();
         }
-        $scope.actors = [];
 
-        $scope.actors = $scope.available;
-        // making sure no children are selected without their parents
-        $scope.changeActors();
     }
 
     $scope.selectAllEnabled = function () {
@@ -210,7 +237,7 @@ function PostCustomActorsVictimsController(
         $scope.post.values.actor_category = $scope.actor_category;
     }
 
-    var initCategory = function () {
+    function initCategory() {
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
             $scope.category_selected = $scope.selected_categories[0].id;
             $scope.victims = [{
@@ -228,7 +255,6 @@ function PostCustomActorsVictimsController(
 
     function fixInittab() {
         $scope.tab_history = {};
-
         // Set initial menu tab
         $scope.switchTab('post', 'actor');
     }
@@ -251,6 +277,7 @@ function PostCustomActorsVictimsController(
     }
 
     $rootScope.$on('selected_category', function (e) {
+        console.log(e);
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
         _.each(selected, function (sel) {

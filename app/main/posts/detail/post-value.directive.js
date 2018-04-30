@@ -57,25 +57,24 @@ module.exports = ['PostEndpoint', '$sce', 'moment', '_', function (PostEndpoint,
                     var tagObj = _.where($scope.tags, {id: parseInt(data.tag_id)});
 
                     if (index < array.length - 1) {
-                        format += actorObj[0].tag + ' (' +  tagObj[0].tag + '), ';
+                        format += '- ' + actorObj[0].tag + ' (' + tagObj[0].tag + '). <br>';
                     } else {
-                        format += actorObj[0].tag + ' (' +  tagObj[0].tag + ')';
+                        format += '- ' + actorObj[0].tag + ' (' + tagObj[0].tag + ').';
                     }
                 });
                 return format;
             };
             $scope.formatSources = function (array) {
                 var format = '<p>';
-                    _.each(array, function (data, index) {
-                        var sourceObj = _.where($scope.sources, {id: parseInt(data.source_id)});
-                        if (index < array.length - 1) {
-                            format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p><p>';
-                        } else {
-                            format += sourceObj[0].tag +'<br>'+ '. Fecha: '+data.event_date + '<br>'+ '. Descripción: '+ data.event_desc + '<br>'+ '. Url: '+data.url + '</p>';
-                        }
-                        console.log(format);
-                    });
-                    return format;
+                _.each(array, function (data, index) {
+                    var sourceObj = _.where($scope.sources, {id: parseInt(data.source_id)});
+                    if (index < array.length - 1) {
+                        format += sourceObj[0].tag + '<br>' + '. Fecha: ' + data.event_date + '<br>' + '. Descripción: ' + data.event_desc + '<br>' + '. Url: ' + data.url + '</p><p>';
+                    } else {
+                        format += sourceObj[0].tag + '<br>' + '. Fecha: ' + data.event_date + '<br>' + '. Descripción: ' + data.event_desc + '<br>' + '. Url: ' + data.url + '</p>';
+                    }
+                });
+                return format;
             };
             if ($scope.attribute.type === 'relation') {
                 $scope.value = $scope.value.map(function (entry) {

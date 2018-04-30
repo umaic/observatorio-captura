@@ -136,7 +136,6 @@ function PostEditorController(
         }
 
         return $q.all(requests).then(function (results) {
-
             if ($scope.post.id && !results[5]) {
                 // Failed to get a lock
                 // Bounce user back to the detail page where admin/manage post perm
@@ -230,11 +229,6 @@ function PostEditorController(
                         $scope.post.values[attr.key] = $scope.post.values[attr.key].map(function (id) {
                             return parseInt(id);
                         });
-                    }
-                }else if (attr.input === 'actorscat') {
-                    // actor.id needs to be a number
-                    if ($scope.post.values[attr.key]) {
-                        $scope.post.values[attr.key] = $scope.post.values[attr.key];
                     }
                 } else if (attr.input === 'sources') {
                     // source.id needs to be a number
