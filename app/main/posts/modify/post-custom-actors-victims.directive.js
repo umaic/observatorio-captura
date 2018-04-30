@@ -129,6 +129,7 @@ function PostCustomActorsVictimsController(
             // making sure no children are selected without their parents
             $scope.changeActors();
         }
+        console.log($scope.post);
 
     }
 
