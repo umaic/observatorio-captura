@@ -84,6 +84,7 @@ function PostCustomSourceController(
     }
 
     function changeSource (source, idx){
+        console.log(source);
             if ($scope.selected[idx]) {
                $scope.selected[idx] = source.source_id 
             }else{
