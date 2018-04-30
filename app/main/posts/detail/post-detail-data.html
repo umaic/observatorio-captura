@@ -36,12 +36,13 @@
 
             <post-value
                     ng-repeat="(key,value) in post.values"
-                    ng-if="form_attributes[key].type !== 'actors' && form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
+                    ng-if="form_attributes[key].type !== 'actors' && form_attributes[key].type !== 'sources' && form_attributes[key].type !== 'media' && isPostValue(key) && showType(form_attributes[key].type)"
                     key="key"
                     value="value"
                     attribute="form_attributes[key]"
                     tags="tags"
                     actors="actors"
+                    sources="sources"
                     type="'post'">
             </post-value>
             <post-detail-map post-id="post.id"></post-detail-map>
