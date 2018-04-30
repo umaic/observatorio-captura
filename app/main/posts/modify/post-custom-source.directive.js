@@ -64,7 +64,6 @@ function PostCustomSourceController(
             parseIds($scope.sources_set);
         }
         setSourceOptions($scope.sources);
-        console.log($scope.selected);
     }
 
     function parseIds(sources){
@@ -84,7 +83,6 @@ function PostCustomSourceController(
     }
 
     function changeSource (source, idx){
-        console.log(source);
             if ($scope.selected[idx]) {
                $scope.selected[idx] = source.source_id 
             }else{
@@ -96,7 +94,8 @@ function PostCustomSourceController(
                         $scope.selected.push(source.source_id);
                     }
                 } 
-            }            
+            }
+            console.log($scope.selected);            
         $scope.post.values.sources_set = $scope.sources_set;
     }
 
