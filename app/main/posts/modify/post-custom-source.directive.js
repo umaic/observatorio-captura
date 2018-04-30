@@ -64,6 +64,7 @@ function PostCustomSourceController(
             parseIds($scope.sources_set);
         }
         setSourceOptions($scope.sources);
+        console.log($scope.selected);
     }
 
     function parseIds(sources){
