@@ -155,6 +155,10 @@ function PostEditorController(
             var actors = results[3];
             var sources = results[4];
             var victimsData = results[5];
+
+            $scope.post.categories = categories;
+            $scope.post.victimsData = victimsData;
+            
             var attributes = [];
             _.each(attrs, function (attr) {
                 if (attr.type === 'title' || attr.type === 'description') {
