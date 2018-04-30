@@ -49,12 +49,16 @@ function PostCustomSourceController(
             $scope.selected = [];
         }
         $scope.sources = [];
-        $scope.sources_set = [{
-            selected: null,
-            date: moment(now).toDate(),
-            desc: null,
-            url: null
-        }];
+        if (!post.id) {
+                $scope.sources_set = [{
+                selected: null,
+                date: moment(now).toDate(),
+                desc: null,
+                url: null
+            }];
+        }else{
+            console.log(post.values);
+        }
 
         $scope.sources = $scope.available;
         setSourceOptions($scope.sources);
