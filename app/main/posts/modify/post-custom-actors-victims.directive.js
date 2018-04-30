@@ -100,10 +100,11 @@ function PostCustomActorsVictimsController(
         $scope.victims.splice(idx, 1);
     }
 
-    function setAge(age_group){
-        console.log(age_group);
-        $scope.ages_by_group = _.where($scope.post.victimsData.victim_age, {id_age_group: age_group});
+    function setAge(victim){
+        victim.ages_by_group = _.where($scope.post.victimsData.victim_age, {id_age_group: victim.age_group});
     }
+
+    
 
     function activate() {
         if ($scope.post.id) {

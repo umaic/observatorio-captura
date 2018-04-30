@@ -126,13 +126,13 @@
                                                 ng-options="item.id as item.age_group for item in post.victimsData.victim_age_group"
                                                 name="edad"
                                                 class="col-md-12"
-                                                ng-change="setAge(victim.victim_age_group)">
+                                                ng-change="setAge(victim)">
                                         </select>
                                     </div>
                                     <div class="col-md-4">
                                         <label for="edad">Edad</label>
                                         <select ng-model="victim.victim_age"
-                                                ng-options="item.id as item.age for item in ages_by_group"
+                                                ng-options="item.id as item.age for item in victim.ages_by_group"
                                                 name="edad"
                                                 class="col-md-12">
                                         </select>
