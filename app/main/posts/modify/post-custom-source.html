@@ -1,52 +1,57 @@
 <form name="frm-sources">
-  <div class="form-field">
-    <div class="panel panel-warning">
-        <div class="panel-body" ng-repeat="source in sources_set track by $index">
+    <div class="form-field">
+        <div class="panel panel-warning">
+            <div class="panel-body" ng-repeat="source in sources_set track by $index">
                 <div class="less-action col-md-1">
-                  <button type="button" class="button-alpha button-fab" ng-if="$index > 0" ng-click="delSource($index)">-</button>
+                    <button type="button" class="button-alpha button-fab" ng-if="$index > 0"
+                            ng-click="delSource($index)">-
+                    </button>
                 </div>
                 <div class="plus-action col-md-1">
-                  <button type="button" class="button-alpha button-fab" ng-click="addSource()" ng-disabled="!source.selected || ($index+1) <sources_set.length">+</button>
+                    <button type="button" class="button-alpha button-fab" ng-click="addSource()"
+                            ng-disabled="!source.source_id || ($index+1) <sources_set.length">+
+                    </button>
                 </div>
-            <div class="col-md-9">
-        <label for="source">Fuente</label>
-            <select ng-model = "source.source_id"
-                    ng-options="item.id as item.tag group by item.parent.tag for item in sources_obj"
-                    name="source"
-                    ng-change="changeSource(source, $index)">
-                    <option ng-if="!source.selected" value="">Seleccione una</option>
-            </select>
-            </div>
-            <div class="col-md-6">
-                <label for="source-date">Fecha del evento reportada por la fuente</label>
-                <div class="input-with-icon">
-                    <svg class="iconic">
-                      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#calendar"></use>
-                    </svg>
-                    <input
-                        name="source-date"
-                        type="date"
-                        pick-a-date="source.event_date"
-                        pick-a-date-options="dateOptions"
+                <div class="col-md-9">
+                    <label for="source">Fuente</label>
+                    <select ng-model="source.source_id"
+                            ng-options="item.id as item.tag group by item.parent.tag for item in sources_obj"
+                            name="source"
+                            ng-change="changeSource(source, $index)">
+                        <option ng-if="!source.selected" value="">Seleccione una</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="source-date">Fecha del evento reportada por la fuente</label>
+                    <div class="input-with-icon">
+                        <svg class="iconic">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/img/iconic-sprite.svg#calendar"></use>
+                        </svg>
+                        <input
+                                name="source-date"
+                                type="date"
+                                pick-a-date="source.event_date"
+                                pick-a-date-options="dateOptions"
 
-                        name="values_{{attribute.id}}"
-                        ng-model="post.values[attribute.key][key]"
-                        ng-required="attribute.required"
-                    />
-                </div>    
-            </div>
-            <div class="col-md-12">
-                <label for="source-desc">Descripción del evento según fuente</label>
-                <textarea name="source-desc"
-                            ng-model="source.event_desc"></textarea>
-            </div>
-            <div class="col-md-12">
-                <label for="source-url">Enlace a la fuente, nombre del articulo, etc</label>
-                <textarea name="source-url"
-                            ng-model="source.url"></textarea>    
-            </div>
+                                name="values_{{attribute.id}}"
+                                ng-model="post.values[attribute.key][key]"
+                                ng-required="attribute.required"
+                        />
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="source-desc">Descripción del evento según fuente</label>
+                    <textarea name="source-desc"
+                              ng-model="source.event_desc"></textarea>
+                </div>
+                <div class="col-md-12">
+                    <label for="source-url">Enlace a la fuente, nombre del articulo, etc</label>
+                    <textarea name="source-url"
+                              ng-model="source.url"></textarea>
+                </div>
 
+            </div>
         </div>
-    </div>   
-  </div>
+    </div>
 </form>

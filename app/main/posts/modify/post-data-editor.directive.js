@@ -341,6 +341,8 @@ function PostDataEditorController(
                     }
                 } else if (attr.input === 'actorscat') {
                     $scope.post[attr.key] = $scope.post.values[attr.key];
+                } else if (attr.input === 'victimcat') {
+                    $scope.post[attr.key] = $scope.post.values[attr.key];
                 } else if (attr.input === 'sources') {
                     // source.id needs to be a number
                     if ($scope.post.values[attr.key]) {

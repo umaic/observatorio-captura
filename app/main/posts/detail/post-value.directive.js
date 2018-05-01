@@ -66,8 +66,6 @@ module.exports = ['PostEndpoint', '$sce', 'moment', '_', function (PostEndpoint,
                 return format;
             };
             $scope.formatVictimsCategory = function (array) {
-                console.log($scope.victimsd);
-                console.log(array);
                 var format = ' ';
                 _.each(array, function (data, index) {
                     format += '- ';

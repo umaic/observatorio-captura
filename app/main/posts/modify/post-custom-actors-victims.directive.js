@@ -50,7 +50,6 @@ function PostCustomActorsVictimsController(
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;
     $scope.selectedParents = [];
-    $scope.selected_cat = [];
     $scope.disabledActors = [];
     $scope.actor_category = [];
     $scope.victim_category = [];
@@ -82,9 +81,8 @@ function PostCustomActorsVictimsController(
                 $scope.changeActors();
             }
         });
-        console.log($scope.post.victim_category);
         _.each($scope.victim_category, function (vc, index) {
-            if (vc.category === cs) {
+            if (parseInt(vc.category) === cs) {
                 $scope.victims = $scope.victim_category[index].victims;
             }
         });
@@ -117,15 +115,16 @@ function PostCustomActorsVictimsController(
     }
 
     function setCondition(victim) {
-        victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
+        victim.sub_conditions = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
     }
 
     function setEthnic(victim) {
-        victim.ages_by_group = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
+        victim.sub_ethnics = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
     }
 
     function activate() {
         if ($scope.post.id) {
+            $scope.selected_cat = $scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f73'];
             _.each($scope.post.actor_category, function (pac) {
                 var found_ac = false;
                 _.each($scope.actor_category, function (ac) {
@@ -135,11 +134,47 @@ function PostCustomActorsVictimsController(
                     }
                 });
                 if (!found_ac) {
-                    $scope.selected_cat.push(parseInt(pac.tag_id));
                     $scope.actor_category.push({
                         category: parseInt(pac.tag_id),
                         actors: [parseInt(pac.actor_id)],
                         actorsParent: []
+                    });
+                }
+            });
+            _.each($scope.post.victim_category, function (pvc) {
+                var found_vc = false;
+                _.each($scope.victim_category, function (vc) {
+                    if (vc.category === parseInt(pvc.tag_id)) {
+                        vc.victims.push({
+                            amount: parseInt(pvc.amount),
+                            victim_gender: pvc.id_gender,
+                            victim_status: pvc.id_status,
+                            victim_ethnic_group: pvc.id_ethnic_group,
+                            victim_sub_ethnic_group: pvc.id_sub_ethnic_group,
+                            victim_age: pvc.id_age,
+                            victim_age_group: pvc.id_age_group,
+                            victim_condition: pvc.id_condition,
+                            victim_sub_condition: pvc.id_sub_condition,
+                            victim_occupation: pvc.id_occupation
+                        });
+                        found_vc = true;
+                    }
+                });
+                if (!found_vc) {
+                    $scope.victim_category.push({
+                        category: parseInt(pvc.tag_id),
+                        victims: [{
+                            amount: parseInt(pvc.amount),
+                            victim_gender: pvc.id_gender,
+                            victim_status: pvc.id_status,
+                            victim_ethnic_group: pvc.id_ethnic_group,
+                            victim_sub_ethnic_group: pvc.id_sub_ethnic_group,
+                            victim_age: pvc.id_age,
+                            victim_age_group: pvc.id_age_group,
+                            victim_condition: pvc.id_condition,
+                            victim_sub_condition: pvc.id_sub_condition,
+                            victim_occupation: pvc.id_occupation
+                        }]
                     });
                 }
             });
@@ -148,6 +183,11 @@ function PostCustomActorsVictimsController(
             });
             $scope.category_selected = $scope.selected_categories[0].id;
             $scope.changeActorsCategory($scope.category_selected);
+            _.each($scope.victim_category, function (vc, index) {
+                if (vc.category === $scope.category_selected) {
+                    $scope.victims = $scope.victim_category[index].victims;
+                }
+            });
             setTimeout(fixInittab, 2000);
         } else {
             // remove default null value when creating a new post
