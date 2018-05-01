@@ -115,11 +115,11 @@ function PostCustomActorsVictimsController(
     }
 
     function setCondition(victim) {
-        victim.sub_conditions = _.where($scope.post.victimsData.victim_sub_condition, {id_condition: victim.victim_condition});
+        victim.sub_conditions = _.where($scope.post.victimsData.victim_sub_condition, {victim_condition_id: victim.victim_condition});
     }
 
     function setEthnic(victim) {
-        victim.sub_ethnics = _.where($scope.post.victimsData.victim_sub_ethnic_group, {id_ethnic_group: victim.victim_ethnic_group});
+        victim.sub_ethnics = _.where($scope.post.victimsData.victim_sub_ethnic_group, {victim_ethnic_group_id: victim.victim_ethnic_group});
     }
 
     function activate() {
@@ -187,6 +187,11 @@ function PostCustomActorsVictimsController(
                 if (vc.category === $scope.category_selected) {
                     $scope.victims = $scope.victim_category[index].victims;
                 }
+                _.each(vc.victims, function (victim, index) {
+                    setEthnic(victim);
+                    setCondition(victim);
+                    setAge(victim);
+                });
             });
             setTimeout(fixInittab, 2000);
         } else {
