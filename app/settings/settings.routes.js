@@ -238,5 +238,13 @@ function (
             controller: require('./plans/plans.controller.js'),
             template: require('./plans/plan.html')
         }
+    )
+    .state(
+        {
+            name: 'callback',
+            url: '/callback',
+            controller: require('./callback/callback.controller.js'),
+            template: require('./callback/callback.html'),
+        }
     );
 }];
