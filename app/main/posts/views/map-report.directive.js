@@ -33,7 +33,7 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
         $scope.categories = ids;
         $http({
 	        method: "post",
-	        url: apiUrl + '/report',
+	        uurl: Util.url('/report')
 	        headers: {
                 'Content-Type' : 'application/x-www-form-urlencoded'
             },
