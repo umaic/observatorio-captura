@@ -20,6 +20,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var requestBlockSize = 5;
         var numberOfChunks = 0;
         var currentGeoJsonRequests = [];
+        var count_search = 0;
 
         activate();
 
@@ -155,6 +156,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 offset: offset,
                 has_location: 'mapped'
             });
+            var ids = [];
 
             var request = PostEndpoint.geojson(conditions);
             currentGeoJsonRequests.push(request);
@@ -167,6 +169,16 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     numberOfChunks += ((posts.total - limit) % limit) > 0 ? 1 : 0;
                 }
 
+                if(count_search > 0){
+                    for(var e of posts.features)
+                        ids.push(e.properties.id);
+                    $scope.$broadcast('parentmethod', ids);
+                    $rootScope.categories = ids;
+                }
+
+                console.log("ids");
+                console.log(ids);
+
                 // Retrieve blocks of chunks
                 // At the end of a block request the next block of chunks
                 if (numberOfChunks > 0 && currentBlock === 1) {
@@ -178,6 +190,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         loadPosts(query, offset, block).then(addPostsToMap);
                     }
                 }
+                count_search++;
                 return posts;
             });
         }

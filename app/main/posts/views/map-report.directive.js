@@ -14,11 +14,12 @@ function MapReportDirective() {
     };
 }
 
-MapReportController.$inject = ['$http', '$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress'];
-function MapReportController($http, $scope, $rootScope, Notify, PostLockService, $state, LoadingProgress) {
+MapReportController.$inject = ['$http', '$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress', 'transformRequestAsFormPost'];
+function MapReportController($http, $scope, $rootScope, Notify, PostLockService, $state, LoadingProgress, transformRequestAsFormPost) {
     
     $scope.tab = 1;
     $scope.showTabs = true;
+    var countg = 0;
 
     $scope.changeTab = function(tab) {
     	$scope.tab = tab;
@@ -28,11 +29,41 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
     	$scope.showTabs = !$scope.showTabs;
     };
 
+    $scope.$on('parentmethod', function (event, ids) {
+        $scope.categories = ids;
+        $http({
+	        method: "post",
+	        url: apiUrl + '/report',
+	        headers: {
+                'Content-Type' : 'application/x-www-form-urlencoded'
+            },
+            transformRequest: transformRequestAsFormPost,
+            data: {ids: ids}
+	    }).then(function(response) {
+	        $scope.resume = response.data.events.total_by_type;
+	        $scope.resumeCount = Object.keys($scope.resume).length;
+	        $scope.categories = [];
+	        $scope.data1 = [];
+	        $scope.data2 = [];
+	        Object.keys(response.data.events.dates).forEach(function(k, v){
+	        	$scope.categories.push(getDateFormatter(k));
+			});
+			var cat = response.data.events.total_by_day.desastres;
+			$scope.data1 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
+			cat = response.data.events.total_by_day.violencia_armada;
+			$scope.data2 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
+			$scope.events_by_category = response.data.events.total_by_categories;
+			$scope.victims_count = response.data.events.victims_count;
+			print_graphics();
+	    });
+    })
+
     $http({
         method: "get",
         url: apiUrl + '/report',
     }).then(function(response) {
         $scope.resume = response.data.events.total_by_type;
+        $scope.resumeCount = Object.keys($scope.resume).length;
         $scope.categories = [];
         $scope.data1 = [];
         $scope.data2 = [];
@@ -40,13 +71,21 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
         	$scope.categories.push(getDateFormatter(k));
 		});
 		var cat = response.data.events.total_by_day.desastres;
-		var data1 = Object.keys(cat).map(function(k) { return cat[k] });
+		$scope.data1 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
 		cat = response.data.events.total_by_day.violencia_armada;
-		var data2 = Object.keys(cat).map(function(k) { return cat[k] });
+		$scope.data2 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
 		$scope.events_by_category = response.data.events.total_by_categories;
 		$scope.victims_count = response.data.events.victims_count;
-		
-		Highcharts.chart('container', {
+		print_graphics();
+    });
+
+    function print_graphics(){
+
+    	var newDiv = angular.element("<div id='graph" + countg + "'></div>");
+	    var target = document.getElementById('container');
+	    angular.element(target).append(newDiv);
+
+    	$scope.chart = Highcharts.chart("graph" + countg, {
 	    	chart:{
 	    		height: 220
 	    	},
@@ -56,20 +95,21 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
 		    xAxis: {
 		        categories: $scope.categories,
 		        crosshair: true,
-		        tickInterval: 2
+		        tickInterval: 2,
+		        isDirty: true
 		    },
 		    series: [{
 		    	showInLegend: false,
 		        name: 'Desastres',
 		        type: 'line',
 		        yAxis: 1,
-		        data: data1,
+		        data: $scope.data1,
 		        color: '#D40000'
 		    }, {
 		    	showInLegend: false,
 		        name: 'Violencia Armada',
 		        type: 'line',
-		        data: data2,
+		        data: $scope.data2,
 		        color: '#2CA02C'
 		    }],
 		    yAxis: [{ // Primary yAxis
@@ -86,6 +126,7 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
 		            }
 		        },
 		        opposite: true,
+		        isDirty: true,
 		        formatter: function(){
 	              return abbreviateNumber(this.value);
 	            }
@@ -104,7 +145,8 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
 		        }
 		    }]
 		});
-    });
+		//$scope.$apply();
+    }
 
 	function abbreviateNumber(value) {
 	    var newValue = value;
