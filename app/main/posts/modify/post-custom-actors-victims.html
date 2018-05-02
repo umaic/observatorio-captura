@@ -1,0 +1,189 @@
+<form name="frm-actors-victims">
+    <div class="form-field">
+        <div class="col-md-12 center-block" ng-if="selected_categories.length > 0">
+            <label for="categorias">Categoría</label>
+            <select ng-model="category_selected" class="actors-category-select"
+                    ng-change="changeActorsCategory(category_selected)"
+                    ng-options="item.id as item.tag for item in selected_categories"
+                    name="categorias">
+            </select>
+            <div>
+                <nav class="tabs-menu init" data-tabs="actor-victim">
+                    <ul style="overflow-x: auto !important;">
+                        <li id="actor-post-li">
+                            <a ng-click="switchTab('post', 'actor')">
+                                Actor/Presunto Perpetrador
+                            </a>
+                        </li>
+                        <li id="victim-post-li">
+                            <a ng-click="switchTab('post', 'victim')">
+                                Afectados
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <div id="actor-post" class="survey-details tabs-target">
+                    <div class="panel panel-warning">
+                        <div class="panel-body">
+                            <div class="form-field checkbox" ng-repeat="(index, actor) in actors"
+                                 ng-if="actor.parent_id === null">
+                                <label>
+                                    <input
+                                            ng-show="actor.children.length === 0 || enableParents === true"
+                                            type="checkbox"
+                                            checklist-value="actor.id"
+                                            ng-disabled="disabledActors[actor.id]"
+                                            value="actor.id"
+                                            checklist-model="selected"
+                                            checklist-change="changeActors()"
+                                    >
+                                    <input
+                                            ng-show="actor.children.length > 0 && enableParents === false"
+                                            type="checkbox"
+                                            checklist-value="actor.id"
+                                            ng-disabled="true"
+                                            value="actor.id"
+                                            checklist-model="selectedParents"
+                                    >
+                                    {{ ::actor.tag }}
+                                </label>
+                                <div class="form-field checkbox" ng-if="actor.children"
+                                     ng-repeat="child in actor.children">
+                                    <label>
+                                        <input
+                                                type="checkbox"
+                                                checklist-model="selected"
+                                                checklist-value="child.id"
+                                                value="child.id"
+                                                ng-selected="selected.indexOf(actor.id) >-1"
+                                                checklist-change="changeActors()"
+                                        >
+                                        {{ ::child.tag }}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="victim-post" class="survey-details tabs-target survey-afected">
+                    <div class="panel panel-warning" ng-repeat="victim in victims track by $index">
+                        <div class="panel-body">
+                            <div class="less-action col-md-1">
+                                <button type="button" class="button-alpha button-fab" ng-if="$index > 0"
+                                        ng-click="delVictim($index)">-
+                                </button>
+                            </div>
+                            <div class="plus-action col-md-1">
+                                <button type="button" class="button-alpha button-fab" ng-click="addVictim()"
+                                        ng-disabled="!victim.amount || ($index+1) < victims.length">+
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <label for="num">Personas</label>
+                                        <input type="number" name="num" ng-model="victim.amount">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="generos">Género</label>
+                                        <select ng-model="victim.victim_gender"
+                                                ng-options="item.id as item.gender for item in post.victimsData.victim_gender"
+                                                name="generos"
+                                                class="col-md-12">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="estados">Estado</label>
+                                        <select ng-model="victim.victim_status"
+                                                ng-options="item.id as item.status for item in post.victimsData.victim_status"
+                                                name="estados"
+                                                class="col-md-12">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-6">
+                                        <label for="poblacion">Grupo Poblacional</label>
+                                        <select ng-model="victim.victim_ethnic_group"
+                                                ng-options="item.id as item.ethnic_group for item in post.victimsData.victim_ethnic_group"
+                                                name="poblacion"
+                                                class="col-md-12"
+                                                ng-change="setEthnic(victim)">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="poblacion">Sub Grupo Poblacional</label>
+                                        <select ng-model="victim.victim_sub_ethnic_group"
+                                                ng-options="item.id as item.sub_ethnic_group for item in victim.sub_ethnics"
+                                                name="poblacion"
+                                                class="col-md-12">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <label for="edad">Grupo de edad</label>
+                                        <select ng-model="victim.victim_age_group"
+                                                ng-options="item.id as item.age_group for item in post.victimsData.victim_age_group"
+                                                name="edad"
+                                                class="col-md-12"
+                                                ng-change="setAge(victim)">
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="edad">Edad</label>
+                                        <select ng-model="victim.victim_age"
+                                                ng-options="item.id as item.age for item in victim.ages_by_group"
+                                                name="edad"
+                                                class="col-md-12">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <label for="ocupacion">Ocupación</label>
+                                        <select ng-model="victim.victim_occupation"
+                                                ng-options="item.id as item.occupation for item in post.victimsData.victim_occupation"
+                                                name="ocupacion"
+                                                class="col-md-12">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <label for="ocupacion">Condición</label>
+                                        <select ng-model="victim.victim_condition"
+                                                ng-options="item.id as item.condition for item in post.victimsData.victim_condition"
+                                                name="ocupacion"
+                                                class="col-md-12"
+                                                ng-change="setCondition(victim)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-md-12">
+                                        <label for="cond">Sub Condición</label>
+                                        <select ng-model="victim.victim_sub_condition"
+                                                ng-options="item.id as item.sub_condition for item in victim.sub_conditions"
+                                                name="cond" class="col-md-12">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

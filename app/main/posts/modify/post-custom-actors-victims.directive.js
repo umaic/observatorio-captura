@@ -12,9 +12,10 @@ function PostCustomActorsVictims() {
             available: '=',
             selected: '=',
             enableParents: '=',
-            form: '='
+            form: '=',
+            post: '='
         },
-        template: require('./custom-actors-victims.html'),
+        template: require('./post-custom-actors-victims.html'),
         controller: PostCustomActorsVictimsController
     };
 }
@@ -37,144 +38,172 @@ function PostCustomActorsVictimsController(
     Notify
 ) {
     $scope.switchTab = switchTab;
+    $scope.addVictim = addVictim;
+    $scope.delVictim = delVictim;
+
+    $scope.setAge = setAge;
+    $scope.setCondition = setCondition;
+    $scope.setEthnic = setEthnic;
+
     //$scope.categorySelected = categorySelected;
     $scope.selectAll = selectAll;
     $scope.selectChild = selectChild;
     $scope.selectParent = selectParent;
     $scope.selectedParents = [];
     $scope.disabledActors = [];
+    $scope.actor_category = [];
+    $scope.victim_category = [];
+    $scope.post.values.victim_category = $scope.victim_category;
+    $scope.victims = [{
+        amount: null,
+        victim_gender: null,
+        victim_status: null,
+        victim_ethnic_group: null,
+        victim_sub_ethnic_group: null,
+        victim_age: null,
+        victim_age_group: null,
+        victim_condition: null,
+        victim_sub_condition: null,
+        victim_occupation: null
+    }];
+
+
     $scope.changeActors = changeActors;
 
-    $scope.estados = [
-        {
-            label: "Desconocido",
-            value: 'desconocido'
-        },
-        {
-            label: "Herido",
-            value: 'herido'
-        },
-        {
-            label: "Muerto",
-            value: 'muerto'
-        },
-        {
-            label: "No aplica",
-            value: 'na'
-        },
-    ];
-
-    $scope.generos = [
-        {
-            label: "Desconocido",
-            value: 'desconocido'
-        },
-        {
-            label: "Femenino",
-            value: 'femenino'
-        },
-        {
-            label: "Masculino",
-            value: 'masculino'
-        },
-    ];
-
-    $scope.poblaciones = [
-        {
-            label: "AfroColombiano",
-            value: 'afro'
-        },
-        {
-            label: "Extranjero",
-            value: 'extranjero'
-        },
-        {
-            label: "Gitano",
-            value: 'gitano'
-        },
-        {
-            label: "Indígena",
-            value: 'indigena'
-        },
-        {
-            label: "Menores",
-            value: 'menores'
-        },
-    ];
-
-    $scope.condiciones = [
-        {
-            label: "Actor armado no estatal",
-            value: 'actor_no_estatal'
-        },
-        {
-            label: "Civil",
-            value: 'civil'
-        },
-        {
-            label: "Desconocido",
-            value: 'desconocido'
-        },
-        {
-            label: "Desmovilizado",
-            value: 'desmovilizado'
-        },
-        {
-            label: "Militar",
-            value: 'militar'
-        },
-    ];
-
-    $scope.ocupaciones = [
-        {
-            label: "Alcalde",
-            value: 'alcalde'
-        },
-        {
-            label: "Combatiente",
-            value: 'combatiente'
-        },
-        {
-            label: "Comerciante",
-            value: 'comerciante'
-        },
-        {
-            label: "Contratista",
-            value: 'contratista'
-        },
-        {
-            label: "Estudiante",
-            value: 'estudiante'
-        },
-    ];
-
-    $scope.edades = [
-        {
-            label: "Desconocido",
-            value: 'desconocido'
-        },
-        {
-            label: "Mayor de 18 años",
-            value: 'mayor'
-        },
-        {
-            label: "Menor de 18 años",
-            value: 'menor'
-        },
-    ];
+    $scope.changeActorsCategory = function (cs) {
+        $scope.category_selected = cs;
+        _.each($scope.actor_category, function (ac) {
+            if (ac.category === cs) {
+                $scope.selected = angular.copy(ac.actors);
+                $scope.selectedParents = angular.copy(ac.actorsParent);
+                $scope.actors = [];
+                $scope.actors = angular.copy($scope.available);
+                $scope.changeActors();
+            }
+        });
+        _.each($scope.victim_category, function (vc, index) {
+            if (parseInt(vc.category) === cs) {
+                $scope.victims = $scope.victim_category[index].victims;
+            }
+        });
+    };
 
     activate();
 
-    function activate() {
-        // remove default null value when creating a new post
-        if ($scope.selected[0] === null) {
-            $scope.selected = [];
-        }
-        $scope.actors = [];
+    function addVictim() {
+        $scope.victims.push({
+            amount: null,
+            victim_gender: null,
+            victim_status: null,
+            victim_ethnic_group: null,
+            victim_sub_ethnic_group: null,
+            victim_age: null,
+            victim_age_group: null,
+            victim_condition: null,
+            victim_sub_condition: null,
+            victim_occupation: null
+        });
+    }
 
-        $scope.actors = $scope.available;
-        // making sure no children are selected without their parents
-        $scope.changeActors();
+    function delVictim(idx) {
+        //console.log(idx);
+        $scope.victims.splice(idx, 1);
+    }
+
+    function setAge(victim) {
+        victim.ages_by_group = _.where($scope.post.victimsData.victim_age, {id_age_group: victim.victim_age_group});
+    }
+
+    function setCondition(victim) {
+        victim.sub_conditions = _.where($scope.post.victimsData.victim_sub_condition, {victim_condition_id: victim.victim_condition});
+    }
+
+    function setEthnic(victim) {
+        victim.sub_ethnics = _.where($scope.post.victimsData.victim_sub_ethnic_group, {victim_ethnic_group_id: victim.victim_ethnic_group});
+    }
+
+    function activate() {
+        if ($scope.post.id) {
+            $scope.selected_cat = $scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f73'];
+            _.each($scope.post.actor_category, function (pac) {
+                var found_ac = false;
+                _.each($scope.actor_category, function (ac) {
+                    if (ac.category === parseInt(pac.tag_id)) {
+                        ac.actors.push(parseInt(pac.actor_id));
+                        found_ac = true;
+                    }
+                });
+                if (!found_ac) {
+                    $scope.actor_category.push({
+                        category: parseInt(pac.tag_id),
+                        actors: [parseInt(pac.actor_id)],
+                        actorsParent: []
+                    });
+                }
+            });
+            _.each($scope.post.victim_category, function (pvc) {
+                var found_vc = false;
+                _.each($scope.victim_category, function (vc) {
+                    if (vc.category === parseInt(pvc.tag_id)) {
+                        vc.victims.push({
+                            amount: parseInt(pvc.amount),
+                            victim_gender: pvc.id_gender,
+                            victim_status: pvc.id_status,
+                            victim_ethnic_group: pvc.id_ethnic_group,
+                            victim_sub_ethnic_group: pvc.id_sub_ethnic_group,
+                            victim_age: pvc.id_age,
+                            victim_age_group: pvc.id_age_group,
+                            victim_condition: pvc.id_condition,
+                            victim_sub_condition: pvc.id_sub_condition,
+                            victim_occupation: pvc.id_occupation
+                        });
+                        found_vc = true;
+                    }
+                });
+                if (!found_vc) {
+                    $scope.victim_category.push({
+                        category: parseInt(pvc.tag_id),
+                        victims: [{
+                            amount: parseInt(pvc.amount),
+                            victim_gender: pvc.id_gender,
+                            victim_status: pvc.id_status,
+                            victim_ethnic_group: pvc.id_ethnic_group,
+                            victim_sub_ethnic_group: pvc.id_sub_ethnic_group,
+                            victim_age: pvc.id_age,
+                            victim_age_group: pvc.id_age_group,
+                            victim_condition: pvc.id_condition,
+                            victim_sub_condition: pvc.id_sub_condition,
+                            victim_occupation: pvc.id_occupation
+                        }]
+                    });
+                }
+            });
+            $scope.selected_categories = $scope.post.categories.filter(function (category) {
+                return $scope.selected_cat.includes(category.id);
+            });
+            $scope.category_selected = $scope.selected_categories[0].id;
+            $scope.changeActorsCategory($scope.category_selected);
+            _.each($scope.victim_category, function (vc, index) {
+                if (vc.category === $scope.category_selected) {
+                    $scope.victims = $scope.victim_category[index].victims;
+                }
+                _.each(vc.victims, function (victim, index) {
+                    setEthnic(victim);
+                    setCondition(victim);
+                    setAge(victim);
+                });
+            });
+            setTimeout(fixInittab, 2000);
+        } else {
+            // remove default null value when creating a new post
+            if ($scope.selected[0] === null) {
+                $scope.selected = [];
+            }
+            $scope.actors = [];
+            $scope.actors = $scope.available;
+            // making sure no children are selected without their parents
+            $scope.changeActors();
+        }
     }
 
     $scope.selectAllEnabled = function () {
@@ -283,41 +312,31 @@ function PostCustomActorsVictimsController(
                 }
             }
         });
+        _.each($scope.actor_category, function (ac) {
+            if (ac.category === $scope.category_selected) {
+                ac.actors = angular.copy($scope.selected);
+                ac.actorsParent = angular.copy($scope.selectedParents);
+            }
+        });
+        $scope.post.values.actor_category = $scope.actor_category;
     }
 
-    var initCategory = function (){
+    function initCategory() {
         if ($scope.selected_categories && $scope.selected_categories.length > 0) {
-            $scope.categoria = $scope.selected_categories[0].id;
+            $scope.category_selected = $scope.selected_categories[0].id;
+            _.each($scope.victim_category, function (vc, index) {
+                if (vc.category === $scope.category_selected) {
+                    $scope.victims = $scope.victim_category[index].victims;
+                }
+            });
         }
     }
 
     function fixInittab() {
-            $scope.tab_history = {};
-
+        $scope.tab_history = {};
         // Set initial menu tab
-            $scope.switchTab('post', 'actor');
-        }
-
-    // function categorySelected() {
-    //         $scope.actors = [
-    //             {
-    //                 label: "Bandas emergentes",
-    //                 value: false
-    //             },
-    //             {
-    //                 label: "Delincuencia",
-    //                 value: false
-    //             },
-    //             {
-    //                 label: "Fuerzas armadas estatales",
-    //                 value: false
-    //             },
-    //             {
-    //                 label: "Guerrillas",
-    //                 value: false
-    //             },
-    //         ];
-    //     }
+        $scope.switchTab('post', 'actor');
+    }
 
     function switchTab(section, tab) {
 
@@ -334,17 +353,64 @@ function PostCustomActorsVictimsController(
         var tab_li = tab + '-li';
         angular.element(document.getElementById(tab)).addClass('active');
         angular.element(document.getElementById(tab_li)).addClass('active');
-    } 
+    }
 
-    $rootScope.$on('selected_category', function(e){
+    $rootScope.$on('selected_category', function (e) {
         var selected = e.targetScope.selected;
         var categories = e.targetScope.categories;
-
-        $scope.selected_categories = categories.filter(function(category){
+        _.each(selected, function (sel) {
+            var found_ac = false;
+            var found_vc = false;
+            _.each($scope.actor_category, function (ac) {
+                if (ac.category === sel) {
+                    found_ac = true;
+                }
+            });
+            _.each($scope.victim_category, function (vc) {
+                if (vc.category === sel) {
+                    found_vc = true;
+                }
+            });
+            if (!found_ac) {
+                $scope.actor_category.push({
+                    category: sel,
+                    actors: [],
+                    actorsParent: []
+                });
+            }
+            if (!found_vc) {
+                $scope.victim_category.push({
+                    category: sel,
+                    victims: [{
+                        amount: null,
+                        victim_gender: null,
+                        victim_status: null,
+                        victim_ethnic_group: null,
+                        victim_sub_ethnic_group: null,
+                        victim_age: null,
+                        victim_age_group: null,
+                        victim_condition: null,
+                        victim_sub_condition: null,
+                        victim_occupation: null
+                    }]
+                });
+            }
+        });
+        _.each($scope.actor_category, function (ac, index) {
+            if (ac && !selected.includes(ac.category)) {
+                $scope.actor_category.splice(index, 1);
+            }
+        });
+        _.each($scope.victim_category, function (vc, index) {
+            if (vc && !selected.includes(vc.category)) {
+                $scope.victim_category.splice(index, 1);
+            }
+        });
+        $scope.selected_categories = categories.filter(function (category) {
             return selected.includes(category.id);
         });
 
         initCategory();
         setTimeout(fixInittab, 2000);
-    }); 
+    });
 }

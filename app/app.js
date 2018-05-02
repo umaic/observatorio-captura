@@ -49,6 +49,7 @@ var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BAC
         'api',
         'tags',
         'actors',
+        'sources',
         'savedsearches',
         'sets',
         'users',
@@ -90,11 +91,15 @@ angular.module('app',
     ])
 
     .constant('CONST', {
-        BACKEND_URL: backendUrl,//'http://apimonitor.kuery.com.co',
+        BACKEND_URL: backendUrl,
         API_URL: apiUrl,
         INTERCOM_APP_ID: intercomAppId,
         APP_STORE_ID: appStoreId,
         DEFAULT_LOCALE: 'en_US',
+        auth0_clientID: '5RVlNXQkW9vBM35eimh4cpaChvxJjAPg',
+        auth0_domain: 'kuery.auth0.com',
+        auth0_audience: 'https://kuery.auth0.com/userinfo',
+        auth0_redirectUri: 'http://monitor.kuery.com.co:3000/callback',
         OAUTH_CLIENT_ID: 'ushahidiui',
         OAUTH_CLIENT_SECRET: '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,
@@ -174,97 +179,83 @@ angular.module('app',
     .run(function () {
         angular.element(document.getElementById('bootstrap-app')).removeClass('hidden');
         angular.element(document.getElementById('bootstrap-loading')).addClass('hidden');
-    }).controller('CallbackController', function ($scope, Authentication) {
-    Authentication.handleAuthentication();
-}).factory(
-    "transformRequestAsFormPost",
-    function () {
-        // I prepare the request data for the form post.
-        function transformRequest(data, getHeaders) {
-            var headers = getHeaders();
-            headers["Content-type"] = "application/x-www-form-urlencoded; charset=utf-8";
-            return (serializeData(data));
-        }
+    })
+    .controller('CallbackController', ['$scope', 'Authentication', function ($scope, Authentication) {
+        Authentication.handleAuthentication();
+    }])
+    .factory(
+        "transformRequestAsFormPost",
+        function () {
+            // I prepare the request data for the form post.
+            function transformRequest(data, getHeaders) {
+                var headers = getHeaders();
+                headers["Content-type"] = "application/x-www-form-urlencoded; charset=utf-8";
+                return (serializeData(data));
+            }
 
-        // Return the factory value.
-        return (transformRequest);
-        // ---
-        // PRVIATE METHODS.
-        // ---
-        // I serialize the given Object into a key-value pair string. This
-        // method expects an object and will default to the toString() method.
-        // --
-        // NOTE: This is an atered version of the jQuery.param() method which
-        // will serialize a data collection for Form posting.
-        // --
-        // https://github.com/jquery/jquery/blob/master/src/serialize.js#L45
-        function serializeData(data) {
-            // If this is not an object, defer to native stringification.
-            if (!angular.isObject(data)) {
-                return ((data == null) ? "" : data.toString());
-            }
-            var buffer = [];
-            // Serialize each key in the object.
-            for (var name in data) {
-                if (!data.hasOwnProperty(name)) {
-                    continue;
+            // Return the factory value.
+            return (transformRequest);
+            // ---
+            // PRVIATE METHODS.
+            // ---
+            // I serialize the given Object into a key-value pair string. This
+            // method expects an object and will default to the toString() method.
+            // --
+            // NOTE: This is an atered version of the jQuery.param() method which
+            // will serialize a data collection for Form posting.
+            // --
+            // https://github.com/jquery/jquery/blob/master/src/serialize.js#L45
+            function serializeData(data) {
+                // If this is not an object, defer to native stringification.
+                if (!angular.isObject(data)) {
+                    return ((data == null) ? "" : data.toString());
                 }
-                var value = data[name];
-                buffer.push(
-                    encodeURIComponent(name) +
-                    "=" +
-                    encodeURIComponent((value == null) ? "" : value)
-                );
+                var buffer = [];
+                // Serialize each key in the object.
+                for (var name in data) {
+                    if (!data.hasOwnProperty(name)) {
+                        continue;
+                    }
+                    var value = data[name];
+                    buffer.push(
+                        encodeURIComponent(name) +
+                        "=" +
+                        encodeURIComponent((value == null) ? "" : value)
+                    );
+                }
+                // Serialize the buffer and clean it up for transportation.
+                var source = buffer
+                    .join("&")
+                    .replace(/%20/g, "+")
+                ;
+                return (source);
             }
-            // Serialize the buffer and clean it up for transportation.
-            var source = buffer
-                .join("&")
-                .replace(/%20/g, "+")
-            ;
-            return (source);
         }
-    }
-);
+    );
 
 
 config.$inject = [
-    '$stateProvider',
     '$locationProvider',
     '$urlRouterProvider',
+    'CONST',
     'angularAuth0Provider'
 ];
 
 function config(
-    $stateProvider,
     $locationProvider,
     $urlRouterProvider,
+    CONST,
     angularAuth0Provider
 ) {
 
-    $stateProvider
-        .state('callback', {
-            url: '/callback',
-            controller: 'CallbackController',
-            templateUrl: 'callback/callback.html',
-            controllerAs: 'vm'
-        });
-
     // Initialization for the angular-auth0 library
-    /*angularAuth0Provider.init({
-      clientID: 'c93Bot24smjNy72aNl0eITQekP6oV7C7',
-      domain: 'yflorezr887.auth0.com',
-      responseType: 'token id_token',
-      audience: 'https://yflorezr887.auth0.com/userinfo',
-      redirectUri: 'http://monitor.kuery.com.co:3000/callback',
-      scope: 'openid'
-    });*/
 
     angularAuth0Provider.init({
-        clientID: '5RVlNXQkW9vBM35eimh4cpaChvxJjAPg',
-        domain: 'kuery.auth0.com',
+        clientID: CONST.auth0_clientID,
+        domain: CONST.auth0_domain,
         responseType: 'token id_token',
-        audience: 'https://kuery.auth0.com/userinfo',
-        redirectUri: 'http://monitor.kuery.com.co:3000/callback',
+        audience: CONST.auth0_audience,
+        redirectUri: CONST.auth0_redirectUri,
         scope: 'openid'
     });
 

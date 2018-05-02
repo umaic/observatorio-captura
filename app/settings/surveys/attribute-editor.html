@@ -48,7 +48,17 @@
             enable-parents="true"
         ></category-selector>
     </div>
-    <!-- End of editing/adding actors -->
+    <!-- End of editing/adding sources -->
+    <!-- editing/adding sources -->
+    <div class="form-field" ng-if="editAttribute.input ==='sources'">
+        <label translate>Which Sources should be available</label>
+        <category-selector
+            available="availableSources"
+            selected="editAttribute.options"
+            enable-parents="true"
+        ></category-selector>
+    </div>
+    <!-- End of editing/adding sources -->
         <div class="form-field" ng-if="editAttribute.input === 'relation'">
             <label translate>survey.field_allowed_relation_survey</label>
             <ul name="visible-to">
