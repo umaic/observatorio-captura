@@ -82,8 +82,12 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
     function print_graphics(){
 
     	var newDiv = angular.element("<div id='graph" + countg + "'></div>");
+    	var newDiv2 = angular.element("<div id='graph2'></div>");
+    	var newDiv3 = angular.element("<div id='graph3'></div>");
 	    var target = document.getElementById('container');
 	    angular.element(target).append(newDiv);
+	    angular.element(target).append(newDiv2);
+	    angular.element(target).append(newDiv3);
 
     	$scope.chart = Highcharts.chart("graph" + countg, {
 	    	chart:{
@@ -144,6 +148,103 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
 		            }
 		        }
 		    }]
+		});
+		Highcharts.chart('graph2', {
+		    chart: {
+		        type: 'pie',
+		        height: 220
+		    },
+		    title: {
+		        text: 'Victimas por grupo poblacional'
+		    },
+		    plotOptions: {
+		        series: {
+		            dataLabels: {
+		                enabled: true,
+		                format: '{point.name}: {point.y:.1f}%'
+		            }
+		        }
+		    },
+
+		    tooltip: {
+		        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+		    },
+
+		    "series": [
+		        {
+		            "name": "Datos",
+		            "colorByPoint": true,
+		            "data": [
+		                {
+		                    "name": "Indígena",
+		                    "y": (($scope.victims_count.indigenas * 100) / 100),
+		                    "drilldown": "Indigena"
+		                },
+		                {
+		                    "name": "Población en general",
+		                    "y": (($scope.victims_count.otro * 100) / 100),
+		                    "drilldown": "Población en general"
+		                },
+		                {
+		                    "name": "Sin info",
+		                    "y": (($scope.victims_count.no_info * 100) / 100),
+		                    "drilldown": "Sin info"
+		                },
+		                {
+		                    "name": "Extranjero",
+		                    "y": (($scope.victims_count.extranjero * 100) / 100),
+		                    "drilldown": "Extranjero"
+		                }
+		            ]
+		        }
+		    ]
+		});
+		Highcharts.chart('graph3', {
+		    chart: {
+		        type: 'pie',
+		        height: 220
+		    },
+		    title: {
+		        text: 'Victimas por genero'
+		    },
+		    plotOptions: {
+		        series: {
+		            dataLabels: {
+		                enabled: true,
+		                format: '{point.name}: {point.y:.1f}%'
+		            }
+		        }
+		    },
+
+		    tooltip: {
+		        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+		    },
+
+		    "series": [
+		        {
+		            "name": "Datos",
+		            "colorByPoint": true,
+		            "data": [
+		                {
+		                    "name": "Hombres",
+		                    "y": (($scope.victims_count.hombres * 100) / 100),
+		                    "drilldown": "Hombres"
+		                },
+		                {
+		                    "name": "Mujeres",
+		                    "y": (($scope.victims_count.menores * 100) / 100),
+		                    "drilldown": "Mujeres"
+		                },
+		                {
+		                    "name": "Desconocido",
+		                    "y": (($scope.victims_count.desconocido * 100) / 100),
+		                    "drilldown": "Desconocido"
+		                }
+		            ]
+		        }
+		    ]
 		});
 		//$scope.$apply();
     }
