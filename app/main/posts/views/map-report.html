@@ -68,7 +68,7 @@
             </div>
             <div id="resumen" ng-class="{'ui-tabs-hide' : tab != 2, 'hidden' : !showTabs}"  class="ui-tabs-panel ui-widget-content ui-corner-bottom">
                 <div class="div_table_totalxd">
-                    <div id="resumen_ec" class="hide left half" style="display: block;">
+                    <div id="resumen_ec" class="left half" style="display: block;">
                         <div id="resumen_total_ec" ng-if="$index == 1" class="ec resumen_total" ng-repeat="(key, value) in resume">
                             <div id="resumen_total_ec_num" class="num">{{value}}</div>
                             <div class="cat bold">Total de
@@ -81,7 +81,7 @@
                             <div class="cat">{{key}}</div>
                         </div>
                     </div>
-                    <div id="resumen_dn" class="hide left half" style="display: block;">
+                    <div id="resumen_dn" class="left half" style="display: block;">
                         <div id="resumen_total_dn" ng-if="$index == 0" class="dn resumen_total" ng-repeat="(key, value) in resume">
                             <div id="resumen_total_dn_num" class="num">{{value}}</div>
                             <div class="cat">Total de
