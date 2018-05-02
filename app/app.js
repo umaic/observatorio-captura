@@ -99,7 +99,7 @@ angular.module('app',
         auth0_clientID: '5RVlNXQkW9vBM35eimh4cpaChvxJjAPg',
         auth0_domain: 'kuery.auth0.com',
         auth0_audience: 'https://kuery.auth0.com/userinfo',
-        auth0_redirectUri: 'http://monitor.kuery.com.co:3000/callback',
+        auth0_redirectUri: 'http://monitor.kuery.com.co/callback',
         OAUTH_CLIENT_ID: 'ushahidiui',
         OAUTH_CLIENT_SECRET: '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,
@@ -235,6 +235,7 @@ angular.module('app',
 
 
 config.$inject = [
+    '$stateProvider',
     '$locationProvider',
     '$urlRouterProvider',
     'CONST',
@@ -242,12 +243,20 @@ config.$inject = [
 ];
 
 function config(
+    $stateProvider,
     $locationProvider,
     $urlRouterProvider,
     CONST,
     angularAuth0Provider
 ) {
 
+    $stateProvider
+        .state('callback', {
+            url: '/callback',
+            controller: 'CallbackController',
+            templateUrl: 'settings/callback/callback.html',
+            controllerAs: 'vm'
+        });
     // Initialization for the angular-auth0 library
 
     angularAuth0Provider.init({
