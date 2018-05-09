@@ -176,9 +176,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     $rootScope.categories = ids;
                 }
 
-                console.log("ids");
-                console.log(ids);
-
                 // Retrieve blocks of chunks
                 // At the end of a block request the next block of chunks
                 if (numberOfChunks > 0 && currentBlock === 1) {
