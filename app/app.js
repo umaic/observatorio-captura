@@ -26,6 +26,7 @@ require('./settings/settings.module.js');
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
+//require('../lib/css/jquery-ui-1.8.22.custom.min.css');
 require('../sass/vendor.scss');
 
 // Stub ngRaven module incase its not configured
