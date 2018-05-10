@@ -116,6 +116,7 @@
     "leaflet.markercluster": "1.0.5",
     "moment": "2.18.0",
     "moment-timezone": "^0.5.4",
+    "ng-csv": "^0.3.6",
     "ng-showdown": "^1.1.0",
     "ngGeolocation": "rjmackay/ngGeolocation",
     "nvd3": "^1.8.4",

@@ -38,8 +38,8 @@ window.ushahidi = window.ushahidi || {};
 var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
-    apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
-    //apiUrl = window.ushahidi.apiUrl = 'http://apimonitor.kuery.com.co' + '/api/v3',
+    //apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
+    apiUrl = window.ushahidi.apiUrl = 'http://apimonitor.kuery.com.co' + '/api/v3',
     platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
     claimedAnonymousScopes = [
         'apikeys',
@@ -91,7 +91,7 @@ angular.module('app',
     ])
 
     .constant('CONST', {
-        BACKEND_URL: backendUrl,
+        BACKEND_URL: 'http://apimonitor.kuery.com.co',// backendUrl,
         API_URL: apiUrl,
         INTERCOM_APP_ID: intercomAppId,
         APP_STORE_ID: appStoreId,
@@ -99,7 +99,7 @@ angular.module('app',
         auth0_clientID: '5RVlNXQkW9vBM35eimh4cpaChvxJjAPg',
         auth0_domain: 'kuery.auth0.com',
         auth0_audience: 'https://kuery.auth0.com/userinfo',
-        auth0_redirectUri: 'http://monitor.kuery.com.co/callback',
+        auth0_redirectUri: 'http://monitor.kuery.com.co:3000/callback',
         OAUTH_CLIENT_ID: 'ushahidiui',
         OAUTH_CLIENT_SECRET: '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,
