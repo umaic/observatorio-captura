@@ -26,6 +26,7 @@ require('./settings/settings.module.js');
 // Load platform-pattern-library CSS
 require('ushahidi-platform-pattern-library/assets/fonts/Lato/css/fonts.css');
 require('ushahidi-platform-pattern-library/assets/css/style.min.css');
+//require('../lib/css/jquery-ui-1.8.22.custom.min.css');
 require('../sass/vendor.scss');
 
 // Stub ngRaven module incase its not configured
@@ -99,7 +100,7 @@ angular.module('app',
         auth0_clientID: '5RVlNXQkW9vBM35eimh4cpaChvxJjAPg',
         auth0_domain: 'kuery.auth0.com',
         auth0_audience: 'https://kuery.auth0.com/userinfo',
-        auth0_redirectUri: 'http://monitor.kuery.com.co/callback',
+        auth0_redirectUri: 'http://monitor.kuery.com.co:3000/callback',
         OAUTH_CLIENT_ID: 'ushahidiui',
         OAUTH_CLIENT_SECRET: '35e7f0bca957836d05ca0492211b0ac707671261',
         CLAIMED_ANONYMOUS_SCOPES: claimedAnonymousScopes,

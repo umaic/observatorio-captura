@@ -240,7 +240,7 @@
     "select_desc": "Una lista de elementos desplegable",
     "radio_desc": "Permite al usuario elegir una opción de una lista predefinida.",
     "checkbox_desc": "Permite al usuario elegir una o más opciones de una lista predefinida.",
-    "relation_desc": "Crea una relación entre diferentes surveys",
+    "relation_desc": "Crea una relación entre diferentes formularios",
     "upload_desc": "Permite subir imágenes al reporte",
     "video_desc": "Permite insertar videos de Youtube o Vimeo en esta publicación",
     "markdown_desc": "Permite el uso de etiquetas para aplicar estilos al contenido del campo.",
@@ -614,14 +614,14 @@
     "author": "Autor",
     "post_date": "Fecha del reporte",
     "change_author": "Cambiar autor",
-    "status_published": "Published",
-    "status_review": "Under review",
-    "status_archived": "Archived",
+    "status_published": "Publicado",
+    "status_review": "En revisión",
+    "status_archived": "Archivado",
     "locking": {
-      "unlocked": "Post successfully unlocked",
+      "unlocked": "Post desbloqueado satisfactoriamente",
       "unlock": "Unlock",
-      "lock_broken_by_other": "Your Post has been unlocked. Your current unsaved changes will be lost.",
-      "locked_message": "The report is locked because <strong>{{ user }}</strong> is working on it right now. Try editing a different post."
+      "lock_broken_by_other": "Tu publicación ha sido desbloqueada. Sus cambios actuales no guardados se perderán.",
+      "locked_message": "El reporte esta bloqueado porque <strong>{{ user }}</strong> está trabajando en el ahora mismo. Intenta editar una publicación diferente."
     },
     "modify": {
       "intro": "Seleccionar survey:",
@@ -926,11 +926,13 @@
       "general": "General",
       "general_desc": "Cambiar el nombre, descripción, logo y otros detalles del despliegue.",
       "surveys": "Formularios",
-      "surveys_desc": "Crear y configurar las colecciones de los surveys de su despliegue.",
+      "surveys_desc": "Crear y configurar las colecciones de los formularios de su despliegue.",
       "data_sources": "Fuentes de datos",
       "data_sources_desc": "Configurar email, SMS, y canales de medios sociales que ayuden a su despliegue a tener contenido.",
       "import": "Importar",
       "import_desc": "Subir datos de survey para su despliegue desde un fichero CSV.",
+      "export": "Exportar información",
+      "export_desc": "Exportar toda un información en un archivo CSV file o selecciona la información que necesitas.",
       "users": "Usuarios",
       "users_desc": "Crear y gestionar la gente que contribuye a su despliegue.",
       "roles": "Roles",
@@ -942,13 +944,13 @@
       "sources": "Fuentes",
       "sources_desc": "Crear y gestionar las fuentes de información que los usuarios pueden añadir a los reportes",
       "webhooks": "Webhooks",
-      "webhooks_desc": "Create webhooks that send Ushahidi Platform data to external applications when specific events are triggered.",
+      "webhooks_desc": "Crea webhooks que envían información a aplicaciones de terceros cuando un evento específico sucede.",
       "plans": "Planes",
       "plan_desc": "Su actual plan de despliegue es <strong>{{current_plan}}</strong>."
     },
     "data_sources": {
       "data_sources": "Fuentes de Datos",
-      "enable_provider_message": "Aceptar entrega de surveys desde esta fuente",
+      "enable_provider_message": "Aceptar entrega de formularios desde esta fuente",
       "hint_turn_on_off": "Puede configurar opciones para esta fuente de datos y luego habilitar o deshabilitar dicha fuente.",
       "hint_plugin_needs_configuring": "Necesita configurar esta fuente de datos para poder habilitarla.",
       "provider_options": "Opciones",
@@ -1249,18 +1251,18 @@
     "form": {
       "add_to_survey": "Añadir a la formulario",
       "save_success": "Formulario  {{name}} guardada",
-      "save_stage_success": "Tarea del survey {{name}} guardada",
+      "save_stage_success": "Tarea del formulario {{name}} guardada",
       "save_attribute_success": "Campo {{name}} añadido",
       "edit_form_success": "Formulario  {{name}} actualizada",
       "edit_stage_success": " Tarea de formulario  {{name}} actualizada",
       "delete_form_confirm": "Seguro de que desea borrar este survey?",
-      "delete_form_confirm_desc": "This action cannot be undone. Deleting this survey will remove all of its data, including posts.",
+      "delete_form_confirm_desc": "Esta acción no se puede deshacer. Al eliminar esta encuesta, se eliminarán todos sus datos, incluidas las publicaciones.",
       "destroy_form_success": "Formulario {{name}} borrado",
       "delete_stage_confirm": "¿Seguro de que desea borrar esta tarea?",
-      "delete_stage_confirm_desc": "This action cannot be undone. Deleting this task will remove all of its fields, and any data in them.",
+      "delete_stage_confirm_desc": "Esta acción no se puede deshacer. Al eliminar esta tarea, se eliminarán todos sus campos y cualquier dato que contengan.",
       "destroy_stage_success": "Formulario tarea {{name}} borrada",
       "delete_attribute_confirm": "Seguro de que desea borrar este campo?",
-      "delete_attribute_confirm_desc": "This action cannot be undone. Deleting this field will remove its data from all existing posts.",
+      "delete_attribute_confirm_desc": "Esta acción no se puede deshacer. Al eliminar este campo, se eliminarán sus datos de todas las publicaciones existentes.",
       "destroy_attribute_success": "Campo {{name}} borrado"
     },
     "collection": {
@@ -1272,11 +1274,11 @@
       "bulk_add_to_collection": "{{count}} reportes han sido añadidos a {{collection}}"
     },
     "savedsearch": {
-      "delete_savedsearch_success": "Saved search deleted successfully.",
-      "delete_savedsearch_plural_success": "Saved searches deleted successfully.",
+      "delete_savedsearch_success": "La búsqueda guardada se borró exitosamente.",
+      "delete_savedsearch_plural_success": "Las búsquedas guardadas se borraron exitosamente.",
       "delete_savedsearch_confirm": "Seguro de que desea borrar esta búsqueda guardada?",
-      "savedsearch_updated": "{{savedsearch}} was updated",
-      "savedsearch_saved": "{{savedsearch}} was saved"
+      "savedsearch_updated": "{{savedsearch}} actualizado",
+      "savedsearch_saved": "{{savedsearch}} guardado"
     },
     "passwordreset": {
       "failed": "Fallo en el reseteo de su contraseña",

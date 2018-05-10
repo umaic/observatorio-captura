@@ -124,7 +124,13 @@ function PostCustomActorsVictimsController(
 
     function activate() {
         if ($scope.post.id) {
-            $scope.selected_cat = $scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f73'];
+            if ($scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f73']) {
+                $scope.selected_cat = $scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f73'];
+            } else if ($scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f11']) {
+                $scope.selected_cat = $scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f11'];
+            } else if ($scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f12']) {
+                $scope.selected_cat = $scope.post.values['4e8546ce-e248-47f4-889b-94c33a900f12'];
+            }
             _.each($scope.post.actor_category, function (pac) {
                 var found_ac = false;
                 _.each($scope.actor_category, function (ac) {
