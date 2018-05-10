@@ -932,7 +932,7 @@
       "import": "Importar",
       "import_desc": "Subir datos de survey para su despliegue desde un fichero CSV.",
       "export": "Exportar información",
-      "export_desc": "Exportar toda un información en un archivo CSV file o selecciona la información que necesitas.",
+      "export_desc": "Exportar toda la información en un archivo CSV.",
       "users": "Usuarios",
       "users_desc": "Crear y gestionar la gente que contribuye a su despliegue.",
       "roles": "Roles",
@@ -1039,6 +1039,18 @@
     "cancel_import": "Cancelar importación",
     "finish_import": "Finalizar importación",
     "which_survey": "¿Qué formulario?"
+  },
+  "data_export": {
+    "title": "Exportar información",
+    "description": "Exportar toda la información en un archivo CSV.",
+    "all": "Exportar",
+    "select_fields": "Seleccionar campos",
+    "select_fields_title": "Selecciona los campos a exportar...",
+    "select_fields_desc": "If you don't want to export all of your data at once, you can select specific fields from each survey for export.",
+    "export_selected": "Exportar campos seleccionados",
+    "cancel": "Cancelar",
+    "export_progress": "Exportación en progreso",
+    "no_fields": "Uh oh... you need to select some fields to export first."
   },
   "user": {
     "role_display": "Rol: {{role}}",
