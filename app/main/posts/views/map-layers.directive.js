@@ -17,28 +17,61 @@ function MapLayersDirective() {
 MapLayerController.$inject = ['$http', '$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress', 'transformRequestAsFormPost', 'Util'];
 function MapLayerController($http, $scope, $rootScope, Notify, PostLockService, $state, LoadingProgress, transformRequestAsFormPost, Util) {
 
+	$scope.close = true;
+	$scope.searchText = "";
+
+	$rootScope.$on('show_modal_layers', function (e) {
+		$scope.show_modal_layers();
+	});
+
+	$scope.show_modal_layers = function(){
+		$scope.close = !$scope.close;
+	}
+
 	$http({
         method: "get",
         headers: {
             'Content-Type': 'text/xml; charset=utf-8'
         },
-        url: 'https://geonode.umaic.org/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3'
+        url: '../../../assets/xml/data.xml'
     }).then(function (response) {
         var parser = new DOMParser();
-        console.log(response);
-		//var xmlDoc = parser.parseFromString(text,"text/xml");
+		var xmlDoc = parser.parseFromString(response.data,"text/xml");
+		var layers = xmlDoc.getElementsByTagName("Layer");
+		var count = 0;
+		$scope.layers = []
+		for(var l of layers){
+			if(count > 0){
+				$scope.layers.push({
+					name: l.getElementsByTagName("Name")[0].childNodes[0].nodeValue,
+					title: l.getElementsByTagName("Title")[0].childNodes[0].nodeValue,
+					text: l.getElementsByTagName("Abstract")[0].childNodes[0].nodeValue,
+					isChecked: false,
+					id: l.getElementsByTagName("Name")[0].childNodes[0].nodeValue
+				});
+			}
+			count++;
+		}
     });
 
-    $scope.layer = function (){
-    	var districtLayer = L.tileLayer.wms('https://geonode.umaic.org/geoserver/wms', {
-            layers: 'geonode:col_municipality_2014_v2',
-            tiled: true,
-            format: 'image/png',
-            transparent: true
-        });
-        setTimeout(function(){ 
-        	$rootScope.map.addLayer(districtLayer);
-        },500);
+    $scope.layer = function (layer){
+    	console.log(layer.isChecked);
+		if(!layer.isChecked){
+			$rootScope.map.eachLayer(function(l) {
+		    	if( l instanceof L.TileLayer ){
+			    	if(layer.name == l.options.layers)
+			    		$rootScope.map.removeLayer(l);
+			    }
+			});
+		}else{
+	    	var districtLayer = L.tileLayer.wms('https://geonode.umaic.org/geoserver/wms', {
+	            layers: layer.name,
+	            tiled: true,
+	            format: 'image/png',
+	            transparent: true
+	        });
+	        $rootScope.map.addLayer(districtLayer);
+	    }
     }
 
 }

@@ -1,4 +1,4 @@
-<div id="layers_div" class="filtro" style="display: block;">
+<div id="layers_div" class="filtro" style="display: block;" ng-class="{'hide' : close}">
     <div class="left">
         <div class="left">
             <h1 class="dosis">Adicionar capas al mapa</h1>
@@ -9,7 +9,7 @@
         <div class="clear"></div>
     </div>
     <div class="right">
-        <a data-div="layers_div" href="#" class="close"><img src="../../../assets/img/close.png" alt="Cerrar" src=""></a>
+        <a data-div="layers_div" ng-click="show_modal_layers()" class="close"><img src="../../../assets/img/close.png" alt="Cerrar" src=""></a>
     </div>
     <div class="clear"></div>
     <p class="inline-block">
@@ -17,22 +17,15 @@
         de Sala Humanitaria
     </p>
     <div class="left w100 mb5">
-        <input type="text" class="w100" placeholder="Buscar por palabra en nombre o descripción">
+        <input type="text" class="w100" ng-model="searchText" placeholder="Buscar por palabra en nombre o descripción">
     </div>
     <div class="clear"></div>
     <div class="pt15">
-        <div class="item-layer">
-            <div class="left layer"> 
-                <input type="checkbox" value="geonode:asentamientos_puntos">
-                <h3>Asentamientos y Pasos Informales frontera colombo-venezolana (La Guajira)</h3>
-                <p class="nota">Puntos georeferenciados correspondientes a los asentamientos informales en La Guajira (Colombia) y los pasos informales en la frontera colombo-venezolana. 2017</p>
-            </div>
-        </div>
-        <div>
-            <div class="left layer"> 
-                <input type="checkbox" value="geonode:asentamientos_puntos">
-                <h3>Asentamientos y Pasos Informales frontera colombo-venezolana (La Guajira)</h3>
-                <p class="nota">Puntos georeferenciados correspondientes a los asentamientos informales en La Guajira (Colombia) y los pasos informales en la frontera colombo-venezolana. 2017 Puntos georeferenciados correspondientes a los asentamientos informales en La Guajira (Colombia) y los pasos informales en la frontera colombo-venezolana. 2017</p>
+        <div class="item-layer" ng-repeat="l in layers | filter:searchText">
+            <div class="left layer w100"> 
+                <input type="checkbox"  ng-model="l.isChecked" ng-change="layer(l)">
+                <h3>{{l.title}}</h3>
+                <p class="nota">{{l.text}}</p>
             </div>
         </div>
     </div>
