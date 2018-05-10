@@ -22,16 +22,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         var numberOfChunks = 0;
         var currentGeoJsonRequests = [];
         var count_search = 0;
-
+        $scope.allMonitorLayers = {events: [], victims: []};
         activate();
-
-        $rootScope.$on('show_victims', function (e) {
-            console.log('show_victims');
-        });
-
-        $rootScope.$on('show_events', function (e) {
-            console.log('show_events');
-        });
 
         function activate() {
             // Set the page title
@@ -90,6 +82,25 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 markers = undefined;
             }
         }
+
+        $rootScope.$on('show_victims', function (e) {
+            angular.forEach($scope.allMonitorLayers.events, function (lay) {
+                map.removeLayer(lay);
+            });
+            angular.forEach($scope.allMonitorLayers.victims, function (lay) {
+                lay.addTo(map);
+            });
+
+        });
+
+        $rootScope.$on('show_events', function (e) {
+            angular.forEach($scope.allMonitorLayers.victims, function (lay) {
+                map.removeLayer(lay);
+            });
+            angular.forEach($scope.allMonitorLayers.events, function (lay) {
+                lay.addTo(map);
+            });
+        });
 
         function addPostsToMap(posts) {
             var forms = [];
@@ -196,11 +207,13 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     angular.forEach(geojson.getLayers(), function (layer) {
                         $scope.events.addLayer(layer);
                     });
-                    $scope.victims.addTo(map);
+                    $scope.events.addTo(map);
                 } else {
                     markers = geojson;
                     markers.addTo(map);
                 }
+                $scope.allMonitorLayers.events.push($scope.events);
+                $scope.allMonitorLayers.victims.push($scope.victims);
             });
             if (posts.features.length > 0) {
                 map.fitBounds(geojsonParent.getBounds());
