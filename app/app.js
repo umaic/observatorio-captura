@@ -88,6 +88,7 @@ angular.module('app',
         'ushahidi.main',
         'ushahidi.settings',
         'ui.bootstrap.dropdown',
+        'ngSanitize',
         'ngCsv'
     ])
 
