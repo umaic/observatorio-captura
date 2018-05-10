@@ -1,6 +1,7 @@
 module.exports = PostViewMap;
 
 PostViewMap.$inject = ['PostEndpoint', 'Maps', '_', 'PostFilters', 'Leaflet', '$q', '$rootScope', '$compile', '$location', '$timeout', '$state', '$translate'];
+
 function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $compile, $location, $timeout, $state, $translate) {
     return {
         restrict: 'E',
@@ -38,7 +39,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
             // Start loading data
             var mapSelector = $scope.noui ? '#map-noui' : '#map-full-size';
-            var createMapDirective =  Maps.createMap(element[0].querySelector(mapSelector));
+            var createMapDirective = Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
             });
@@ -56,7 +57,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             // Change state on mode change
             $scope.$watch(() => {
                 return PostFilters.getModeId();
-            }, (mode) => {
+        }, (mode) => {
                 if (PostFilters.getMode() === 'savedsearch') {
                     $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
                 } else if (PostFilters.getMode() === 'collection') {
@@ -83,27 +84,61 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
         }
 
         function addPostsToMap(posts) {
-            var geojson = L.geoJson(posts, {
+            var forms = [];
+            angular.forEach(posts.features, function (post) {
+                var exists = false;
+                angular.forEach(forms, function (fp) {
+                    if (fp.form_id === post.properties.form) {
+                        fp.features.push(post);
+                        exists = true;
+                    }
+                });
+                if (!exists) {
+                    var post_copy = angular.copy(posts);
+                    post_copy.form_id = post.properties.form;
+                    post_copy.features = [post];
+                    forms.push(post_copy);
+                }
+            });
+            var geojsonParent = L.geoJson(posts, {
                 pointToLayer: Maps.pointToLayer,
                 onEachFeature: onEachFeature
             });
-
-            if (map.options.clustering) {
-
-                markers = markers ? markers : L.markerClusterGroup();
-                // This has to be done individually.
-                // Using clusterLayer.addLayers() breaks the clustering.
-                // Need to investigate as this should have been fixing in v1.0.0
-                angular.forEach(geojson.getLayers(), function (layer) {
-                    markers.addLayer(layer);
+            angular.forEach(forms, function (p) {
+                var hosts = new L.markerClusterGroup({
+                    iconCreateFunction: function (cluster) {
+                        var childCount = cluster.getChildCount();
+                        var c = ' marker-cluster-';
+                        if (childCount < 10) {
+                            c += 'small';
+                        } else if (childCount < 100) {
+                            c += 'medium';
+                        } else {
+                            c += 'large';
+                        }
+                        return new L.DivIcon({
+                            html: '<div style="color:#FFF !important; background-color: ' + p.features[0].properties["marker-color"] + '!important;"><span>' + childCount + '</span></div>',
+                            className: 'marker-cluster' + c,
+                            iconSize: new L.Point(40, 40)
+                        });
+                    }
                 });
-            } else {
-                markers = geojson;
-            }
-            markers.addTo(map);
-
+                var geojson = L.geoJson(p, {
+                    pointToLayer: Maps.pointToLayer,
+                    onEachFeature: onEachFeature
+                });
+                if (map.options.clustering) {
+                    angular.forEach(geojson.getLayers(), function (layer) {
+                        hosts.addLayer(layer);
+                    });
+                    hosts.addTo(map);
+                } else {
+                    markers = geojson;
+                    markers.addTo(map);
+                }
+            });
             if (posts.features.length > 0) {
-                map.fitBounds(geojson.getBounds());
+                map.fitBounds(geojsonParent.getBounds());
             }
             // Focus map on data points but..
             // Avoid zooming further than 15 (particularly when we just have a single point)
@@ -169,8 +204,8 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     numberOfChunks += ((posts.total - limit) % limit) > 0 ? 1 : 0;
                 }
 
-                if(count_search > 0){
-                    for(var e of posts.features)
+                if (count_search > 0) {
+                    for (var e of posts.features)
                         ids.push(e.properties.id);
                     $scope.$broadcast('parentmethod', ids);
                     $rootScope.categories = ids;
@@ -214,7 +249,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         var scope = $rootScope.$new();
                         scope.post = details;
                         scope.goToPost = goToPost;
-                        scope.selectedPost = {post : details};
+                        scope.selectedPost = {post: details};
 
                         var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
 
