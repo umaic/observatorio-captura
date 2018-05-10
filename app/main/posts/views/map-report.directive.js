@@ -15,8 +15,9 @@ function MapReportDirective() {
 }
 
 MapReportController.$inject = ['$http', '$scope', '$rootScope', 'Notify', 'PostLockService', '$state', 'LoadingProgress', 'transformRequestAsFormPost', 'Util'];
+
 function MapReportController($http, $scope, $rootScope, Notify, PostLockService, $state, LoadingProgress, transformRequestAsFormPost, Util) {
-    
+
     $scope.tab = 1;
     $scope.showTabs = true;
     var countg = 0;
@@ -29,239 +30,238 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
         $scope.showTabs = !$scope.showTabs;
     };
 
-    $scope.layer = function (){
-    	var districtLayer = L.tileLayer.wms('https://geonode.umaic.org/geoserver/wms', {
+    $scope.layer = function () {
+        var districtLayer = L.tileLayer.wms('https://geonode.umaic.org/geoserver/wms', {
             layers: 'geonode:col_municipality_2014_v2',
             tiled: true,
             format: 'image/png',
             transparent: true
         });
-        setTimeout(function(){ 
-        	$rootScope.map.addLayer(districtLayer);
-        },500);
-        
-    	//$rootScope.addLayersToMap();
-    	//addWMSLayer('geonode:col_admbnda_adm2_igac_ochal', 'geonode:col_admbnda_adm2_igac_ochal', true);
+        setTimeout(function () {
+            $rootScope.map.addLayer(districtLayer);
+        }, 500);
+
+        //$rootScope.addLayersToMap();
+        //addWMSLayer('geonode:col_admbnda_adm2_igac_ochal', 'geonode:col_admbnda_adm2_igac_ochal', true);
     }
 
     $scope.$on('parentmethod', function (event, ids) {
         $scope.categories = ids;
         $http({
-	        method: "post",
-	        url: Util.url('/report'),
-	        headers: {
-                'Content-Type' : 'application/x-www-form-urlencoded'
+            method: "post",
+            url: Util.url('/report'),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
             },
             transformRequest: transformRequestAsFormPost,
             data: {ids: ids}
-	    }).then(function(response) {
-	        $scope.resume = response.data.events.total_by_type;
-	        $scope.resumeCount = Object.keys($scope.resume).length;
-	        $scope.categories = [];
-	        $scope.data1 = [];
-	        $scope.data2 = [];
-	        Object.keys(response.data.events.dates).forEach(function(k, v){
-	        	$scope.categories.push(getDateFormatter(k));
-			});
-			var cat = response.data.events.total_by_day.desastres;
-			$scope.data1 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
-			cat = response.data.events.total_by_day.violencia_armada;
-			$scope.data2 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
-			$scope.events_by_category = response.data.events.total_by_categories;
-			$scope.victims_count = response.data.events.victims_count;
-			print_graphics();
-	    });
-    })
+        }).then(function (response) {
+            $scope.resume = response.data.events.total_by_type;
+            $scope.resumeForms = response.data.events.forms;
+            $scope.resumeFormPlaces = response.data.events.total_by_place;
+            $scope.resumeCount = Object.keys($scope.resume).length;
+            $scope.categories = [];
+            $scope.data1 = [];
+            $scope.data2 = [];
+            Object.keys(response.data.events.dates).forEach(function (k, v) {
+                $scope.categories.push(getDateFormatter(k));
+            });
+            var cat = response.data.events.total_by_day.desastres;
+            $scope.data1 = cat == undefined ? [] : Object.keys(cat).map(function (k) {
+                return cat[k]
+            });
+            cat = response.data.events.total_by_day.violencia_armada;
+            $scope.data2 = cat == undefined ? [] : Object.keys(cat).map(function (k) {
+                return cat[k]
+            });
+            $scope.events_by_category = response.data.events.total_by_categories;
+            $scope.victims_count = response.data.events.victims_count;
+            print_graphics();
+        });
+    });
 
     $http({
         method: "get",
         url: Util.url('/report')
     }).then(function (response) {
         $scope.resume = response.data.events.total_by_type;
+        $scope.resumeForms = response.data.events.forms;
+        $scope.resumeFormPlaces = response.data.events.total_by_place;
         $scope.resumeCount = Object.keys($scope.resume).length;
         $scope.categories = [];
         $scope.data1 = [];
         $scope.data2 = [];
-        Object.keys(response.data.events.dates).forEach(function(k, v){
-        	$scope.categories.push(getDateFormatter(k));
-		});
-		var cat = response.data.events.total_by_day.desastres;
-		$scope.data1 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
-		cat = response.data.events.total_by_day.violencia_armada;
-		$scope.data2 = cat == undefined ? [] : Object.keys(cat).map(function(k) { return cat[k] });
-		$scope.events_by_category = response.data.events.total_by_categories;
-		$scope.victims_count = response.data.events.victims_count;
-		print_graphics();
+        Object.keys(response.data.events.dates).forEach(function (k, v) {
+            $scope.categories.push(getDateFormatter(k));
+        });
+        var cat = response.data.events.total_by_day.desastres;
+        $scope.data1 = cat == undefined ? [] : Object.keys(cat).map(function (k) {
+            return cat[k]
+        });
+        cat = response.data.events.total_by_day.violencia_armada;
+        $scope.data2 = cat == undefined ? [] : Object.keys(cat).map(function (k) {
+            return cat[k]
+        });
+        $scope.events_by_category = response.data.events.total_by_categories;
+        $scope.victims_count = response.data.events.victims_count;
+        print_graphics();
     });
 
-    function print_graphics(){
+    function print_graphics() {
 
-    	var newDiv = angular.element("<div id='graph" + countg + "'></div>");
-    	var newDiv2 = angular.element("<div id='graph2'></div>");
-    	var newDiv3 = angular.element("<div id='graph3'></div>");
-	    var target = document.getElementById('container');
-	    angular.element(target).append(newDiv);
-	    angular.element(target).append(newDiv2);
-	    angular.element(target).append(newDiv3);
+        var newDiv = angular.element("<div id='graph" + countg + "'></div>");
+        var newDiv2 = angular.element("<div id='graph2'></div>");
+        var newDiv3 = angular.element("<div id='graph3'></div>");
+        var target = document.getElementById('container');
+        angular.element(target).append(newDiv);
+        angular.element(target).append(newDiv2);
+        angular.element(target).append(newDiv3);
+        var series = [];
+        var yaxis = [];
+        angular.forEach($scope.resumeForms, function (form, group) {
+            series.push({
+                showInLegend: false,
+                name: form.name,
+                type: 'line',
+                data: form.total_posts == 0 ? [] : Object.keys(form.totals).map(function (k) {
+                    return form.totals[k]
+                }),
+                color: '#' + form.color
+            });
+            yaxis.push({ // Primary yAxis
+                labels: {
+                    format: '{value}',
+                    style: {
+                        color: '#' + form.color
+                    }
+                },
+                title: {
+                    text: form.name,
+                    style: {
+                        color: '#' + form.color
+                    }
+                },
+                opposite: true,
+                isDirty: true,
+                formatter: function () {
+                    return abbreviateNumber(this.value);
+                }
+            });
+        });
+        $scope.chart = Highcharts.chart("graph" + countg, {
+            chart: {
+                height: 220
+            },
+            title: {
+                text: 'EVENTOS'
+            },
+            xAxis: {
+                categories: $scope.categories,
+                crosshair: true,
+                tickInterval: 2,
+                isDirty: true
+            },
+            series: series,
+            yAxis: yaxis
+        });
+        Highcharts.chart('graph2', {
+            chart: {
+                type: 'pie',
+                height: 220
+            },
+            title: {
+                text: 'Victimas por grupo poblacional'
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.y:.1f}%'
+                    }
+                }
+            },
 
-    	$scope.chart = Highcharts.chart("graph" + countg, {
-	    	chart:{
-	    		height: 220
-	    	},
-		    title: {
-		        text: 'EVENTOS'
-		    },
-		    xAxis: {
-		        categories: $scope.categories,
-		        crosshair: true,
-		        tickInterval: 2,
-		        isDirty: true
-		    },
-		    series: [{
-		    	showInLegend: false,
-		        name: 'Desastres',
-		        type: 'line',
-		        yAxis: 1,
-		        data: $scope.data1,
-		        color: '#D40000'
-		    }, {
-		    	showInLegend: false,
-		        name: 'Violencia Armada',
-		        type: 'line',
-		        data: $scope.data2,
-		        color: '#2CA02C'
-		    }],
-		    yAxis: [{ // Primary yAxis
-		        labels: {
-		            format: '{value}',
-		            style: {
-		                color: '#2CA02C'
-		            }
-		        },
-		        title: {
-		            text: 'Eventos',
-		            style: {
-		                color: '#2CA02C'
-		            }
-		        },
-		        opposite: true,
-		        isDirty: true,
-		        formatter: function(){
-	              return abbreviateNumber(this.value);
-	            }
-		    }, {
-		        title: {
-		            text: 'Eventos',
-		            style: {
-		                color: '#D40000'
-		            }
-		        },
-		        labels: {
-		            format: '{value}',
-		            style: {
-		                color: '#D40000'
-		            }
-		        }
-		    }]
-		});
-		Highcharts.chart('graph2', {
-		    chart: {
-		        type: 'pie',
-		        height: 220
-		    },
-		    title: {
-		        text: 'Victimas por grupo poblacional'
-		    },
-		    plotOptions: {
-		        series: {
-		            dataLabels: {
-		                enabled: true,
-		                format: '{point.name}: {point.y:.1f}%'
-		            }
-		        }
-		    },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}</b> of total<br/>'
+            },
 
-		    tooltip: {
-		        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-		    },
+            "series": [
+                {
+                    "name": "Datos",
+                    "colorByPoint": true,
+                    "data": [
+                        {
+                            "name": "Indígena",
+                            "y": (($scope.victims_count.indigenas * 100) / 100),
+                            "drilldown": "Indigena"
+                        },
+                        {
+                            "name": "Población en general",
+                            "y": (($scope.victims_count.otro * 100) / 100),
+                            "drilldown": "Población en general"
+                        },
+                        {
+                            "name": "Sin info",
+                            "y": (($scope.victims_count.no_info * 100) / 100),
+                            "drilldown": "Sin info"
+                        },
+                        {
+                            "name": "Extranjero",
+                            "y": (($scope.victims_count.extranjero * 100) / 100),
+                            "drilldown": "Extranjero"
+                        }
+                    ]
+                }
+            ]
+        });
+        Highcharts.chart('graph3', {
+            chart: {
+                type: 'pie',
+                height: 220
+            },
+            title: {
+                text: 'Victimas por genero'
+            },
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}: {point.y:.1f}%'
+                    }
+                }
+            },
 
-		    "series": [
-		        {
-		            "name": "Datos",
-		            "colorByPoint": true,
-		            "data": [
-		                {
-		                    "name": "Indígena",
-		                    "y": (($scope.victims_count.indigenas * 100) / 100),
-		                    "drilldown": "Indigena"
-		                },
-		                {
-		                    "name": "Población en general",
-		                    "y": (($scope.victims_count.otro * 100) / 100),
-		                    "drilldown": "Población en general"
-		                },
-		                {
-		                    "name": "Sin info",
-		                    "y": (($scope.victims_count.no_info * 100) / 100),
-		                    "drilldown": "Sin info"
-		                },
-		                {
-		                    "name": "Extranjero",
-		                    "y": (($scope.victims_count.extranjero * 100) / 100),
-		                    "drilldown": "Extranjero"
-		                }
-		            ]
-		        }
-		    ]
-		});
-		Highcharts.chart('graph3', {
-		    chart: {
-		        type: 'pie',
-		        height: 220
-		    },
-		    title: {
-		        text: 'Victimas por genero'
-		    },
-		    plotOptions: {
-		        series: {
-		            dataLabels: {
-		                enabled: true,
-		                format: '{point.name}: {point.y:.1f}%'
-		            }
-		        }
-		    },
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+            },
 
-		    tooltip: {
-		        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-		        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-		    },
-
-		    "series": [
-		        {
-		            "name": "Datos",
-		            "colorByPoint": true,
-		            "data": [
-		                {
-		                    "name": "Hombres",
-		                    "y": (($scope.victims_count.hombres * 100) / 100),
-		                    "drilldown": "Hombres"
-		                },
-		                {
-		                    "name": "Mujeres",
-		                    "y": (($scope.victims_count.menores * 100) / 100),
-		                    "drilldown": "Mujeres"
-		                },
-		                {
-		                    "name": "Desconocido",
-		                    "y": (($scope.victims_count.desconocido * 100) / 100),
-		                    "drilldown": "Desconocido"
-		                }
-		            ]
-		        }
-		    ]
-		});
-		//$scope.$apply();
+            "series": [
+                {
+                    "name": "Datos",
+                    "colorByPoint": true,
+                    "data": [
+                        {
+                            "name": "Hombres",
+                            "y": (($scope.victims_count.hombres * 100) / 100),
+                            "drilldown": "Hombres"
+                        },
+                        {
+                            "name": "Mujeres",
+                            "y": (($scope.victims_count.menores * 100) / 100),
+                            "drilldown": "Mujeres"
+                        },
+                        {
+                            "name": "Desconocido",
+                            "y": (($scope.victims_count.desconocido * 100) / 100),
+                            "drilldown": "Desconocido"
+                        }
+                    ]
+                }
+            ]
+        });
+        //$scope.$apply();
     }
 
     function abbreviateNumber(value) {
