@@ -42,6 +42,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             var createMapDirective = Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
+                $rootScope.map = map;
             });
             // When data is loaded
             $q.all({
