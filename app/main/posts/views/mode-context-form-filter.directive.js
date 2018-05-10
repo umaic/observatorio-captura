@@ -1,6 +1,7 @@
 module.exports = ModeContextFormFilterDirective;
 
 ModeContextFormFilterDirective.$inject = [];
+
 function ModeContextFormFilterDirective() {
     return {
         restrict: 'E',
@@ -9,7 +10,9 @@ function ModeContextFormFilterDirective() {
         template: require('./mode-context-form-filter.html')
     };
 }
+
 ModeContextFormFilter.$inject = ['$scope', 'FormEndpoint', 'PostEndpoint', '$q', '_', '$rootScope', 'PostSurveyService', 'PostFilters', '$timeout', '$location'];
+
 function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootScope, PostSurveyService, PostFilters, $timeout, $location) {
     $scope.forms = [];
     $scope.showOnly = showOnly;
@@ -152,10 +155,12 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
             $scope.filters.form.splice(index, 1);
         }
     }
+
     $scope.buttonAct = 'e';
     $scope.activeButton = activeButton;
     $scope.showEvents = showEvents;
     $scope.showVictims = showVictims;
+    $scope.showLayers = showLayers;
 
     function activeButton(b) {
         return $scope.buttonAct == b;
@@ -169,5 +174,9 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
     function showEvents() {
         $scope.buttonAct = 'e';
         $rootScope.$emit('show_events');
+    }
+
+    function showLayers() {
+        $rootScope.$emit('show_modal_layers');
     }
 }
