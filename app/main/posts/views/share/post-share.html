@@ -1,13 +1,26 @@
-<a ng-class="{ 'button' : isButton(), 'button-flat': isAdd()}" ng-click="openShareMenu()">
+<div>
+	<a ng-class="{ 'button' : isButton(), 'button-flat': isAdd(), 'active-map-button': activeButton('e')}" ng-click="showEvents()">
+        <span ng-class="{'button-label': isButton(), 'label': !isButton()}">
+			Eventos
+	    </span>
+	</a>
+	<a ng-class="{ 'button' : isButton(), 'button-flat': isAdd(), 'active-map-button': activeButton('v')}" ng-click="showVictims()">
+        <span ng-class="{'button-label': isButton(), 'label': !isButton()}">
+			Afectados
+	    </span>
+	</a>
+	<a ng-class="{ 'button' : isButton(), 'button-flat': isAdd()}" ng-click="openShareMenu()">
 		<div class="loading" ng-if="loading">
 			<div class="line"></div>
 			<div class="line"></div>
 			<div class="line"></div>
 		</div>
-    <svg class="iconic" ng-hide="loading">
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#share"></use>
-    </svg>
-	<span ng-class="{'button-label': isButton(), 'label': !isButton()}" translate="app.share">
+		<svg class="iconic" ng-hide="loading">
+			<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#share"></use>
+		</svg>
+		<span ng-class="{'button-label': isButton(), 'label': !isButton()}" translate="app.share">
 			Share {{isButton()}}
 	</span>
-</a>
+	</a>
+
+</div>

@@ -25,6 +25,14 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
 
         activate();
 
+        $rootScope.$on('show_victims', function (e) {
+            console.log('show_victims');
+        });
+
+        $rootScope.$on('show_events', function (e) {
+            console.log('show_events');
+        });
+
         function activate() {
             // Set the page title
             $translate('post.posts').then(function (title) {
@@ -105,7 +113,37 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 onEachFeature: onEachFeature
             });
             angular.forEach(forms, function (p) {
-                var hosts = new L.markerClusterGroup({
+                var mark = [];
+                var victimsCount = 0;
+                angular.forEach(p.features, function (feature) {
+                    victimsCount += parseInt(feature.properties["victims"]);
+                    var m = new L.DivIcon({
+                        html: '<div style="color:#FFF !important; background-color: ' + feature.properties["marker-color"] + '!important;"><span>' + feature.properties["victims"] + '</span></div>',
+                        className: 'marker-cluster' + c,
+                        iconSize: new L.Point(40, 40)
+                    });
+                    mark.push(m);
+                });
+                $scope.victims = new L.markerClusterGroup({
+                    iconCreateFunction: function (cluster) {
+                        var childCount = cluster.getChildCount();
+                        var c = ' marker-cluster-';
+                        if (childCount < 10) {
+                            c += 'small';
+                        } else if (childCount < 100) {
+                            c += 'medium';
+                        } else {
+                            c += 'large';
+                        }
+                        return new L.DivIcon({
+                            html: '<div style="color:#FFF !important; background-color: ' + p.features[0].properties["marker-color"] + '!important;"><span>' + victimsCount + '</span></div>',
+                            className: 'marker-cluster' + c,
+                            iconSize: new L.Point(40, 40)
+                        });
+                    }
+                });
+                $scope.events.addLayer(mark);
+                $scope.events = new L.markerClusterGroup({
                     iconCreateFunction: function (cluster) {
                         var childCount = cluster.getChildCount();
                         var c = ' marker-cluster-';
@@ -129,9 +167,9 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 });
                 if (map.options.clustering) {
                     angular.forEach(geojson.getLayers(), function (layer) {
-                        hosts.addLayer(layer);
+                        $scope.events.addLayer(layer);
                     });
-                    hosts.addTo(map);
+                    $scope.events.addTo(map);
                 } else {
                     markers = geojson;
                     markers.addTo(map);
