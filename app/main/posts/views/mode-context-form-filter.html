@@ -1,6 +1,7 @@
 <form class="survey-filter">
 
-    <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }" ng-repeat="form in forms" dropdown>
+    <div class="survey-filter-checkbox init" ng-class="{ checked : (filters.form.indexOf(form.id) !== -1) }"
+         ng-repeat="form in forms" dropdown>
         <div class="survey-filter-parent">
             <div class="survey-filter-label">
                 <span class="post-band" ng-style="{backgroundColor: form.color}"></span>
@@ -9,30 +10,36 @@
                     {{ ::form.name }}
                 </label>
             </div>
-             <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
+            <span class="survey-filter-total init" data-toggle="dropdown-menu" dropdown-toggle>
                 <!-- todo! show count -->
                 {{ form.post_count }}
                 <svg class="iconic">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                         xlink:href="/img/iconic-sprite.svg#chevron-bottom"></use>
                 </svg>
             </span>
             <ul class="dropdown-menu init" dropdown-menu>
                 <li ng-show="canAddToSurvey(form)">
                     <a ui-sref="postCreate({id: form.id })">
                         <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#plus"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/img/iconic-sprite.svg#plus"></use>
                         </svg>
-                        <span class="label" translate="post.add_to_form" translate-values="{ form: form.name }">Add to</span>
+                        <span class="label" translate="post.add_to_form"
+                              translate-values="{ form: form.name }">Add to</span>
                     </a>
                 </li>
                 <div class="divider"></div>
-                <li><a translate="post.show_only_form" translate-values="{ form: form.name }" ng-click="showOnly(form.id)">Show only </a></li>
-                <li><a translate="post.hide_form" translate-values="{ form: form.name }" ng-click="hide(form.id)">Hide</a></li>
+                <li><a translate="post.show_only_form" translate-values="{ form: form.name }"
+                       ng-click="showOnly(form.id)">Show only </a></li>
+                <li><a translate="post.hide_form" translate-values="{ form: form.name }"
+                       ng-click="hide(form.id)">Hide</a></li>
                 <div class="divider"></div>
                 <li ng-show="hasManageSettingsPermission()">
                     <a ui-sref="settings.surveys.id({id: form.id, action: 'edit'})">
                         <svg class="iconic">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/img/iconic-sprite.svg#cog"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink"
+                                 xlink:href="/img/iconic-sprite.svg#cog"></use>
                         </svg>
                         <span class="label" translate="nav.survey_settings">Survey settings</span>
                     </a>
@@ -43,7 +50,8 @@
 </form>
 <div class="tool" ng-show="unmapped > 0">
     <p>There are
-        <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include location information.
+        <a ng-click="goToUnmapped()"><strong>{{getUnmapped()}}</strong></a> not shown here because they don't include
+        location information.
     </p>
 </div>
 <div class="form-field" ng-show="hasManageSettingsPermission()">
@@ -55,6 +63,14 @@
     </a>
 </div>
 <div class="tool">
-    <h6 class="tool-heading" translate="app.data_sources"></h6>
-    <filter-by-datasource post-stats="sourceStats" filters="filters"></filter-by-datasource>
+    <a class="button custom-map-button" ng-class="{'active-map-button': activeButton('e')}" ng-click="showEvents()">
+        <span class="button-label">
+			Eventos
+	    </span>
+    </a>
+    <a class="button custom-map-button" ng-class="{'active-map-button': activeButton('v')}" ng-click="showVictims()">
+        <span class="button-label">
+			Afectados
+	    </span>
+    </a>
 </div>

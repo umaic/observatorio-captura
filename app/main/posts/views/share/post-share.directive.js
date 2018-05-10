@@ -29,30 +29,12 @@ function PostShareController(
     $window,
     ModalService
 ) {
-    $scope.buttonAct = 'e';
     $scope.loading = false;
     $scope.openShareMenu = openShareMenu;
-    $scope.activeButton = activeButton;
-    $scope.showEvents = showEvents;
-    $scope.showVictims = showVictims;
     $scope.isButton = isButton;
     $scope.isAdd = isAdd;
 
     activate();
-
-    function activeButton(b) {
-        return $scope.buttonAct == b;
-    }
-
-    function showVictims() {
-        $scope.buttonAct = 'v';
-        $rootScope.$emit('show_victims');
-    }
-
-    function showEvents() {
-        $scope.buttonAct = 'e';
-        $rootScope.$emit('show_events');
-    }
 
     function activate() {
     }

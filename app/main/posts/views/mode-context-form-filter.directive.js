@@ -103,10 +103,10 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
         // calculating stats for each datasource, based on the current form-filter
         _.each(providers, function (provider) {
             var posts = _.filter(stats.totals[0].values, function (value) {
-                    // including posts without a form in the stats
-                    var id = value.id === null ? 'none' : value.id;
-                    return value.type === provider && _.contains($scope.filters.form, id);
-                });
+                // including posts without a form in the stats
+                var id = value.id === null ? 'none' : value.id;
+                return value.type === provider && _.contains($scope.filters.form, id);
+            });
 
             if (posts && posts.length > 0) {
                 var sourceStat = {total: 0};
@@ -151,5 +151,23 @@ function ModeContextFormFilter($scope, FormEndpoint, PostEndpoint, $q, _, $rootS
         if (index !== -1) {
             $scope.filters.form.splice(index, 1);
         }
+    }
+    $scope.buttonAct = 'e';
+    $scope.activeButton = activeButton;
+    $scope.showEvents = showEvents;
+    $scope.showVictims = showVictims;
+
+    function activeButton(b) {
+        return $scope.buttonAct == b;
+    }
+
+    function showVictims() {
+        $scope.buttonAct = 'v';
+        $rootScope.$emit('show_victims');
+    }
+
+    function showEvents() {
+        $scope.buttonAct = 'e';
+        $rootScope.$emit('show_events');
     }
 }
