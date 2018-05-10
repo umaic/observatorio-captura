@@ -8,55 +8,32 @@
                     <a ng-click="changeTab(1)">Resumen</a>
                 </li>
                 <li ng-class="{'ui-tabs-selected ui-state-active': tab == 2}" class="ui-state-default ui-corner-top">
-                    <a ng-click="changeTab(2)">Categorias</a>
+                    <a ng-click="changeTab(2)">Categorías</a>
                 </li>
                 <li ng-class="{'ui-tabs-selected ui-state-active': tab == 3}" class="ui-state-default ui-corner-top">
-                    <a ng-click="changeTab(3)">Departamentos</a>
+                    <a ng-click="changeTab(3)">Zonas</a>
                 </li>
             </ul>
             <div id="tendencia" ng-class="{'ui-tabs-hide' : tab != 1, 'hidden' : !showTabs}" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
                 <div id="chart_t_s">
                     <div class="left" id="chart_total">
-                        <div ng-class="{'ec':$index % 2==0, 'dn':$index % 2==1}" class="ct" 
-                            ng-repeat="(key, value) in resume">
-                            <div class="total_n" 
-                            id="{{ $index % 2 == 1 ? 'chart_total_v' : 'chart_total_d' }}"
-                            id="chart_total_v">{{value}}</div>
-                            <div class="total_t">total {{key}}</div>
+                        <div class="ct ct-char-victim" ng-repeat="(key, value) in resumeForms" style="background-color: #{{value.color}} !important;">
+                            <div  class="char-victim-name-post">
+                                <div class="total_n" id="chart_total_v">{{value.total_posts}}</div>
+                                <div class="total_t">total {{value.name}}</div>
+                            </div>
+                            <div class="char-victim-info" id="chart_subtotal">
+                                <div>
+                                    <div class="left" ng-repeat="(k, v) in value.victims" style="background-color: #{{value.color}} !important;">
+                                        <div class="subtotal_n" id="civiles">{{v}}</div>
+                                        <div class="subtotal_t">{{k}}</div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="left ec" id="chart_subtotal">
-                        <div>
-                            <div class="left">
-                                <div class="subtotal_n" id="civiles">{{victims_count.civiles}}</div>
-                                <div class="subtotal_t">civiles</div>
-                            </div>
-                            <div class="left">
-                                <div class="subtotal_n" id="afros">{{victims_count.afros}}</div>
-                                <div class="subtotal_t">afro <br>colombianos</div>
-                            </div>
-                            <div class="left">
-                                <div class="subtotal_n" id="indigenas">{{victims_count.indigenas}}</div>
-                                <div class="subtotal_t">indígenas</div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                        <div>
-                            <div class="left">
-                                <div class="subtotal_n" id="mujeres">{{victims_count.mujeres}}</div>
-                                <div class="subtotal_t">mujeres</div>
-                            </div>
-                            <div class="left">
-                                <div class="subtotal_n" id="hombres">{{victims_count.hombres}}</div>
-                                <div class="subtotal_t">hombres</div>
-                            </div>
-                            <div class="left">
-                                <div class="subtotal_n" id="menores">{{victims_count.menores}}</div>
-                                <div class="subtotal_t">niños</div>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                    </div>
+
                     <div class="clear"></div>
                 </div>
                 <div id="container"></div>
@@ -64,30 +41,19 @@
             <div id="resumen" ng-class="{'ui-tabs-hide' : tab != 2, 'hidden' : !showTabs}"  class="ui-tabs-panel ui-widget-content ui-corner-bottom">
                 <div class="div_table_totalxd">
                     <div id="resumen_ec" class="left half" style="display: block;">
-                        <div id="resumen_total_ec" ng-if="$index == 1" class="ec resumen_total" ng-repeat="(key, value) in resume">
-                            <div id="resumen_total_ec_num" class="num">{{value}}</div>
+                        <div id="resumen_total_ec" class="ec resumen_total" ng-repeat="(key, value) in resumeForms"
+                             style="background-color: #{{value.color}} !important; width: 25% !important;">
+                            <div id="resumen_total_ec_num" class="num">{{value.total_posts}}</div>
                             <div class="cat bold">Total de
                                 <span class="data_title">eventos</span>
                             </div>
-                        </div>
-                        <div class="resumen_row ect" id="60" ng-repeat="(key, value) in events_by_category.violencia_armada">
-                            <div class="cat_color hide" style="background-color: rgb(55, 208, 16);">&nbsp;</div>
-                            <div class="num">{{value}}</div>
-                            <div class="cat">{{key}}</div>
-                        </div>
-                    </div>
-                    <div id="resumen_dn" class="left half" style="display: block;">
-                        <div id="resumen_total_dn" ng-if="$index == 0" class="dn resumen_total" ng-repeat="(key, value) in resume">
-                            <div id="resumen_total_dn_num" class="num">{{value}}</div>
-                            <div class="cat">Total de
-                                <span class="data_title">eventos</span>
+                            <div class="resumen_row ect" id="60" ng-repeat="(k, val) in value.categories">
+                                <div class="cat_color hide" style="background-color: rgb(55, 208, 16);">&nbsp;</div>
+                                <div class="num">{{val}}</div>
+                                <div class="cat">{{k}}</div>
                             </div>
                         </div>
-                        <div class="resumen_row dnt" ng-repeat="(key, value) in events_by_category.desastres">
-                            <div class="cat_color hide">&nbsp;</div>
-                            <div class="num">{{value}}</div>
-                            <div class="cat">{{key}}</div>
-                        </div>
+
                     </div>
                     <div class="clear"></div>
                 </div>
@@ -96,31 +62,29 @@
                 <div id="div_table_totalxd" class="div_table_totalxd">
                     <table id="table_totalxd">
                         <thead>
-                            <tr>
-                                <th class="d"></th>
-                                <th class="ec">Violencia</th>
-                                <th class="dn">Desastres</th>
-                            </tr>
+                        <tr>
+                            <th class="d"></th>
+                            <th class="ec" ng-repeat="(key, value) in resumeForms" style="background-color: #{{value.color}} !important;">{{value.name}}</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr class="totalxd">
-                                <td class="left">Total</td>
-                                <td class="ec" ng-repeat="(key, value) in resume" ng-if="$index == 1">{{value}}</td>
-                                <td class="dn" ng-repeat="(key, value) in resume" ng-if="$index == 0">{{value}}</td>
-                            </tr>
+                        <tr class="totalxd" ng-repeat="(key, value) in resumeFormPlaces">
+                            <td class="left">{{value.name}}</td>
+                            <td class="ec" ng-repeat="(k, v) in value.forms">{{v}}</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <!-- /Tabs -->
-        
+
         <!-- Tabla variacion -->
         <div id="variacion_data" class="hide">
         </div>
         <!-- /Tabla variacion -->
     </div>
     <!--/ Data right -->
-    
+
     <div class="clear"></div>
 </div>
