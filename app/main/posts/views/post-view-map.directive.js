@@ -50,7 +50,6 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             var createMapDirective = Maps.createMap(element[0].querySelector(mapSelector));
             var createMap = createMapDirective.then(function (data) {
                 map = data;
-                $rootScope.map = map;
             });
             // When data is loaded
             $q.all({
@@ -118,12 +117,21 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                 var victimsCount = 0;
                 angular.forEach(p.features, function (feature) {
                     victimsCount += parseInt(feature.properties["victims"]);
-                    var m = new L.DivIcon({
+                    var c = ' marker-cluster-';
+                    if (parseInt(feature.properties["victims"]) < 10) {
+                        c += 'small';
+                    } else if (parseInt(feature.properties["victims"]) < 100) {
+                        c += 'medium';
+                    } else {
+                        c += 'large';
+                    }
+                    var myIcon = new L.DivIcon({
                         html: '<div style="color:#FFF !important; background-color: ' + feature.properties["marker-color"] + '!important;"><span>' + feature.properties["victims"] + '</span></div>',
                         className: 'marker-cluster' + c,
                         iconSize: new L.Point(40, 40)
                     });
-                    mark.push(m);
+                    var m = new L.marker([feature.geometry.geometries[0]["coordinates"][1], feature.geometry.geometries[0]["coordinates"][0]], {icon: myIcon});
+                    mark.push({marker: m, feature: feature});
                 });
                 $scope.victims = new L.markerClusterGroup({
                     iconCreateFunction: function (cluster) {
@@ -143,7 +151,25 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                         });
                     }
                 });
-                $scope.events.addLayer(mark);
+                angular.forEach(mark, function (ma) {
+                    ma.marker.addTo($scope.victims).on('click', function (e) {
+                        getPostDetails(ma.feature).then(function (details) {
+                            var scope = $rootScope.$new();
+                            scope.post = details;
+                            scope.goToPost = goToPost;
+                            scope.selectedPost = {post: details};
+
+                            var el = $compile('<post-card selected-post="selectedPost" post="post" short-content="true" click-action="goToPost"></post-card>')(scope);
+
+                            ma.marker.bindPopup(el[0], {
+                                'minWidth': '300',
+                                'maxWidth': '300',
+                                'className': 'pl-popup'
+                            });
+                            ma.marker.openPopup();
+                        });
+                    });
+                });
                 $scope.events = new L.markerClusterGroup({
                     iconCreateFunction: function (cluster) {
                         var childCount = cluster.getChildCount();
@@ -170,7 +196,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
                     angular.forEach(geojson.getLayers(), function (layer) {
                         $scope.events.addLayer(layer);
                     });
-                    $scope.events.addTo(map);
+                    $scope.victims.addTo(map);
                 } else {
                     markers = geojson;
                     markers.addTo(map);
