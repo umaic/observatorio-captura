@@ -36,6 +36,7 @@ function (
     $scope.attachAttributes = attachAttributes;
 
     $scope.exportAllNew = function(){
+        $scope.showProgress = true;
         $http({
             method: "get",
             url: Util.url('/report-test')
@@ -43,6 +44,7 @@ function (
             var filename = "someFileName.csv";
             $scope.exportData = response.data;
             alasql('SELECT * INTO CSV("' + filename + '",{headers:true}) FROM ?', [$scope.exportData]);
+            $scope.showProgress = false;
         });
     }
 
