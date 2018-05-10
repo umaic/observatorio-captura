@@ -10,7 +10,6 @@ module.exports = [
     'LoadingProgress',
     '$http',
     'Util',
-    'ngCsv',
 function (
     $scope,
     $rootScope,
@@ -22,8 +21,7 @@ function (
     _,
     LoadingProgress,
     $http,
-    Util,
-    ngCsv
+    Util
 ) {
     $scope.exportAll = exportAll;
     $scope.showFields = false;
