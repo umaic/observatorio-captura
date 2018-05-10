@@ -55,7 +55,7 @@ function Maps(ConfigEndpoint, L, _, CONST, $rootScope) {
                 map.panTo(map.unproject(px), {animate: true}); // pan to new center
             });
             // Add a layer control
-            L.control.layers(getBaseLayersForControl(), {}).addTo(map);
+            //L.control.layers(getBaseLayersForControl(), {}).addTo(map);
             return map;
         });
     }
