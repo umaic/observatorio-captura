@@ -37,12 +37,16 @@ function (
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.attachAttributes = attachAttributes;
 
-    $http({
-        method: "get",
-        url: Util.url('/report-test')
-    }).then(function (response) {
-        $scope.exportData = response.data;
-    });
+    $scope.exportAllNew = function(){
+        $http({
+            method: "get",
+            url: Util.url('/report-test')
+        }).then(function (response) {
+            var filename = "someFileName.csv";
+            $scope.exportData = response.data;
+            alasql('SELECT * INTO CSV("' + filename + '",{headers:true}) FROM ?', [$scope.exportData]);
+        });
+    }
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;
