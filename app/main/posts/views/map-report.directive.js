@@ -29,6 +29,21 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
         $scope.showTabs = !$scope.showTabs;
     };
 
+    $scope.layer = function (){
+    	var districtLayer = L.tileLayer.wms('https://geonode.umaic.org/geoserver/wms', {
+            layers: 'geonode:col_municipality_2014_v2',
+            tiled: true,
+            format: 'image/png',
+            transparent: true
+        });
+        setTimeout(function(){ 
+        	$rootScope.map.addLayer(districtLayer);
+        },500);
+        
+    	//$rootScope.addLayersToMap();
+    	//addWMSLayer('geonode:col_admbnda_adm2_igac_ochal', 'geonode:col_admbnda_adm2_igac_ochal', true);
+    }
+
     $scope.$on('parentmethod', function (event, ids) {
         $scope.categories = ids;
         $http({
@@ -273,4 +288,5 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
         var d = new Date(date_string)
         return tt[2] + ' ' + d.toLocaleString("en-us", {month: "short"});
     }
+
 }

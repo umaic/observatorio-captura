@@ -1,9 +1,4 @@
 <div id="totalxd" class="">
-    <div class="progress-bar" ng-show="isLoading()">
-        <span>
-            ..
-        </span>
-    </div>
     <!-- Data right -->
     <div id="data">
         <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -17,6 +12,9 @@
                 </li>
                 <li ng-class="{'ui-tabs-selected ui-state-active': tab == 3}" class="ui-state-default ui-corner-top">
                     <a ng-click="changeTab(3)">Departamentos</a>
+                </li>
+                <li class="ui-state-default ui-corner-top">
+                    <a ng-click="layer()">Layer</a>
                 </li>
             </ul>
             <div id="tendencia" ng-class="{'ui-tabs-hide' : tab != 1, 'hidden' : !showTabs}" class="ui-tabs-panel ui-widget-content ui-corner-bottom">

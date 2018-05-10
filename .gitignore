@@ -22,3 +22,5 @@ server/www/img/icons/
 server/www/
 app/locales/
 package-lock.json
+.gitignore
+app/app.js
