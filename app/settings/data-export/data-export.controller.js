@@ -8,6 +8,9 @@ module.exports = [
     'FormAttributeEndpoint',
     '_',
     'LoadingProgress',
+    '$http',
+    'Util',
+    'ngCsv',
 function (
     $scope,
     $rootScope,
@@ -17,7 +20,10 @@ function (
     FormEndpoint,
     FormAttributeEndpoint,
     _,
-    LoadingProgress
+    LoadingProgress,
+    $http,
+    Util,
+    ngCsv
 ) {
     $scope.exportAll = exportAll;
     $scope.showFields = false;
@@ -30,6 +36,13 @@ function (
     $scope.getForms = getForms;
     $scope.isLoading = LoadingProgress.getLoadingState;
     $scope.attachAttributes = attachAttributes;
+
+    $http({
+        method: "get",
+        url: Util.url('/report-test')
+    }).then(function (response) {
+        $scope.exportData = response.data;
+    });
 
     $rootScope.$on('event:export_job:stopped', function () {
         $scope.showProgress = false;

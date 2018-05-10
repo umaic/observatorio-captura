@@ -38,8 +38,8 @@ window.ushahidi = window.ushahidi || {};
 var backendUrl = window.ushahidi.backendUrl = (window.ushahidi.backendUrl || BACKEND_URL).replace(/\/$/, ''),
     intercomAppId = window.ushahidi.intercomAppId = window.ushahidi.intercomAppId || '',
     appStoreId = window.ushahidi.appStoreId = window.ushahidi.appStoreId || '',
-    //apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
-    apiUrl = window.ushahidi.apiUrl = 'http://apimonitor.kuery.com.co' + '/api/v3',
+    apiUrl = window.ushahidi.apiUrl = backendUrl + '/api/v3',
+    //apiUrl = window.ushahidi.apiUrl = 'http://apimonitor.kuery.com.co' + '/api/v3',
     platform_websocket_redis_adapter_url = window.ushahidi.platform_websocket_redis_adapter_url || '',
     claimedAnonymousScopes = [
         'apikeys',
@@ -87,11 +87,12 @@ angular.module('app',
         'ushahidi.common',
         'ushahidi.main',
         'ushahidi.settings',
-        'ui.bootstrap.dropdown'
+        'ui.bootstrap.dropdown',
+        'ngCsv'
     ])
 
     .constant('CONST', {
-        BACKEND_URL: 'http://apimonitor.kuery.com.co',// backendUrl,
+        BACKEND_URL: backendUrl,
         API_URL: apiUrl,
         INTERCOM_APP_ID: intercomAppId,
         APP_STORE_ID: appStoreId,
