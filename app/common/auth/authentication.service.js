@@ -77,11 +77,11 @@ module.exports = [
         /*********** Auth0 ********/
 
         function handleAuthentication() {
-            angularAuth0.parseHash(function(err, authResult) {
+            angularAuth0.parseHash(function (err, authResult) {
                 if (authResult && authResult.accessToken && authResult.idToken) {
                     setSession(authResult);
                 } else if (err) {
-                    $location.path( "/views/map" );
+                    $location.path("/views/map");
                 }
             });
         }
@@ -104,8 +104,8 @@ module.exports = [
 
         function getProfile() {
             var accessToken = localStorage.getItem('access_token');
-            if (accessToken){
-                angularAuth0.client.userInfo(accessToken, function(err, profile) {
+            if (accessToken) {
+                angularAuth0.client.userInfo(accessToken, function (err, profile) {
                     if (profile)
                         setUserProfile(profile);
                 });
@@ -117,12 +117,12 @@ module.exports = [
                 method: "post",
                 url: Util.url('/validate'),
                 headers: {
-                    'Content-Type' : 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 transformRequest: transformRequestAsFormPost,
                 data: {email: profile.email}
-            }).then(function(response) {
-                if(response.data == 0){
+            }).then(function (response) {
+                if (response.data == 0) {
                     var request = $http({
                         method: "post",
                         url: Util.url('/oauth/token'),
@@ -132,7 +132,7 @@ module.exports = [
                             client_secret: CONST.OAUTH_CLIENT_SECRET,
                             scope: CONST.CLAIMED_USER_SCOPES.join(' ')
                         }
-                    }).then(function(response) {
+                    }).then(function (response) {
                         var accessToken = response.data.access_token;
                         var token_type = response.data.token_type;
                         var request = $http({
@@ -146,11 +146,11 @@ module.exports = [
                                 password: profile.sub,
                                 realname: profile.name,
                             }
-                        }).then(function(response) {
+                        }).then(function (response) {
                             login(profile.email, profile.sub)
                         });
                     });
-                }else
+                } else
                     login(profile.email, profile.sub)
             });
             //userProfile = profile;
@@ -162,7 +162,7 @@ module.exports = [
 
         /**************************/
 
-        function login (username, password) {
+        function login(username, password) {
             var payload = {
                     username: username,
                     password: password,
@@ -200,7 +200,7 @@ module.exports = [
                                 .finally(function () {
                                     setToLoginState(userDataResponse.data);
                                     $rootScope.$broadcast('event:authentication:login:succeeded');
-                                    $location.path( "/views/map" );
+                                    $location.path("/views/map");
                                     //deferred.resolve();
                                 });
                         }, handleRequestError);

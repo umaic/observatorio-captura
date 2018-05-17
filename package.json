@@ -93,6 +93,7 @@
   "dependencies": {
     "@uirouter/angularjs": "^1.0.10",
     "URIjs": "^1.14.1",
+    "alasql": "^0.4.5",
     "angular": "^1.5.6",
     "angular-auth0": "^3.0.0",
     "angular-cache": "^4.6.0",
@@ -111,6 +112,7 @@
     "auth0-js": "^9.4.2",
     "checklist-model": "~0.11.0",
     "d3": "^3.5.17",
+    "highcharts": "^6.1.0",
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",

@@ -4,19 +4,23 @@ require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap');
-require('angular-datepicker/build/angular-datepicker');
+//require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
 require('angular-elastic');
 require('angular-filter');
 require('angular-local-storage');
 require('checklist-model');
-require('ngGeolocation/ngGeolocation');
+//require('ngGeolocation/ngGeolocation');
 require('ng-showdown');
+require('highcharts');
+require('alasql');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
 require('angular-nvd3/src/angular-nvd3');
 require('angular-cache');
 require('angular-linkify');
+window.auth0 = require('auth0-js');  // Required for angular-auth0
+require('angular-auth0');
 
 // Load ushahidi modules
 require('./common/common-module.js');
@@ -118,15 +122,15 @@ angular.module('app',
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.html5Mode(true).hashPrefix('!');
     }])
-    .config(function ($urlRouterProvider, $urlMatcherFactoryProvider, angularAuth0Provider, $stateProvider) {
-        $urlRouterProvider.when('', '/views/map');
-        $urlRouterProvider.when('/', '/views/map');
-        // if the path doesn't match any of the urls you configured
-        // otherwise will take care of routing the user to the specified url
-
-        $urlRouterProvider.otherwise('/404');
-        $urlMatcherFactoryProvider.strictMode(false);
-    })
+    .config(['$urlRouterProvider', '$urlMatcherFactoryProvider',
+        function ($urlRouterProvider, $urlMatcherFactoryProvider) {
+            $urlRouterProvider.when('', '/views/map');
+            $urlRouterProvider.when('/', '/views/map');
+            // if the path doesn't match any of the urls you configured
+            // otherwise will take care of routing the user to the specified url
+            $urlRouterProvider.otherwise('/404');
+            $urlMatcherFactoryProvider.strictMode(false);
+        }])
     .config(['$showdownProvider', function ($showdownProvider) {
         $showdownProvider.setOption('simplifiedAutoLink', true);
         $showdownProvider.setOption('excludeTrailingPunctuationFromURLs', true);
