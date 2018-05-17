@@ -1995,3 +1995,109 @@ hr {
 .item-layer {
   position: relative;
 }
+ /*estilos diseno*/
+
+/*color barra lateral*/
+.ltr-namespace .mode-bar {
+       background-color: #00a551;
+}
+
+/*tamano iconos*/
+
+.ltr-namespace .mode-bar li a svg.iconic { 
+    width: 25px;
+    height: 25px;
+}
+
+/*color verde claro segunda barra*/
+.ltr-namespace .mode-context {
+    background-color: #e4f4ea;
+}
+
+/*color items*/
+.ltr-namespace .survey-filter-checkbox.checked {
+    background: #fff;
+}
+
+.ltr-namespace .survey-filter .survey-filter-checkbox {
+    margin: 15px auto;
+    width: 90%;
+}
+
+.ltr-namespace .survey-filter-checkbox.checked .survey-filter-total {
+    color: #fff;
+    /* text-shadow: 0 1px 1px #000; */
+    /* box-shadow: 0 0 8px 2px #3F4349; */
+    /* background-color: #8E9297; */
+}
+
+.ltr-namespace .survey-filter-checkbox .survey-filter-total svg.iconic {
+    position: relative;
+    top: 1px;
+    float: right;
+    fill: #fff;
+    width: 10px;
+    height: 10px;
+    margin-left: 6px;
+    transition: 0.3s;
+}
+
+/*funte items*/
+.ltr-namespace .survey-filter-checkbox.checked label, .ltr-namespace .survey-filter-checkbox.checked .form-sheet .listing .listing-heading, .ltr-namespace .form-sheet .listing .survey-filter-checkbox.checked .listing-heading {
+    color: #00a551;
+}
+
+/*toolbar*/
+.ltr-namespace .toolbar {
+    background-color: #fff;
+}
+.ltr-namespace .toolbar .searchbar .searchbar-input .form-field input[type="search"] {
+    border-color: #000;
+    background-color: #fff;
+    color:#000;
+}
+
+.ltr-namespace .toolbar .searchbar.active .searchbar-input .input-with-icon svg.iconic {
+    fill: #2B323A;
+}
+
+.ltr-namespace .searchbar .searchbar-input+.searchbar-options .button:last-of-type {
+    border-radius: 0px 2px 2px 0px;
+    background-color: #00a551;
+}
+
+.ltr-namespace .searchbar .badge {
+    background-color: #51c728;
+    color: #000;
+}
+
+.ltr-namespace .toolbar .button-group button, .ltr-namespace .toolbar .button-group .button {
+    height: 36px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-left: 8px;
+    background-color: #adebc6;
+    color: #00a551;
+}
+
+.ltr-namespace button svg.iconic, .ltr-namespace .button svg.iconic, .ltr-namespace input[type="button"] svg.iconic {
+    display: initial;
+    width: .866666667em;
+    height: .866666667em;
+    fill: #00a551;
+    transition: 0.3s;
+}
+
+
+#totalxd {
+    right: 0px;
+    width: 15%;
+    max-height: 750px;
+    padding: 0;
+    top: 84px;
+    position: absolute;
+    z-index: 1000;
+}
+
+
+
