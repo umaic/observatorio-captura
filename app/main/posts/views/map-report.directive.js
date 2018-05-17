@@ -119,13 +119,17 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
         var series = [];
         var yaxis = [];
         angular.forEach($scope.resumeForms, function (form, group) {
+            var obj = [];
+            if (form.totals) {
+                obj = Object.keys(form.totals).map(function (k) {
+                    return form.totals[k]
+                });
+            }
             series.push({
                 showInLegend: false,
                 name: form.name,
                 type: 'line',
-                data: form.total_posts == 0 ? [] : Object.keys(form.totals).map(function (k) {
-                    return form.totals[k]
-                }),
+                data: form.total_posts == 0 ? [] : obj,
                 color: '#' + form.color
             });
             yaxis.push({ // Primary yAxis

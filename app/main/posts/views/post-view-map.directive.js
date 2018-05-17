@@ -58,7 +58,7 @@ function PostViewMap(PostEndpoint, Maps, _, PostFilters, L, $q, $rootScope, $com
             // Change state on mode change
             $scope.$watch(() => {
                 return PostFilters.getModeId();
-        }, (mode) => {
+            }, (mode) => {
                 if (PostFilters.getMode() === 'savedsearch') {
                     $state.go('posts.map.savedsearch', {savedSearchId: PostFilters.getModeId()});
                 } else if (PostFilters.getMode() === 'collection') {

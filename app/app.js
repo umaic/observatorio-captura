@@ -4,15 +4,15 @@ require('angular-resource');
 require('angular-translate');
 require('angular-translate-loader-static-files');
 require('angular-ui-bootstrap');
-//require('angular-datepicker/build/angular-datepicker');
+require('angular-datepicker/build/angular-datepicker');
 require('angular-sanitize');
 require('angular-elastic');
 require('angular-filter');
 require('angular-local-storage');
 require('checklist-model');
-//require('ngGeolocation/ngGeolocation');
+require('ngGeolocation/ngGeolocation');
 require('ng-showdown');
-require('highcharts');
+window.Highcharts = require('highcharts');
 require('alasql');
 window.d3 = require('d3'); // Required for nvd3
 require('./common/wrapper/nvd3-wrapper');
