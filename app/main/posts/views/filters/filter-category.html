@@ -2,16 +2,16 @@
     <label translate="nav.categories">Categories</label>
 
     <div class="form-field checkbox" ng-repeat="(index, category) in categories" ng-class="{ overflow : ($index > 1) }" ng-if="category.parent_id === null">
-        <label>
+        <label style="font-weight: bold;">
             <input
                 type="checkbox"
                 checklist-value="category.id"
                 value="category.id"
                 checklist-model="selectedCategories"
-            > 
+            >
             {{ ::category.tag }}
         </label>
-        <div 
+        <div
           class="form-field checkbox"
           ng-repeat="child in category.children"
         >
@@ -25,7 +25,7 @@
           >
             {{ ::child.tag }}
         </label>
-    </div> 
+    </div>
     </div>
       <span class="form-field-toggle">
         <svg class="iconic">

@@ -174,7 +174,7 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
                 height: 220
             },
             title: {
-                text: 'Victimas por grupo poblacional'
+                text: 'Afectados por grupo poblacional'
             },
             plotOptions: {
                 series: {
@@ -225,7 +225,7 @@ function MapReportController($http, $scope, $rootScope, Notify, PostLockService,
                 height: 220
             },
             title: {
-                text: 'Victimas por genero'
+                text: 'Afectados por genero'
             },
             plotOptions: {
                 series: {
