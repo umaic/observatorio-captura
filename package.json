@@ -112,7 +112,7 @@
     "auth0-js": "^9.4.2",
     "checklist-model": "~0.11.0",
     "d3": "^3.5.17",
-    "highcharts": "^6.1.0",
+    "highcharts": "^8.2.0",
     "leaflet": "~1.0.1",
     "leaflet.locatecontrol": "^0.62.0",
     "leaflet.markercluster": "1.0.5",
